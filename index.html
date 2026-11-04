@@ -474,6 +474,22 @@ function parseVal(s) {
   return sign * coef * root;
 }
 
+/* 第三關時間的中文說法，例如 180 → 三分鐘、150 → 兩分三十秒、90 → 一分三十秒 */
+function timeText(sec) {
+  sec = Math.max(1, Math.round(sec || 180));
+  const zh = n => {
+    const d = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
+    if (n < 10) return d[n];
+    if (n < 20) return '十' + (n % 10 ? d[n % 10] : '');
+    return d[Math.floor(n / 10)] + '十' + (n % 10 ? d[n % 10] : '');
+  };
+  const m = Math.floor(sec / 60), s = sec % 60;
+  const mm = m === 2 ? '兩' : zh(m);
+  if (m && !s) return mm + '分鐘';
+  if (!m) return zh(s) + '秒';
+  return mm + '分' + zh(s) + '秒';
+}
+
 function fmtTime(ms) {
   const s = Math.max(0, Math.ceil(ms / 1000));
   return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
@@ -540,7 +556,7 @@ const STORY = {
     intro: [
       { who: 'cmd', html: '工程師，颱風即將登陸！還有<strong class="text-red-400">六個撤離點</strong>必須立刻下達撤離指令。' },
       { who: 'intel', html: `直升機只回報直角坐標 ${M('(x,y)')}，但撤離指令必須用極坐標 ${M(R`[r,\theta]`)} 下達。可以用計算機幫忙，但別忘了看清楚撤離點在哪個象限！` },
-      { who: 'cmd', html: '這次只有<strong class="text-red-400">三分鐘</strong>，而且只有<strong class="text-red-400">一次機會</strong>，指令送出就不能修改。準備好再開始！' }
+      { who: 'cmd', html: '這次只有<strong class="text-red-400">{L3TIME}</strong>，而且只有<strong class="text-red-400">一次機會</strong>，指令送出就不能修改。準備好再開始！' }
     ],
     outroTitle: '任務完成：撤離指令全數送出', outroTag: 'ALL CLEAR 🟢',
     outro: [
@@ -810,7 +826,8 @@ function renderCommChat(st) {
   t.innerHTML = (st.danger ? ICON_WARN : ICON_PHONE) + `<span>${st.title}</span>`;
 
   const base = st.overlay ? 2.4 : 0.4;
-  $('comm-bubbles').innerHTML = bubbles(st.intro, base);
+  const intro = st.intro.map(m => ({ ...m, html: m.html.replace('{L3TIME}', timeText(state.timeLimit)) }));
+  $('comm-bubbles').innerHTML = bubbles(intro, base);
   const wrap = $('comm-btn-wrap');
   wrap.style.animation = 'none'; void wrap.offsetWidth; wrap.style.animation = '';
   wrap.style.animationDelay = (base + st.intro.length * 1.5) + 's';
@@ -1698,7 +1715,7 @@ const L3 = {
     pickEnabled = false; onPick = null; kpHide();
     $('btn-restart').classList.add('hidden');
     $('legend').innerHTML = 'r ≥ 0<br>可以使用計算機';
-    setPanel('🌀 颱風危機：象限挑戰', `限時 ${Math.round(state.timeLimit / 60 * 10) / 10} 分鐘，只能作答一次`);
+    setPanel('🌀 颱風危機：象限挑戰', `限時${timeText(state.timeLimit)}，只能作答一次`);
     if (this.done) this.renderResult();
     else if (this.started) { this.startTimer(); this.renderQuestion(); }
     else this.renderIntro();
@@ -1712,7 +1729,7 @@ const L3 = {
         <h2 class="font-bold text-red-800 text-base mb-3">⏱️ 撤離任務規則</h2>
         <ul class="text-sm text-slate-700 space-y-2 leading-relaxed list-disc pl-5">
           <li>共 6 個撤離點，每題從四個指令中選出正確的極坐標，可以使用計算機。</li>
-          <li>限時 ${fmtTime(state.timeLimit * 1000)}，時間到系統會自動送出。</li>
+          <li>限時${timeText(state.timeLimit)}，時間到系統會自動送出。</li>
           <li>只有一次機會，開始後不能重來；不小心重新整理，計時也不會停。</li>
           <li>作答時不顯示對錯，送出前都可以回頭修改。</li>
         </ul>
