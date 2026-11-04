@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>颱風危機：極坐標定位任務</title>
+<!-- 版面樣式：Tailwind CSS 3.4 預先編譯（不需連線載入）。若改了 class，需要重新編譯。 -->
+<style id="tailwind">*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.visible{visibility:visible}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0}.bottom-3{bottom:.75rem}.left-1\/2{left:50%}.left-3{left:.75rem}.right-0{right:0}.right-3{right:.75rem}.top-0{top:0}.top-1\/2{top:50%}.top-3{top:.75rem}.z-10{z-index:10}.z-20{z-index:20}.z-50{z-index:50}.z-\[60\]{z-index:60}.z-\[65\]{z-index:65}.z-\[70\]{z-index:70}.col-span-2{grid-column:span 2/span 2}.mx-auto{margin-left:auto;margin-right:auto}.my-3{margin-top:.75rem;margin-bottom:.75rem}.my-auto{margin-top:auto;margin-bottom:auto}.-mr-10{margin-right:-2.5rem}.-mr-2{margin-right:-.5rem}.-mt-10{margin-top:-2.5rem}.mb-0\.5{margin-bottom:.125rem}.mb-1{margin-bottom:.25rem}.mb-12{margin-bottom:3rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.ml-1{margin-left:.25rem}.mr-1{margin-right:.25rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.mt-5{margin-top:1.25rem}.mt-6{margin-top:1.5rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-2\.5{height:.625rem}.h-20{height:5rem}.h-3{height:.75rem}.h-32{height:8rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.h-8{height:2rem}.h-\[100dvh\]{height:100dvh}.h-\[30rem\]{height:30rem}.h-full{height:100%}.min-h-0{min-height:0}.w-10{width:2.5rem}.w-2\.5{width:.625rem}.w-20{width:5rem}.w-3{width:.75rem}.w-32{width:8rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-8{width:2rem}.w-\[30rem\]{width:30rem}.w-full{width:100%}.min-w-\[4\.5rem\]{min-width:4.5rem}.max-w-2xl{max-width:42rem}.max-w-\[46\%\]{max-width:46%}.max-w-lg{max-width:32rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.flex-grow{flex-grow:1}.-translate-x-1\/2{--tw-translate-x:-50%}.-translate-x-1\/2,.-translate-y-1\/2{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-y-1\/2{--tw-translate-y:-50%}.scale-100{--tw-scale-x:1;--tw-scale-y:1}.scale-100,.scale-95{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.scale-95{--tw-scale-x:.95;--tw-scale-y:.95}.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes ping{75%,to{transform:scale(2);opacity:0}}.animate-ping{animation:ping 1s cubic-bezier(0,0,.2,1) infinite}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}.list-disc{list-style-type:disc}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-6{grid-template-columns:repeat(6,minmax(0,1fr))}.flex-row-reverse{flex-direction:row-reverse}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.justify-around{justify-content:space-around}.gap-1{gap:.25rem}.gap-1\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-x-4{-moz-column-gap:1rem;column-gap:1rem}.gap-y-2{row-gap:.5rem}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.scroll-smooth{scroll-behavior:smooth}.whitespace-nowrap{white-space:nowrap}.rounded{border-radius:.25rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}.rounded-tl-none{border-top-left-radius:0}.rounded-tr-none{border-top-right-radius:0}.border{border-width:1px}.border-2{border-width:2px}.border-4{border-width:4px}.border-y{border-top-width:1px}.border-b,.border-y{border-bottom-width:1px}.border-t{border-top-width:1px}.border-amber-200{--tw-border-opacity:1;border-color:rgb(253 230 138/var(--tw-border-opacity,1))}.border-amber-300{--tw-border-opacity:1;border-color:rgb(252 211 77/var(--tw-border-opacity,1))}.border-amber-400{--tw-border-opacity:1;border-color:rgb(251 191 36/var(--tw-border-opacity,1))}.border-green-200{--tw-border-opacity:1;border-color:rgb(187 247 208/var(--tw-border-opacity,1))}.border-green-300{--tw-border-opacity:1;border-color:rgb(134 239 172/var(--tw-border-opacity,1))}.border-green-400{--tw-border-opacity:1;border-color:rgb(74 222 128/var(--tw-border-opacity,1))}.border-green-500{--tw-border-opacity:1;border-color:rgb(34 197 94/var(--tw-border-opacity,1))}.border-green-500\/50{border-color:rgba(34,197,94,.5)}.border-green-700{--tw-border-opacity:1;border-color:rgb(21 128 61/var(--tw-border-opacity,1))}.border-red-200{--tw-border-opacity:1;border-color:rgb(254 202 202/var(--tw-border-opacity,1))}.border-red-300{--tw-border-opacity:1;border-color:rgb(252 165 165/var(--tw-border-opacity,1))}.border-red-500{--tw-border-opacity:1;border-color:rgb(239 68 68/var(--tw-border-opacity,1))}.border-red-500\/50{border-color:rgba(239,68,68,.5)}.border-sky-100{--tw-border-opacity:1;border-color:rgb(224 242 254/var(--tw-border-opacity,1))}.border-sky-200{--tw-border-opacity:1;border-color:rgb(186 230 253/var(--tw-border-opacity,1))}.border-sky-300{--tw-border-opacity:1;border-color:rgb(125 211 252/var(--tw-border-opacity,1))}.border-sky-400\/50{border-color:rgba(56,189,248,.5)}.border-sky-500{--tw-border-opacity:1;border-color:rgb(14 165 233/var(--tw-border-opacity,1))}.border-sky-700{--tw-border-opacity:1;border-color:rgb(3 105 161/var(--tw-border-opacity,1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240/var(--tw-border-opacity,1))}.border-slate-300{--tw-border-opacity:1;border-color:rgb(203 213 225/var(--tw-border-opacity,1))}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105/var(--tw-border-opacity,1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85/var(--tw-border-opacity,1))}.border-transparent{border-color:transparent}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235/var(--tw-bg-opacity,1))}.bg-black\/75{background-color:rgba(0,0,0,.75)}.bg-green-50{--tw-bg-opacity:1;background-color:rgb(240 253 244/var(--tw-bg-opacity,1))}.bg-green-500{--tw-bg-opacity:1;background-color:rgb(34 197 94/var(--tw-bg-opacity,1))}.bg-green-500\/10{background-color:rgba(34,197,94,.1)}.bg-green-600{--tw-bg-opacity:1;background-color:rgb(22 163 74/var(--tw-bg-opacity,1))}.bg-green-900\/50{background-color:rgba(20,83,45,.5)}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229/var(--tw-bg-opacity,1))}.bg-red-400{--tw-bg-opacity:1;background-color:rgb(248 113 113/var(--tw-bg-opacity,1))}.bg-red-50{--tw-bg-opacity:1;background-color:rgb(254 242 242/var(--tw-bg-opacity,1))}.bg-red-500{--tw-bg-opacity:1;background-color:rgb(239 68 68/var(--tw-bg-opacity,1))}.bg-red-600{--tw-bg-opacity:1;background-color:rgb(220 38 38/var(--tw-bg-opacity,1))}.bg-sky-100{--tw-bg-opacity:1;background-color:rgb(224 242 254/var(--tw-bg-opacity,1))}.bg-sky-50{--tw-bg-opacity:1;background-color:rgb(240 249 255/var(--tw-bg-opacity,1))}.bg-sky-500{--tw-bg-opacity:1;background-color:rgb(14 165 233/var(--tw-bg-opacity,1))}.bg-sky-500\/10{background-color:rgba(14,165,233,.1)}.bg-sky-600{--tw-bg-opacity:1;background-color:rgb(2 132 199/var(--tw-bg-opacity,1))}.bg-sky-600\/20{background-color:rgba(2,132,199,.2)}.bg-sky-600\/90{background-color:rgba(2,132,199,.9)}.bg-sky-900\/60{background-color:rgba(12,74,110,.6)}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity,1))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240/var(--tw-bg-opacity,1))}.bg-slate-300{--tw-bg-opacity:1;background-color:rgb(203 213 225/var(--tw-bg-opacity,1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252/var(--tw-bg-opacity,1))}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85/var(--tw-bg-opacity,1))}.bg-slate-700\/80{background-color:rgba(51,65,85,.8)}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity,1))}.bg-slate-800\/90{background-color:rgba(30,41,59,.9)}.bg-slate-800\/95{background-color:rgba(30,41,59,.95)}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity,1))}.bg-slate-900\/75{background-color:rgba(15,23,42,.75)}.bg-slate-900\/80{background-color:rgba(15,23,42,.8)}.bg-slate-900\/90{background-color:rgba(15,23,42,.9)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23/var(--tw-bg-opacity,1))}.bg-slate-950\/80{background-color:rgba(2,6,23,.8)}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.bg-white\/95{background-color:hsla(0,0%,100%,.95)}.bg-\[radial-gradient\(ellipse_at_center\2c _var\(--tw-gradient-stops\)\)\]{background-image:radial-gradient(ellipse at center,var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right,var(--tw-gradient-stops))}.from-sky-400{--tw-gradient-from:#38bdf8 var(--tw-gradient-from-position);--tw-gradient-to:rgba(56,189,248,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-sky-600{--tw-gradient-from:#0284c7 var(--tw-gradient-from-position);--tw-gradient-to:rgba(2,132,199,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-slate-900{--tw-gradient-from:#0f172a var(--tw-gradient-from-position);--tw-gradient-to:rgba(15,23,42,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.via-slate-800{--tw-gradient-to:rgba(30,41,59,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#1e293b var(--tw-gradient-via-position),var(--tw-gradient-to)}.to-black{--tw-gradient-to:#000 var(--tw-gradient-to-position)}.to-indigo-700{--tw-gradient-to:#4338ca var(--tw-gradient-to-position)}.to-red-500{--tw-gradient-to:#ef4444 var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.p-2{padding:.5rem}.p-2\.5{padding:.625rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.\!py-3{padding-top:.75rem!important;padding-bottom:.75rem!important}.px-10{padding-left:2.5rem;padding-right:2.5rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-2\.5{padding-left:.625rem;padding-right:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-8{padding-left:2rem;padding-right:2rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-3\.5{padding-top:.875rem;padding-bottom:.875rem}.py-4{padding-top:1rem}.pb-4,.py-4{padding-bottom:1rem}.pl-3{padding-left:.75rem}.pl-5{padding-left:1.25rem}.pr-1{padding-right:.25rem}.pt-3{padding-top:.75rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.\!text-base{font-size:1rem!important;line-height:1.5rem!important}.text-2xl{font-size:1.5rem;line-height:2rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-5xl{font-size:3rem;line-height:1}.text-6xl{font-size:3.75rem;line-height:1}.text-7xl{font-size:4.5rem;line-height:1}.text-8xl{font-size:6rem;line-height:1}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-medium{font-weight:500}.italic{font-style:italic}.tabular-nums{--tw-numeric-spacing:tabular-nums;font-variant-numeric:var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction)}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-\[0\.3em\]{letter-spacing:.3em}.tracking-wider{letter-spacing:.05em}.tracking-widest{letter-spacing:.1em}.text-amber-300\/90{color:rgba(252,211,77,.9)}.text-amber-600{--tw-text-opacity:1;color:rgb(217 119 6/var(--tw-text-opacity,1))}.text-amber-700{--tw-text-opacity:1;color:rgb(180 83 9/var(--tw-text-opacity,1))}.text-amber-800{--tw-text-opacity:1;color:rgb(146 64 14/var(--tw-text-opacity,1))}.text-green-400{--tw-text-opacity:1;color:rgb(74 222 128/var(--tw-text-opacity,1))}.text-green-600{--tw-text-opacity:1;color:rgb(22 163 74/var(--tw-text-opacity,1))}.text-green-800{--tw-text-opacity:1;color:rgb(22 101 52/var(--tw-text-opacity,1))}.text-orange-600{--tw-text-opacity:1;color:rgb(234 88 12/var(--tw-text-opacity,1))}.text-red-300{--tw-text-opacity:1;color:rgb(252 165 165/var(--tw-text-opacity,1))}.text-red-300\/80{color:hsla(0,94%,82%,.8)}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113/var(--tw-text-opacity,1))}.text-red-600{--tw-text-opacity:1;color:rgb(220 38 38/var(--tw-text-opacity,1))}.text-red-700{--tw-text-opacity:1;color:rgb(185 28 28/var(--tw-text-opacity,1))}.text-red-800{--tw-text-opacity:1;color:rgb(153 27 27/var(--tw-text-opacity,1))}.text-sky-100{--tw-text-opacity:1;color:rgb(224 242 254/var(--tw-text-opacity,1))}.text-sky-100\/90{color:rgba(224,242,254,.9)}.text-sky-300{--tw-text-opacity:1;color:rgb(125 211 252/var(--tw-text-opacity,1))}.text-sky-700{--tw-text-opacity:1;color:rgb(3 105 161/var(--tw-text-opacity,1))}.text-sky-800{--tw-text-opacity:1;color:rgb(7 89 133/var(--tw-text-opacity,1))}.text-sky-900{--tw-text-opacity:1;color:rgb(12 74 110/var(--tw-text-opacity,1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240/var(--tw-text-opacity,1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity,1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity,1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59/var(--tw-text-opacity,1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.opacity-0{opacity:0}.opacity-40{opacity:.4}.opacity-75{opacity:.75}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color)}.shadow-2xl,.shadow-\[0_0_15px_rgba\(2\2c 132\2c 199\2c 0\.4\)\]{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_15px_rgba\(2\2c 132\2c 199\2c 0\.4\)\]{--tw-shadow:0 0 15px rgba(2,132,199,.4);--tw-shadow-colored:0 0 15px var(--tw-shadow-color)}.shadow-\[0_0_20px_rgba\(2\2c 132\2c 199\2c 0\.5\)\]{--tw-shadow:0 0 20px rgba(2,132,199,.5);--tw-shadow-colored:0 0 20px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_20px_rgba\(2\2c 132\2c 199\2c 0\.6\)\]{--tw-shadow:0 0 20px rgba(2,132,199,.6);--tw-shadow-colored:0 0 20px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_20px_rgba\(239\2c 68\2c 68\2c 0\.5\)\]{--tw-shadow:0 0 20px rgba(239,68,68,.5);--tw-shadow-colored:0 0 20px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_20px_rgba\(239\2c 68\2c 68\2c 0\.6\)\]{--tw-shadow:0 0 20px rgba(239,68,68,.6);--tw-shadow-colored:0 0 20px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_20px_rgba\(34\2c 197\2c 94\2c 0\.5\)\]{--tw-shadow:0 0 20px rgba(34,197,94,.5);--tw-shadow-colored:0 0 20px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_30px_rgba\(34\2c 197\2c 94\2c 0\.6\)\]{--tw-shadow:0 0 30px rgba(34,197,94,.6);--tw-shadow-colored:0 0 30px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_40px_rgba\(0\2c 0\2c 0\2c 0\.5\)\]{--tw-shadow:0 0 40px rgba(0,0,0,.5);--tw-shadow-colored:0 0 40px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_50px_rgba\(0\2c 0\2c 0\2c 0\.8\)\]{--tw-shadow:0 0 50px rgba(0,0,0,.8);--tw-shadow-colored:0 0 50px var(--tw-shadow-color)}.shadow-\[0_0_50px_rgba\(0\2c 0\2c 0\2c 0\.8\)\],.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-md{--tw-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color),0 2px 4px -2px var(--tw-shadow-color)}.shadow-md,.shadow-xl{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 8px 10px -6px var(--tw-shadow-color)}.outline-none{outline:2px solid transparent;outline-offset:2px}.ring{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color)}.ring,.ring-2{box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.ring-2{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color)}.ring-sky-200{--tw-ring-opacity:1;--tw-ring-color:rgb(186 230 253/var(--tw-ring-opacity,1))}.ring-sky-300{--tw-ring-opacity:1;--tw-ring-color:rgb(125 211 252/var(--tw-ring-opacity,1))}.blur-3xl{--tw-blur:blur(64px)}.blur-3xl,.blur-\[100px\]{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.blur-\[100px\]{--tw-blur:blur(100px)}.drop-shadow-\[0_0_20px_rgba\(56\2c 189\2c 248\2c 0\.8\)\]{--tw-drop-shadow:drop-shadow(0 0 20px rgba(56,189,248,.8))}.drop-shadow-\[0_0_20px_rgba\(56\2c 189\2c 248\2c 0\.8\)\],.drop-shadow-\[0_0_25px_rgba\(239\2c 68\2c 68\2c 0\.8\)\]{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.drop-shadow-\[0_0_25px_rgba\(239\2c 68\2c 68\2c 0\.8\)\]{--tw-drop-shadow:drop-shadow(0 0 25px rgba(239,68,68,.8))}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur{--tw-backdrop-blur:blur(8px)}.backdrop-blur,.backdrop-blur-md{-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-300{transition-duration:.3s}.duration-700{transition-duration:.7s}.hover\:scale-105:hover{--tw-scale-x:1.05;--tw-scale-y:1.05}.hover\:scale-105:hover,.hover\:scale-110:hover{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:scale-110:hover{--tw-scale-x:1.1;--tw-scale-y:1.1}.hover\:border-red-300:hover{--tw-border-opacity:1;border-color:rgb(252 165 165/var(--tw-border-opacity,1))}.hover\:bg-green-500:hover{--tw-bg-opacity:1;background-color:rgb(34 197 94/var(--tw-bg-opacity,1))}.hover\:bg-indigo-600\/80:hover{background-color:rgba(79,70,229,.8)}.hover\:bg-indigo-700:hover{--tw-bg-opacity:1;background-color:rgb(67 56 202/var(--tw-bg-opacity,1))}.hover\:bg-red-500:hover{--tw-bg-opacity:1;background-color:rgb(239 68 68/var(--tw-bg-opacity,1))}.hover\:bg-red-600\/80:hover{background-color:rgba(220,38,38,.8)}.hover\:bg-red-700:hover{--tw-bg-opacity:1;background-color:rgb(185 28 28/var(--tw-bg-opacity,1))}.hover\:bg-sky-500:hover{--tw-bg-opacity:1;background-color:rgb(14 165 233/var(--tw-bg-opacity,1))}.hover\:bg-sky-600\/80:hover{background-color:rgba(2,132,199,.8)}.hover\:bg-sky-700:hover{--tw-bg-opacity:1;background-color:rgb(3 105 161/var(--tw-bg-opacity,1))}.hover\:bg-slate-300:hover{--tw-bg-opacity:1;background-color:rgb(203 213 225/var(--tw-bg-opacity,1))}.hover\:bg-slate-600:hover{--tw-bg-opacity:1;background-color:rgb(71 85 105/var(--tw-bg-opacity,1))}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85/var(--tw-bg-opacity,1))}.hover\:bg-slate-800:hover{--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity,1))}.hover\:text-amber-700:hover{--tw-text-opacity:1;color:rgb(180 83 9/var(--tw-text-opacity,1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.focus\:border-sky-400:focus{--tw-border-opacity:1;border-color:rgb(56 189 248/var(--tw-border-opacity,1))}.active\:scale-95:active{--tw-scale-x:.95;--tw-scale-y:.95;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.active\:bg-amber-100:active{--tw-bg-opacity:1;background-color:rgb(254 243 199/var(--tw-bg-opacity,1))}.active\:bg-sky-100:active{--tw-bg-opacity:1;background-color:rgb(224 242 254/var(--tw-bg-opacity,1))}.active\:bg-sky-700:active{--tw-bg-opacity:1;background-color:rgb(3 105 161/var(--tw-bg-opacity,1))}.active\:bg-slate-400:active{--tw-bg-opacity:1;background-color:rgb(148 163 184/var(--tw-bg-opacity,1))}.disabled\:bg-slate-300:disabled{--tw-bg-opacity:1;background-color:rgb(203 213 225/var(--tw-bg-opacity,1))}.disabled\:bg-slate-600:disabled{--tw-bg-opacity:1;background-color:rgb(71 85 105/var(--tw-bg-opacity,1))}.disabled\:text-slate-500:disabled{--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity,1))}.disabled\:opacity-40:disabled{opacity:.4}@media not all and (min-width:768px){.max-md\:\!hidden{display:none!important}.max-md\:hidden{display:none}}@media (min-width:768px){.md\:left-3{left:.75rem}.md\:top-14{top:3.5rem}.md\:hidden{display:none}.md\:h-full{height:100%}.md\:w-2\/5{width:40%}.md\:w-3\/5{width:60%}.md\:w-auto{width:auto}.md\:max-w-\[65\%\]{max-width:65%}.md\:flex-row{flex-direction:row}.md\:border-b-0{border-bottom-width:0}.md\:border-r{border-right-width:1px}.md\:p-10{padding:2.5rem}.md\:p-4{padding:1rem}.md\:p-8{padding:2rem}.md\:px-3{padding-left:.75rem;padding-right:.75rem}.md\:py-2{padding-top:.5rem;padding-bottom:.5rem}.md\:py-5{padding-top:1.25rem;padding-bottom:1.25rem}.md\:text-2xl{font-size:1.5rem;line-height:2rem}.md\:text-3xl{font-size:1.875rem;line-height:2.25rem}.md\:text-6xl{font-size:3.75rem;line-height:1}.md\:text-\[11px\]{font-size:11px}.md\:text-base{font-size:1rem;line-height:1.5rem}.md\:text-lg{font-size:1.125rem;line-height:1.75rem}.md\:text-sm{font-size:.875rem;line-height:1.25rem}.md\:text-xl{font-size:1.25rem;line-height:1.75rem}.md\:text-xs{font-size:.75rem;line-height:1rem}}</style>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']] },
+    svg: { fontCache: 'global' },
+    startup: { typeset: false }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  html { touch-action: manipulation; -webkit-text-size-adjust: 100%; }
+  html, body { overscroll-behavior: none; }
+  body { font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', system-ui, sans-serif; height: 100vh; height: 100dvh; }
+  button { -webkit-tap-highlight-color: transparent; }
+  #radar { touch-action: none; }
+  #stage, #keypad, .kp-field, .opt-btn, .menu-btn { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+  #tasks { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+
+  /* 安全區（瀏海、Home 鍵橫條） */
+  .screen-pad { padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right));
+                padding-top: max(1rem, env(safe-area-inset-top)); padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
+  #stage-tools { top: max(.75rem, env(safe-area-inset-top)); left: max(.75rem, env(safe-area-inset-left)); }
+  #keypad { padding-bottom: max(.5rem, env(safe-area-inset-bottom)); }
+
+  /* 手機直向：上雷達、下任務 */
+  @media (max-width: 767px) {
+    #stage { height: 42vh; height: 42dvh; }
+    #status-box { top: max(.75rem, env(safe-area-inset-top)); right: max(.75rem, env(safe-area-inset-right)); }
+    .kp-dup { display: none; }
+    #legend { font-size: 10px; padding: .2rem .45rem; line-height: 1.35; }
+    /* 第一關：點選題雷達最大；輸入題留空間給數字鍵盤 */
+    #main-app[data-lv="tap"] #stage { height: 60vh; height: 60dvh; }
+    #main-app[data-lv="read"] #stage, #main-app[data-lv="l2"] #stage { height: 50vh; height: 50dvh; }
+  }
+  @media (max-width: 767px) and (max-height: 700px) {
+    #stage { height: 38vh; height: 38dvh; }
+    #main-app[data-lv="tap"] #stage { height: 57vh; height: 57dvh; }
+    #main-app[data-lv="read"] #stage, #main-app[data-lv="l2"] #stage { height: 42vh; height: 42dvh; }
+    #main-app[data-lv="tap"] #panel-head, #main-app[data-lv="read"] #panel-head, #main-app[data-lv="l2"] #panel-head { display: none; }
+    .kp-key { min-height: 38px; }
+  }
+  /* 手機橫向：左雷達、右任務 */
+  @media (orientation: landscape) and (max-height: 520px) {
+    #main-app { flex-direction: row; }
+    #stage { width: 56%; height: 100%; border-bottom: 0; border-right: 1px solid #334155; }
+    #panel { width: 44%; height: 100%; flex: none; }
+    #panel-head { padding-top: .5rem; padding-bottom: .5rem; }
+    #panel-head h1 { font-size: 1rem; }
+    .kp-key { min-height: 34px; }
+    #keypad { gap: .25rem; padding-top: .35rem; }
+  }
+  mjx-container { display: inline-block; margin: 0 !important; }
+  .fade-out { opacity: 0 !important; pointer-events: none; transition: opacity .5s ease; }
+  .screen { transition: opacity .5s ease; }
+
+  @keyframes vibrate-phone {
+    0% { transform: translate(2px, 2px) rotate(0deg); }
+    20% { transform: translate(-4px, 0) rotate(2deg); }
+    40% { transform: translate(2px, -2px) rotate(2deg); }
+    60% { transform: translate(-4px, 2px) rotate(0deg); }
+    80% { transform: translate(-2px, -2px) rotate(2deg); }
+    100% { transform: translate(2px, -3px) rotate(-2deg); }
+  }
+  .vibrate { animation: vibrate-phone .1s infinite; }
+
+  @keyframes chatPopUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  .chat-bubble { opacity: 0; animation: chatPopUp .6s cubic-bezier(.175,.885,.32,1.275) forwards; }
+
+  @keyframes spin-slow { to { transform: rotate(-360deg); } }
+  .spin-slow { animation: spin-slow 6s linear infinite; display: inline-block; }
+
+  @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+  .shake { animation: shake .3s ease 2; }
+
+  .kp-key { min-height: 42px; }
+  .opt-btn mjx-container { pointer-events: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vibrate, .spin-slow, .animate-pulse, .animate-ping { animation: none !important; }
+    .chat-bubble { animation: none !important; opacity: 1 !important; }
+  }
+</style>
+</head>
+<body class="h-[100dvh] w-full overflow-hidden bg-slate-900">
+
+<!-- ==================== 登入 ==================== -->
+<div id="login-screen" class="screen screen-pad fixed inset-0 z-[65] flex flex-col items-center justify-center overflow-y-auto text-white bg-slate-900 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900 via-slate-800 to-black">
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] bg-sky-600/20 rounded-full blur-[100px] pointer-events-none"></div>
+  <div class="relative z-10 w-full max-w-sm">
+    <div class="text-center mb-8">
+      <div class="text-6xl mb-3 drop-shadow-[0_0_20px_rgba(56,189,248,0.8)]"><span class="spin-slow">🌀</span></div>
+      <h1 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-red-500 tracking-widest">颱風危機</h1>
+      <p class="text-slate-400 text-sm mt-2 tracking-widest">指揮中心身分驗證</p>
+    </div>
+    <div id="login-box" class="bg-slate-800/90 border border-slate-600 rounded-3xl p-6 shadow-2xl">
+      <label class="block text-sm text-slate-300 mb-1" for="login-account">帳號</label>
+      <input id="login-account" type="text" autocomplete="username" autocapitalize="off" spellcheck="false"
+        class="w-full bg-slate-900 border-2 border-slate-600 focus:border-sky-400 rounded-xl px-4 py-3 text-lg font-bold outline-none mb-4">
+      <label class="block text-sm text-slate-300 mb-1" for="login-password">密碼</label>
+      <input id="login-password" type="password" autocomplete="current-password"
+        class="w-full bg-slate-900 border-2 border-slate-600 focus:border-sky-400 rounded-xl px-4 py-3 text-lg font-bold outline-none">
+      <p id="login-err" class="hidden text-red-400 text-sm mt-3"></p>
+      <button id="btn-login" class="w-full mt-5 bg-sky-600 hover:bg-sky-500 disabled:bg-slate-600 text-white font-bold py-3.5 rounded-xl text-lg shadow-[0_0_20px_rgba(2,132,199,0.5)]">登入</button>
+      <p id="login-status" class="text-center text-xs text-slate-400 mt-3"></p>
+    </div>
+    <p id="demo-badge" class="hidden text-center text-xs text-amber-300/90 mt-4 leading-relaxed">示範模式：帳號寫在 config.js，紀錄只存在這台裝置。</p>
+  </div>
+</div>
+
+<!-- ==================== 首頁 ==================== -->
+<div id="title-screen" class="screen screen-pad hidden fixed inset-0 z-[60] flex flex-col items-center justify-center overflow-y-auto text-white bg-slate-900 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900 via-slate-800 to-black">
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] bg-sky-600/20 rounded-full blur-[100px] pointer-events-none"></div>
+  <div id="user-chip" class="absolute z-20 flex items-center gap-2 bg-slate-800/90 border border-slate-600 rounded-full pl-3 pr-1 py-1 text-sm text-slate-200" style="top:max(1rem,env(safe-area-inset-top));right:max(1rem,env(safe-area-inset-right))">
+    👷 工程師 <b id="user-seat" class="text-sky-300"></b> 號
+    <button id="btn-logout" class="ml-1 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-bold px-3 py-1.5 rounded-full">登出</button>
+  </div>
+  <div class="relative z-10 flex flex-col items-center w-full max-w-sm">
+    <div class="text-7xl mb-6 drop-shadow-[0_0_20px_rgba(56,189,248,0.8)]"><span class="spin-slow">🌀</span></div>
+    <h1 class="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-red-500 mb-4 text-center tracking-widest whitespace-nowrap">颱風危機</h1>
+    <h2 class="text-lg md:text-xl font-bold text-slate-300 mb-12 tracking-widest text-center">極坐標定位與轉換</h2>
+    <button id="btn-start" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-bold py-4 rounded-2xl text-2xl shadow-[0_0_20px_rgba(2,132,199,0.6)] transition-transform hover:scale-105 active:scale-95 mb-6 border border-sky-400/50 flex items-center justify-center gap-3">
+      開始遊戲
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    </button>
+    <div class="relative w-full flex flex-col items-center">
+      <button id="btn-toggle-menu" class="text-slate-400 hover:text-white text-sm flex items-center gap-2 transition-colors py-2 px-4 rounded-lg hover:bg-slate-800">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        目錄：選擇關卡
+      </button>
+      <div id="level-menu" class="hidden flex-col gap-2 w-full mt-3 bg-slate-800/95 backdrop-blur rounded-xl p-3 border border-slate-600 shadow-2xl">
+        <button data-level="1" class="menu-btn w-full text-left px-5 py-4 rounded-lg bg-slate-700/80 hover:bg-sky-600/80 text-white font-bold transition-all flex items-center gap-3"><span class="text-lg">1️⃣</span>第一關：颱風定位</button>
+        <button data-level="2" class="menu-btn w-full text-left px-5 py-4 rounded-lg bg-slate-700/80 hover:bg-indigo-600/80 text-white font-bold transition-all flex items-center gap-3"><span class="text-lg">2️⃣</span>第二關：坐標翻譯機</button>
+        <button data-level="3" class="menu-btn w-full text-left px-5 py-4 rounded-lg bg-slate-700/80 hover:bg-red-600/80 text-white font-bold transition-all flex items-center gap-3"><span class="text-lg">3️⃣</span>第三關：象限挑戰（限時）</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 關卡授權碼 ==================== -->
+<div id="code-modal" class="screen hidden fixed inset-0 z-[70] items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+  <div id="code-box" class="bg-slate-800 border border-slate-600 rounded-3xl p-6 md:p-8 max-w-sm w-full text-white shadow-2xl">
+    <div class="flex items-center gap-3 mb-4 border-b border-slate-700 pb-4">
+      <span class="text-2xl">🔐</span>
+      <h3 class="text-green-400 font-bold text-lg tracking-wider">指揮中心授權</h3>
+    </div>
+    <p id="code-desc" class="text-slate-300 text-sm mb-4">請輸入老師公布的授權碼</p>
+    <input id="code-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="授權碼"
+      class="w-full bg-slate-900 border-2 border-slate-600 focus:border-sky-400 rounded-xl px-4 py-3 text-2xl text-center tracking-[0.3em] font-bold outline-none">
+    <p id="code-err" class="hidden text-red-400 text-sm mt-2 text-center">授權碼不正確，請再確認一次。</p>
+    <div class="flex gap-3 mt-6">
+      <button id="code-cancel" class="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold py-3 rounded-xl">返回</button>
+      <button id="code-ok" class="flex-1 bg-sky-600 hover:bg-sky-500 text-white font-bold py-3 rounded-xl shadow-[0_0_15px_rgba(2,132,199,0.4)]">驗證並進入</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 任務通訊（每關開場） ==================== -->
+<div id="comm-screen" class="screen screen-pad hidden fixed inset-0 z-50 flex-col items-center text-white overflow-y-auto bg-slate-900 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900 via-slate-800 to-black">
+  <div id="comm-ring" class="hidden text-center max-w-sm mx-auto flex-col items-center justify-center my-auto">
+    <div class="relative mb-8">
+      <div class="text-8xl vibrate drop-shadow-[0_0_25px_rgba(239,68,68,0.8)] relative z-10">📱</div>
+      <div class="absolute inset-0 bg-red-500 rounded-full blur-3xl opacity-40 animate-pulse"></div>
+    </div>
+    <h2 class="text-red-400 font-bold tracking-widest text-xl mb-3 animate-pulse border-y border-red-500/50 py-2 w-full">⚠️ 颱風緊急來電</h2>
+    <p class="text-slate-400 text-sm mb-12">颱風逼近東部海面，請立即接聽獲取任務簡報</p>
+    <button id="btn-answer" class="relative group flex items-center justify-center w-20 h-20 bg-green-500 rounded-full text-4xl shadow-[0_0_30px_rgba(34,197,94,0.6)] transition-transform hover:scale-110 active:scale-95" aria-label="接聽">
+      <span class="relative z-10">📞</span>
+      <span class="absolute inset-0 rounded-full border-4 border-green-400 animate-ping opacity-75"></span>
+    </button>
+    <p class="text-green-400 font-bold text-sm mt-4 tracking-widest">點擊接聽通訊</p>
+  </div>
+
+  <div id="comm-chat" class="hidden relative text-left max-w-2xl w-full mx-auto my-auto bg-slate-800/90 backdrop-blur-md p-5 md:p-10 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.8)] border border-slate-600 overflow-hidden">
+    <div class="absolute top-0 right-0 w-32 h-32 bg-sky-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+    <div id="comm-overlay" class="hidden absolute inset-0 flex-col items-center justify-center bg-black/75 backdrop-blur-sm z-20 transition-opacity duration-700 text-center p-6"></div>
+    <div class="flex items-center justify-between border-b border-slate-600 pb-4 mb-6 gap-3">
+      <h2 id="comm-title" class="text-lg md:text-2xl font-bold flex items-center gap-3"></h2>
+      <span class="text-xs font-mono text-slate-400 bg-slate-900 px-2 py-1 rounded shrink-0">REC 🔴</span>
+    </div>
+    <div id="comm-bubbles" class="space-y-5 mb-6 relative z-10 text-sm md:text-base font-medium"></div>
+    <div id="comm-btn-wrap" class="chat-bubble flex justify-center mt-6">
+      <button id="comm-btn" class="text-white font-bold py-3 px-10 rounded-xl text-lg transition-all flex items-center gap-2 hover:scale-105 active:scale-95 w-full md:w-auto justify-center"></button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 任務間緊急通訊 ==================== -->
+<div id="mission-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm transition-opacity duration-300 opacity-0">
+  <div id="mission-modal-content" class="bg-slate-800 border border-slate-600 p-6 md:p-8 rounded-3xl shadow-[0_0_40px_rgba(0,0,0,0.5)] max-w-lg w-full scale-95 transition-transform duration-300 text-white">
+    <div class="flex items-center gap-3 mb-6 border-b border-slate-700 pb-4">
+      <span class="relative flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span></span>
+      <h3 id="mm-title" class="text-green-400 font-bold text-lg tracking-wider flex-grow">緊急通訊接收中</h3>
+      <span class="text-xs font-mono text-slate-400 bg-slate-900 px-2 py-1 rounded">REC 🔴</span>
+    </div>
+    <div id="mm-chat" class="space-y-4 mb-8 text-sm md:text-base"></div>
+    <button id="mm-btn" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-bold py-3.5 rounded-xl text-lg transition-transform hover:scale-105 active:scale-95 shadow-[0_0_15px_rgba(2,132,199,0.4)]">收到，立即執行</button>
+  </div>
+</div>
+
+<!-- ==================== 主程式 ==================== -->
+<div id="main-app" class="screen hidden fixed inset-0 z-10 flex-col md:flex-row bg-slate-100 text-slate-800">
+  <!-- 左側：雷達 -->
+  <div id="stage" class="relative w-full md:w-3/5 md:h-full shrink-0 bg-slate-950 border-b md:border-b-0 md:border-r border-slate-700 overflow-hidden">
+    <canvas id="radar" class="absolute inset-0 w-full h-full"></canvas>
+    <div id="stage-tools" class="absolute flex gap-2 z-20">
+      <button id="btn-home" class="bg-slate-800/90 hover:bg-slate-700 text-white px-3 py-1.5 rounded-lg text-sm font-bold shadow-lg">🏠 首頁</button>
+      <button id="btn-restart" class="bg-sky-600/90 hover:bg-sky-700 text-white px-3 py-1.5 rounded-lg text-sm font-bold shadow-lg">↻ <span class="max-md:hidden">重新開始本關</span><span class="md:hidden">重來</span></button>
+    </div>
+    <div id="status-box" class="absolute md:top-14 md:left-3 bg-white/95 backdrop-blur-md px-2.5 py-1.5 md:px-3 md:py-2 rounded-xl shadow-xl border-2 border-transparent z-10 pointer-events-none max-w-[46%] md:max-w-[65%] transition-colors">
+      <div class="text-[10px] md:text-[11px] text-slate-500 font-bold mb-0.5">雷達系統</div>
+      <div id="status-text" class="font-bold text-sm md:text-lg leading-tight">系統啟動中</div>
+    </div>
+    <div id="stage-timer" class="hidden max-md:!hidden absolute top-3 right-3 z-20 bg-slate-900/90 border-2 border-red-500 text-red-300 font-black text-2xl px-4 py-1 rounded-xl tabular-nums shadow-[0_0_20px_rgba(239,68,68,0.5)]">3:00</div>
+    <div id="legend" class="absolute bottom-3 left-3 z-10 text-[11px] md:text-xs text-sky-100/90 bg-slate-900/75 px-2.5 py-1.5 rounded-lg leading-relaxed pointer-events-none"></div>
+  </div>
+
+  <!-- 右側：任務面板 -->
+  <div id="panel" class="w-full md:w-2/5 flex-1 md:h-full min-h-0 bg-white flex flex-col shadow-2xl relative z-10">
+    <div id="panel-head" class="bg-gradient-to-r from-sky-600 to-indigo-700 text-white px-5 py-2.5 md:py-5 shrink-0">
+      <h1 id="panel-title" class="text-base md:text-xl font-bold"></h1>
+      <p id="panel-sub" class="max-md:hidden text-xs md:text-sm text-sky-100"></p>
+    </div>
+    <div id="panel-data" class="px-4 pt-3 shrink-0"></div>
+    <div id="tasks" class="px-4 py-3 space-y-4 overflow-y-auto flex-1 min-h-0 scroll-smooth"></div>
+    <div id="keypad" class="hidden shrink-0 border-t border-slate-200 bg-slate-100 p-2 grid grid-cols-6 gap-1.5"></div>
+  </div>
+</div>
+
+<!-- ==================== 任務完成 ==================== -->
+<div id="outro-screen" class="screen screen-pad hidden fixed inset-0 z-50 flex-col items-center text-white overflow-y-auto bg-slate-900 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900 via-slate-800 to-black">
+  <div class="text-left max-w-2xl w-full mx-auto my-auto bg-slate-800/90 backdrop-blur-md p-5 md:p-10 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.8)] border border-green-500/50 relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-32 h-32 bg-green-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+    <div class="flex items-center justify-between border-b border-slate-600 pb-4 mb-6 gap-3 relative z-10">
+      <h2 class="text-lg md:text-2xl font-bold text-green-400 flex items-center gap-3">
+        <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span id="outro-title"></span>
+      </h2>
+      <span id="outro-tag" class="text-xs font-mono text-green-400 bg-green-900/50 px-2 py-1 rounded border border-green-700 shrink-0"></span>
+    </div>
+    <div id="outro-bubbles" class="space-y-5 mb-6 relative z-10 text-sm md:text-base font-medium"></div>
+    <div id="outro-btns" class="chat-bubble flex flex-col md:flex-row justify-center items-center gap-4 mt-6 relative z-10"></div>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script>
+/* =========================================================
+   設定：老師請改 config.js，不用改這個檔案
+   ========================================================= */
+const DEFAULTS = {
+  supabaseUrl: '', supabaseKey: '',
+  level3Seconds: 180,
+  revealLevel3AnswersAfterSubmit: false,
+  demo: { codes: { 1: '1111', 2: '2222', 3: '3333' }, accounts: [{ account: 'demo', password: '1234', seat: 1, name: '示範工程師' }] }
+};
+const CONFIG = Object.assign({}, DEFAULTS, window.GAME_CONFIG || {});
+CONFIG.demo = Object.assign({}, DEFAULTS.demo, CONFIG.demo || {});
+const ONLINE = !!(CONFIG.supabaseUrl && CONFIG.supabaseKey);
+
+/* 瀏覽器儲存（登入狀態、第三關作答進度） */
+const store = {
+  get(k) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+  del(k) { try { localStorage.removeItem(k); } catch (e) {} }
+};
+
+/* 連線版：Supabase（帳號、授權碼、計時、計分都在伺服器） */
+const RemoteAPI = {
+  async rpc(name, body) {
+    const headers = { 'Content-Type': 'application/json', apikey: CONFIG.supabaseKey };
+    if (CONFIG.supabaseKey.startsWith('eyJ')) headers.Authorization = 'Bearer ' + CONFIG.supabaseKey;
+    const res = await fetch(CONFIG.supabaseUrl.replace(/\/+$/, '') + '/rest/v1/rpc/' + name, { method: 'POST', headers, body: JSON.stringify(body) });
+    if (!res.ok) throw new Error(res.status + ' ' + await res.text());
+    return res.json();
+  },
+  token() { return store.get('typhoon.token'); },
+  async login(account, password) {
+    const r = await this.rpc('game_login', { p_account: account, p_password: password });
+    if (!r || !r.ok) return { ok: false };
+    store.set('typhoon.token', r.token);
+    return this.me();
+  },
+  async me() {
+    const t = this.token();
+    if (!t) return { ok: false };
+    const r = await this.rpc('game_me', { p_token: t });
+    if (!r || !r.ok) store.del('typhoon.token');
+    return r;
+  },
+  async logout() { store.del('typhoon.token'); },
+  unlock(level, code) { return this.rpc('game_unlock', { p_token: this.token(), p_level: level, p_code: code }); },
+  log(e) {
+    return this.rpc('game_log', { p_token: this.token(), p_level: e.level, p_item: String(e.item), p_answer: e.answer == null ? null : e.answer,
+      p_correct: !!e.correct, p_tag: e.tag || null, p_attempt: e.attempt || null });
+  },
+  l3Start() { return this.rpc('game_l3_start', { p_token: this.token() }); },
+  l3Submit(answers, auto) { return this.rpc('game_l3_submit', { p_token: this.token(), p_answers: answers, p_auto: !!auto }); }
+};
+
+/* 示範版：帳號與授權碼寫在 config.js，紀錄只存在這台裝置 */
+const LocalAPI = {
+  data() { return store.get('typhoon.demo') || { session: null, users: {} }; },
+  save(d) { store.set('typhoon.demo', d); },
+  acc(name) { return CONFIG.demo.accounts.find(a => String(a.account).toLowerCase() === String(name).trim().toLowerCase()); },
+  user(d) { const a = d.session; d.users[a] = d.users[a] || { unlocked: [], l3: null }; return d.users[a]; },
+  async login(account, password) {
+    const a = this.acc(account);
+    if (!a || String(a.password) !== String(password)) return { ok: false };
+    const d = this.data(); d.session = a.account; this.user(d); this.save(d);
+    return this.me();
+  },
+  async me() {
+    const d = this.data(); if (!d.session) return { ok: false };
+    const a = this.acc(d.session); if (!a) return { ok: false };
+    const u = this.user(d);
+    return { ok: true, account: a.account, seat: a.seat, name: a.name, unlocked: u.unlocked, l3: u.l3,
+      server_now: new Date().toISOString(), time_limit: CONFIG.level3Seconds };
+  },
+  async logout() { const d = this.data(); d.session = null; this.save(d); },
+  async unlock(level, code) {
+    const ok = String(CONFIG.demo.codes[level] || '').toLowerCase() === String(code).trim().toLowerCase();
+    if (ok) { const d = this.data(); const u = this.user(d); if (!u.unlocked.includes(level)) u.unlocked.push(level); this.save(d); }
+    return { ok };
+  },
+  async log() { return { ok: true }; },
+  async l3Start() {
+    const d = this.data(), u = this.user(d);
+    if (!u.unlocked.includes(3)) return { ok: false, reason: 'locked' };
+    if (!u.l3) { u.l3 = { started_at: new Date().toISOString(), submitted: false }; this.save(d); }
+    return { ok: true, started_at: u.l3.started_at, server_now: new Date().toISOString(), submitted: u.l3.submitted, score: u.l3.score, used_seconds: u.l3.used_seconds };
+  },
+  async l3Submit(answers, auto) {
+    const d = this.data(), u = this.user(d);
+    if (!u.l3) return { ok: false, reason: 'not_started' };
+    if (!u.l3.submitted) {
+      const used = Math.min((Date.now() - new Date(u.l3.started_at).getTime()) / 1000, CONFIG.level3Seconds);
+      Object.assign(u.l3, { submitted: true, score: answers.filter(a => a === 0).length, used_seconds: Math.round(used * 10) / 10, auto: !!auto });
+      this.save(d);
+    }
+    return { ok: true, score: u.l3.score, used_seconds: u.l3.used_seconds };
+  }
+};
+const API = ONLINE ? RemoteAPI : LocalAPI;
+
+/* 作答紀錄：送到資料庫；暫時連不上時先排隊，下一次再補送 */
+const GAME_LOG = [];
+const pendingLogs = [];
+function report(evt) {
+  evt.ts = new Date().toISOString();
+  GAME_LOG.push(evt);
+  console.log('[作答紀錄]', evt);
+  if (evt.type || evt.level == null || evt.item == null) return;
+  pendingLogs.push(evt);
+  flushLogs();
+}
+let flushing = false;
+async function flushLogs() {
+  if (flushing) return; flushing = true;
+  try {
+    while (pendingLogs.length) { await API.log(pendingLogs[0]); pendingLogs.shift(); }
+  } catch (e) { setTimeout(flushLogs, 5000); }
+  finally { flushing = false; }
+}
+
+/* ---------- 共用工具 ---------- */
+const $ = id => document.getElementById(id);
+const R = String.raw;
+const M = tex => '\\(' + tex + '\\)';
+const mod360 = a => ((a % 360) + 360) % 360;
+const near = (a, b, tol = 0.05) => Math.abs(a - b) <= tol;
+const SQ3 = Math.sqrt(3), SQ2 = Math.sqrt(2);
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function typeset(el) {
+  const mj = window.MathJax;
+  if (!mj || !mj.startup || !mj.startup.promise) { setTimeout(() => typeset(el), 300); return; }
+  mj.startup.promise.then(() => mj.typesetPromise([el])).catch(() => {});
+}
+
+function parseVal(s) {
+  if (!s) return NaN;
+  s = s.replace(/−/g, '-').replace(/\s/g, '');
+  const m = s.match(/^([+-]?)(\d+(?:\.\d+)?|\.\d+)?(√(\d+(?:\.\d+)?))?$/);
+  if (!m || (!m[2] && !m[3])) return NaN;
+  const sign = m[1] === '-' ? -1 : 1;
+  const coef = m[2] ? parseFloat(m[2]) : 1;
+  const root = m[3] ? Math.sqrt(parseFloat(m[4])) : 1;
+  return sign * coef * root;
+}
+
+function fmtTime(ms) {
+  const s = Math.max(0, Math.ceil(ms / 1000));
+  return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+}
+
+const ICON_PHONE = '<svg class="w-6 h-6 animate-pulse shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>';
+const ICON_WARN = '<svg class="w-6 h-6 animate-pulse shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>';
+const ICON_BOLT = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>';
+
+/* ---------- 人員與對話 ---------- */
+const SPEAKERS = {
+  cmd:   { name: '指揮官 簡大哥', emoji: '👮‍♂️', right: false },
+  intel: { name: '情報官 阿程',   emoji: '👩‍💻', right: true }
+};
+
+function bubble(msg, delay) {
+  const s = SPEAKERS[msg.who];
+  const style = delay != null ? `style="animation-delay:${delay}s"` : '';
+  const avatar = `<div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-xl shadow-lg shrink-0 border-2 ${s.right ? 'border-sky-500' : 'border-red-500'} ${msg.cont ? 'opacity-0' : ''}">${msg.cont ? '' : s.emoji}</div>`;
+  const nameLine = msg.cont ? '' : `<p class="${s.right ? 'text-sky-300 text-right' : 'text-red-400'} font-bold mb-1 text-xs tracking-wider">${s.name}</p>`;
+  const box = s.right ? 'bg-sky-900/60 border-sky-700 rounded-tr-none' : 'bg-slate-700/80 border-slate-600 rounded-tl-none';
+  return `<div class="chat-bubble flex items-start gap-3 ${s.right ? 'flex-row-reverse' : ''}" ${style}>${avatar}<div class="${box} p-3 md:p-4 rounded-2xl border shadow-md"><div>${nameLine}<p class="text-white leading-relaxed">${msg.html}</p></div></div></div>`;
+}
+function bubbles(list, base = 0.4, step = 1.5) {
+  return list.map((m, i) => bubble(m, base + i * step)).join('');
+}
+
+/* ---------- 劇情 ---------- */
+const STORY = {
+  1: {
+    ring: true, title: '安全通訊頻道已建立', btn: '接收任務並登入雷達',
+    intro: [
+      { who: 'cmd', html: '工程師，狀況緊急！強烈颱風正從太平洋朝台灣東部逼近，<strong class="text-red-400 text-lg">海上還有漁船來不及回港</strong>！' },
+      { who: 'intel', html: '花蓮雷達站只會回報兩件事：目標<strong class="text-sky-300">離雷達站多遠</strong>，以及從正東方向的<strong class="text-sky-300">極軸</strong>開始<strong class="text-sky-300">轉了幾度</strong>。逆時針轉記成正的角度，順時針轉記成負的角度。' },
+      { who: 'intel', cont: true, html: '我們要靠這兩個數字，在雷達畫面上找出每一個目標的位置。' },
+      { who: 'cmd', html: '救難隊已經待命，就等你的定位。現在立即登入雷達系統，海上的人就交給你了！' }
+    ],
+    outroTitle: '任務完成：目標全數定位', outroTag: 'SECURE 🟢',
+    outro: [
+      { who: 'intel', html: '指揮官，工程師全部定位成功！只要知道<strong class="text-sky-300">距離</strong>和<strong class="text-sky-300">方向</strong>，就能說清楚海上任何一個位置。' },
+      { who: 'cmd', html: '收到！救難船已經依照定位出發，漁船全數平安返航。' },
+      { who: 'cmd', cont: true, html: '幹得好，工程師！等一下向大家報告你是怎麼描述位置的。' }
+    ],
+    next: { label: '進入第二關：坐標翻譯機 🚀', level: 2 }
+  },
+  2: {
+    danger: true, title: '緊急狀況：坐標翻譯模組故障', btn: '接收任務並開始翻譯',
+    overlay: { l1: 'TRANSLATOR = ERROR', l2: 'COORDINATE MODULE OFFLINE.<br>MANUAL TRANSLATION REQUIRED.' },
+    intro: [
+      { who: 'intel', html: '指揮官、工程師！颱風外圍的強風打壞了雷達站的天線，雷達和救援直升機之間的<strong class="text-red-400">坐標翻譯模組當機了！</strong>' },
+      { who: 'intel', cont: true, html: `雷達只會用極坐標 ${M(R`[r,\theta]`)} 回報位置，直升機的導航卻只看得懂直角坐標 ${M('(x,y)')}，兩邊完全無法溝通！` },
+      { who: 'cmd', html: `工程師，直升機已經在空中待命。請你親自把雷達的位置翻譯成 ${M('(x,y)')}，讓直升機立刻出發！` }
+    ],
+    outroTitle: '任務完成：翻譯模組重新上線', outroTag: 'ONLINE 🟢',
+    outro: [
+      { who: 'cmd', html: '翻譯模組重新上線！直升機已經依照你算出的坐標，把物資送到每一個目標。' },
+      { who: 'intel', html: '原來兩種坐標之間有固定的規律：只要畫出直角三角形，就能互相翻譯！' },
+      { who: 'cmd', html: '工程師，等一下向大家說明你發現的翻譯規律。' }
+    ],
+    next: { label: '進入第三關：象限挑戰 🚀', level: 3 }
+  },
+  3: {
+    danger: true, title: '緊急狀況：颱風即將登陸', btn: '接收任務',
+    intro: [
+      { who: 'cmd', html: '工程師，颱風即將登陸！還有<strong class="text-red-400">六個撤離點</strong>必須立刻下達撤離指令。' },
+      { who: 'intel', html: `直升機只回報直角坐標 ${M('(x,y)')}，但撤離指令必須用極坐標 ${M(R`[r,\theta]`)} 下達。可以用計算機幫忙，但別忘了看清楚撤離點在哪個象限！` },
+      { who: 'cmd', html: '這次只有<strong class="text-red-400">三分鐘</strong>，而且只有<strong class="text-red-400">一次機會</strong>，指令送出就不能修改。準備好再開始！' }
+    ],
+    outroTitle: '任務完成：撤離指令全數送出', outroTag: 'ALL CLEAR 🟢',
+    outro: [
+      { who: 'cmd', html: '所有撤離指令都已送出，颱風登陸前，撤離點的居民都到了安全的地方。' },
+      { who: 'intel', html: '指揮官，指令的正確率會由老師公布，我們一起看看哪一題最容易出錯。' },
+      { who: 'cmd', html: '數學就是我們最強大的武器。幹得好，工程師，任務圓滿成功！' }
+    ],
+    next: null
+  }
+};
+
+/* ---------- 畫面切換 ---------- */
+const state = { level: 0, unlocked: {}, user: null, timeLimit: 180 };
+const SCREENS = ['login-screen', 'title-screen', 'comm-screen', 'main-app', 'outro-screen'];
+
+function showScreen(el) { el.classList.remove('hidden', 'fade-out'); el.classList.add('flex'); }
+function hideScreen(el, cb) {
+  el.classList.add('fade-out');
+  setTimeout(() => { el.classList.add('hidden'); el.classList.remove('flex', 'fade-out'); if (cb) cb(); }, 500);
+}
+function goTo(id, after) {
+  let hid = false;
+  SCREENS.forEach(s => {
+    const el = $(s);
+    if (s !== id && !el.classList.contains('hidden')) { hideScreen(el); hid = true; }
+  });
+  setTimeout(() => { showScreen($(id)); if (after) after(); }, hid ? 520 : 0);
+}
+
+/* 首頁 */
+$('btn-start').onclick = () => startLevel(1);
+$('btn-toggle-menu').onclick = () => {
+  const m = $('level-menu');
+  m.classList.toggle('hidden'); m.classList.toggle('flex');
+};
+document.querySelectorAll('.menu-btn').forEach(b => b.onclick = () => startLevel(+b.dataset.level));
+
+function startLevel(n) {
+  if (state.unlocked[n]) { openComm(n); return; }
+  openCode(n);
+}
+
+/* 授權碼 */
+let codeTarget = 0;
+function openCode(n) {
+  codeTarget = n;
+  $('code-desc').textContent = `請輸入老師公布的第${['一', '二', '三'][n - 1]}關授權碼`;
+  $('code-input').value = '';
+  $('code-err').classList.add('hidden');
+  showScreen($('code-modal'));
+  setTimeout(() => $('code-input').focus(), 100);
+}
+let codeBusy = false;
+async function checkCode() {
+  const v = $('code-input').value.trim();
+  if (!v || codeBusy) return;
+  codeBusy = true;
+  const btn = $('code-ok'); btn.disabled = true; btn.textContent = '驗證中……';
+  const err = $('code-err');
+  try {
+    const r = await API.unlock(codeTarget, v);
+    if (r && r.ok) {
+      state.unlocked[codeTarget] = true;
+      report({ type: 'unlock', level: codeTarget });
+      hideScreen($('code-modal'));
+      openComm(codeTarget);
+    } else if (r && r.reason === 'login') {
+      hideScreen($('code-modal')); forceLogin('登入已過期，請重新登入。');
+    } else {
+      err.textContent = '授權碼不正確，請再確認一次。'; err.classList.remove('hidden');
+      const box = $('code-box');
+      box.classList.remove('shake'); void box.offsetWidth; box.classList.add('shake');
+    }
+  } catch (e) {
+    err.textContent = '無法連上伺服器，請確認網路後再試一次。'; err.classList.remove('hidden');
+  } finally {
+    codeBusy = false; btn.disabled = false; btn.textContent = '驗證並進入';
+  }
+}
+$('code-ok').onclick = checkCode;
+$('code-input').addEventListener('keydown', e => { if (e.key === 'Enter') checkCode(); });
+$('code-cancel').onclick = () => hideScreen($('code-modal'));
+
+/* 登入 */
+function showLoginError(msg) { const e = $('login-err'); e.textContent = msg; e.classList.remove('hidden'); }
+function showLogin(msg) {
+  $('login-status').textContent = '';
+  $('btn-login').disabled = false; $('btn-login').textContent = '登入';
+  if (msg) showLoginError(msg); else $('login-err').classList.add('hidden');
+  if (!ONLINE) $('demo-badge').classList.remove('hidden');
+  goTo('login-screen');
+}
+function forceLogin(msg) { API.logout(); state.user = null; state.unlocked = {}; L3.reset(); showLogin(msg); }
+let loginBusy = false;
+async function doLogin() {
+  const a = $('login-account').value.trim(), p = $('login-password').value;
+  if (!a || !p) { showLoginError('請輸入帳號和密碼。'); return; }
+  if (loginBusy) return;
+  loginBusy = true;
+  const btn = $('btn-login'); btn.disabled = true; btn.textContent = '登入中……';
+  $('login-err').classList.add('hidden');
+  try {
+    const me = await API.login(a, p);
+    if (me && me.ok) { $('login-password').value = ''; onLoggedIn(me); }
+    else showLoginError('帳號或密碼不正確。');
+  } catch (e) {
+    showLoginError('無法連上伺服器，請確認網路後再試一次。');
+  } finally {
+    loginBusy = false; btn.disabled = false; btn.textContent = '登入';
+  }
+}
+$('btn-login').onclick = doLogin;
+$('login-password').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+$('login-account').addEventListener('keydown', e => { if (e.key === 'Enter') $('login-password').focus(); });
+
+function onLoggedIn(me) {
+  state.user = { account: me.account, seat: me.seat, name: me.name };
+  state.unlocked = {};
+  (me.unlocked || []).forEach(l => { state.unlocked[l] = true; });
+  state.timeLimit = me.time_limit || CONFIG.level3Seconds;
+  L3.restore(me.l3, me.server_now);
+  $('user-seat').textContent = me.seat != null ? me.seat : '—';
+  if (L3.inProgress()) { state.level = 3; enterMain(3); }   // 第三關作答中重新整理：直接回到作答畫面
+  else goTo('title-screen');
+}
+
+$('btn-logout').onclick = () => {
+  if (L3.inProgress() && !confirm('第三關作答中，登出後計時不會停止。確定要登出嗎？')) return;
+  forceLogin();
+};
+
+/* 開啟頁面：已登入就直接進首頁，不用重新登入 */
+async function boot() {
+  if (!ONLINE) $('demo-badge').classList.remove('hidden');
+  $('login-status').textContent = '連線中……';
+  $('btn-login').disabled = true;
+  try {
+    const me = await API.me();
+    if (me && me.ok) { $('login-status').textContent = ''; $('btn-login').disabled = false; onLoggedIn(me); return; }
+    showLogin();
+  } catch (e) {
+    showLogin('無法連上伺服器，請確認網路後重新整理頁面。');
+  }
+}
+
+/* 開場通訊 */
+function openComm(n) {
+  state.level = n;
+  const st = STORY[n];
+  goTo('comm-screen', () => {
+    const ring = $('comm-ring');
+    if (st.ring) {
+      ring.classList.remove('hidden'); ring.classList.add('flex');
+      $('comm-chat').classList.add('hidden');
+    } else {
+      ring.classList.add('hidden'); ring.classList.remove('flex');
+      renderCommChat(st);
+    }
+  });
+}
+$('btn-answer').onclick = () => {
+  if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+  const ring = $('comm-ring');
+  ring.classList.add('hidden'); ring.classList.remove('flex');
+  renderCommChat(STORY[state.level]);
+};
+
+function renderCommChat(st) {
+  const chat = $('comm-chat');
+  chat.classList.remove('hidden');
+  chat.classList.toggle('border-red-500/50', !!st.danger);
+  chat.classList.toggle('border-slate-600', !st.danger);
+  const t = $('comm-title');
+  t.className = `text-lg md:text-2xl font-bold flex items-center gap-3 ${st.danger ? 'text-red-400' : 'text-green-400'}`;
+  t.innerHTML = (st.danger ? ICON_WARN : ICON_PHONE) + `<span>${st.title}</span>`;
+
+  const base = st.overlay ? 2.4 : 0.4;
+  $('comm-bubbles').innerHTML = bubbles(st.intro, base);
+  const wrap = $('comm-btn-wrap');
+  wrap.style.animation = 'none'; void wrap.offsetWidth; wrap.style.animation = '';
+  wrap.style.animationDelay = (base + st.intro.length * 1.5) + 's';
+  const btn = $('comm-btn');
+  btn.innerHTML = st.btn + ICON_BOLT;
+  btn.className = 'text-white font-bold py-3 px-10 rounded-xl text-lg transition-all flex items-center gap-2 hover:scale-105 active:scale-95 w-full md:w-auto justify-center ' +
+    (st.danger ? 'bg-red-600 hover:bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.6)]' : 'bg-sky-600 hover:bg-sky-500 shadow-[0_0_20px_rgba(2,132,199,0.6)]');
+
+  const ov = $('comm-overlay');
+  if (st.overlay) {
+    ov.innerHTML = `<div class="text-6xl mb-4 animate-pulse">⚠️</div><div class="text-red-400 font-black text-2xl md:text-3xl font-mono tracking-wider mb-2">${st.overlay.l1}</div><div class="text-red-300/80 font-mono text-xs md:text-sm leading-relaxed">${st.overlay.l2}</div>`;
+    ov.classList.remove('hidden', 'opacity-0'); ov.classList.add('flex');
+    setTimeout(() => ov.classList.add('opacity-0'), 1600);
+    setTimeout(() => { ov.classList.add('hidden'); ov.classList.remove('flex'); }, 2400);
+  } else {
+    ov.classList.add('hidden'); ov.classList.remove('flex');
+  }
+  typeset($('comm-bubbles'));
+}
+$('comm-btn').onclick = () => enterMain(state.level);
+
+function enterMain(n) {
+  goTo('main-app', () => { resizeCanvas(); LEVELS[n].init(); keepAwake(); });
+}
+
+/* 遊玩時保持螢幕不休眠（支援的瀏覽器才有效） */
+let wakeLock = null;
+async function keepAwake() {
+  try { if ('wakeLock' in navigator && !wakeLock) { wakeLock = await navigator.wakeLock.request('screen'); wakeLock.addEventListener('release', () => { wakeLock = null; }); } } catch (e) {}
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && !$('main-app').classList.contains('hidden')) keepAwake();
+  if (document.visibilityState === 'visible' && !$('main-app').classList.contains('hidden')) resizeCanvas();
+});
+window.addEventListener('beforeunload', e => {
+  if (typeof L3 !== 'undefined' && L3.started && !L3.done) { e.preventDefault(); e.returnValue = ''; }
+});
+window.addEventListener('orientationchange', () => setTimeout(() => { if (!$('main-app').classList.contains('hidden')) resizeCanvas(); }, 300));
+
+/* 任務完成 */
+function showOutro(n) {
+  const st = STORY[n];
+  goTo('outro-screen', () => {
+    $('outro-title').textContent = st.outroTitle;
+    $('outro-tag').textContent = st.outroTag;
+    $('outro-bubbles').innerHTML = bubbles(st.outro, 0.4);
+    const btns = $('outro-btns');
+    let html = '';
+    const big = 'text-white font-bold py-3 px-8 rounded-xl text-lg transition-all flex items-center gap-2 hover:scale-105 active:scale-95 w-full md:w-auto justify-center';
+    if (n !== 3) html += `<button data-act="replay" class="${big} bg-green-600 hover:bg-green-500 shadow-[0_0_20px_rgba(34,197,94,0.5)]">重新體驗任務</button>`;
+    if (st.next) html += `<button data-act="next" class="${big} bg-red-600 hover:bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.5)]">${st.next.label}</button>`;
+    else html += `<button data-act="home" class="${big} bg-sky-600 hover:bg-sky-500 shadow-[0_0_20px_rgba(2,132,199,0.5)]">返回首頁</button>`;
+    btns.innerHTML = html;
+    btns.style.animation = 'none'; void btns.offsetWidth; btns.style.animation = '';
+    btns.style.animationDelay = (0.4 + st.outro.length * 1.5) + 's';
+    btns.querySelectorAll('button').forEach(b => b.onclick = () => {
+      if (b.dataset.act === 'replay') enterMain(n);
+      else if (b.dataset.act === 'next') startLevel(st.next.level);
+      else goTo('title-screen');
+    });
+    typeset($('outro-bubbles'));
+  });
+}
+
+/* 任務間通訊 */
+function showMissionModal(m, cb) {
+  const modal = $('mission-modal'), content = $('mission-modal-content');
+  $('mm-title').textContent = m.title;
+  $('mm-chat').innerHTML = bubble({ who: m.who, html: m.html });
+  modal.classList.remove('hidden'); void modal.offsetWidth;
+  modal.classList.remove('opacity-0');
+  content.classList.remove('scale-95'); content.classList.add('scale-100');
+  typeset($('mm-chat'));
+  $('mm-btn').onclick = () => {
+    modal.classList.add('opacity-0');
+    content.classList.remove('scale-100'); content.classList.add('scale-95');
+    setTimeout(() => { modal.classList.add('hidden'); if (cb) cb(); }, 300);
+  };
+}
+
+$('btn-home').onclick = () => { pickEnabled = false; goTo('title-screen'); };
+$('btn-restart').onclick = () => LEVELS[state.level].init();
+
+/* =========================================================
+   雷達畫布
+   ========================================================= */
+const canvas = $('radar'), ctx = canvas.getContext('2d');
+let W = 0, H = 0, DPR = 1;
+let pickEnabled = false, onPick = null;
+const view = { maxR: 5, axes: false, polarHint: true, land: true, station: true };
+const scene = { objects: [], marker: null, ghost: null, tri: null, anim: null };
+
+/* 台灣海岸輪廓（以花蓮為極點，1 格 = 35 公里，示意用） */
+const LAND = [[0.4,3.6],[0.6,3.35],[0.25,2.6],[0.3,1.8],[0.1,0.9],[0,0],[-0.45,-1.4],[-0.9,-2.8],[-1.3,-4.0],[-1.75,-5.4],[-2.2,-6.7],[-2.5,-6.0],[-2.75,-5.2],[-3.8,-4.4],[-4.15,-3.2],[-4.25,-1.9],[-3.6,0.2],[-3.0,1.0],[-2.1,2.3],[-1.3,3.1],[-0.6,3.6]];
+
+function resizeCanvas() {
+  const r = $('stage').getBoundingClientRect();
+  DPR = Math.min(window.devicePixelRatio || 1, 2);
+  W = r.width; H = r.height;
+  canvas.width = Math.round(W * DPR); canvas.height = Math.round(H * DPR);
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+}
+new ResizeObserver(() => { if (!$('main-app').classList.contains('hidden')) resizeCanvas(); }).observe($('stage'));
+
+function geom() {
+  const ox = W / 2, oy = H / 2 + 12;
+  const sc = (Math.min(W, H - 24) / 2) * 0.82 / view.maxR;
+  return { ox, oy, sc };
+}
+
+function pill(text, x, y, opt = {}) {
+  ctx.font = `${opt.bold ? '700' : '500'} ${opt.size || 12}px 'Noto Sans TC', sans-serif`;
+  const w = ctx.measureText(text).width + 10, h = (opt.size || 12) + 8;
+  const rx = x - w / 2, ry = y - h / 2, rad = 6;
+  ctx.fillStyle = opt.bg || 'rgba(15,23,42,0.85)';
+  ctx.beginPath();
+  ctx.moveTo(rx + rad, ry); ctx.lineTo(rx + w - rad, ry); ctx.quadraticCurveTo(rx + w, ry, rx + w, ry + rad);
+  ctx.lineTo(rx + w, ry + h - rad); ctx.quadraticCurveTo(rx + w, ry + h, rx + w - rad, ry + h);
+  ctx.lineTo(rx + rad, ry + h); ctx.quadraticCurveTo(rx, ry + h, rx, ry + h - rad);
+  ctx.lineTo(rx, ry + rad); ctx.quadraticCurveTo(rx, ry, rx + rad, ry); ctx.fill();
+  ctx.fillStyle = opt.color || '#fff'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText(text, x, y + 0.5);
+}
+function emoji(ch, x, y, size = 24) {
+  ctx.font = `${size}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`;
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText(ch, x, y);
+}
+function arrowHead(x1, y1, x2, y2, size, color) {
+  const a = Math.atan2(y2 - y1, x2 - x1);
+  ctx.fillStyle = color; ctx.beginPath();
+  ctx.moveTo(x2, y2);
+  ctx.lineTo(x2 - size * Math.cos(a - 0.45), y2 - size * Math.sin(a - 0.45));
+  ctx.lineTo(x2 - size * Math.cos(a + 0.45), y2 - size * Math.sin(a + 0.45));
+  ctx.closePath(); ctx.fill();
+}
+
+function draw(t) {
+  const { ox, oy, sc } = geom();
+  const P = (x, y) => [ox + x * sc, oy - y * sc];
+  const maxR = view.maxR, deg = Math.PI / 180;
+  ctx.clearRect(0, 0, W, H);
+
+  const bg = ctx.createRadialGradient(ox, oy, 0, ox, oy, Math.max(W, H) * 0.75);
+  bg.addColorStop(0, '#0c2a47'); bg.addColorStop(1, '#020617');
+  ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+
+  // 陸地
+  if (view.land) {
+    ctx.beginPath();
+    LAND.forEach(([x, y], i) => { const [px, py] = P(x, y); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); });
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(52,96,74,0.55)'; ctx.fill();
+    ctx.strokeStyle = 'rgba(134,239,172,0.45)'; ctx.lineWidth = 1.5; ctx.stroke();
+    if (maxR <= 6) { const [lx, ly] = P(-2.5, -1.2); ctx.fillStyle = 'rgba(187,247,208,0.35)'; ctx.font = "700 14px 'Noto Sans TC'"; ctx.textAlign = 'center'; ctx.fillText('台灣', lx, ly); }
+  }
+
+  // 放射線（每 15°）
+  for (let a = 0; a < 360; a += 15) {
+    const alpha = a % 90 === 0 ? 0.3 : a % 30 === 0 ? 0.15 : 0.07;
+    const [ex, ey] = P(maxR * Math.cos(a * deg), maxR * Math.sin(a * deg));
+    ctx.strokeStyle = `rgba(56,189,248,${alpha})`; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ex, ey); ctx.stroke();
+  }
+  // 同心圓
+  for (let r = 1; r <= maxR; r++) {
+    ctx.strokeStyle = `rgba(56,189,248,${r === maxR ? 0.45 : 0.25})`; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(ox, oy, r * sc, 0, 2 * Math.PI); ctx.stroke();
+  }
+
+  // 掃描
+  if (!reduceMotion) {
+    const ang = (t / 5000 * 2 * Math.PI) % (2 * Math.PI), d = 0.035;
+    for (let k = 0; k < 22; k++) {
+      ctx.fillStyle = `rgba(56,189,248,${0.16 * (1 - k / 22)})`;
+      ctx.beginPath(); ctx.moveTo(ox, oy);
+      ctx.arc(ox, oy, maxR * sc, -ang + k * d, -ang + (k + 1) * d);
+      ctx.closePath(); ctx.fill();
+    }
+  }
+
+  // 直角坐標軸
+  if (view.axes) {
+    ctx.strokeStyle = 'rgba(255,255,255,0.6)'; ctx.lineWidth = 1.5;
+    const [x1, y1] = P(-maxR - 0.3, 0), [x2, y2] = P(maxR + 0.3, 0);
+    const [x3, y3] = P(0, -maxR - 0.3), [x4, y4] = P(0, maxR + 0.3);
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.moveTo(x3, y3); ctx.lineTo(x4, y4); ctx.stroke();
+    arrowHead(x3, y3, x4, y4, 9, 'rgba(255,255,255,0.75)');
+    ctx.font = "italic 700 15px 'Times New Roman', serif"; ctx.fillStyle = '#fff'; ctx.textAlign = 'left';
+    ctx.fillText('y', x4 + 8, y4 + 6);
+    ctx.fillText('x', x2 - 4, y2 + 18);
+  }
+
+  // 同心圓刻度（沿極軸）
+  const step = maxR > 6 ? 2 : 1;
+  for (let r = step; r <= maxR; r += step) {
+    const [lx, ly] = P(r, 0);
+    ctx.fillStyle = 'rgba(186,230,253,0.9)'; ctx.font = "600 11px 'Noto Sans TC'"; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    ctx.fillText(String(r), lx, ly + 4);
+  }
+  ctx.textBaseline = 'alphabetic';
+
+  // 極軸
+  {
+    const [ax, ay] = P(maxR + 0.35, 0);
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ax, ay); ctx.stroke();
+    arrowHead(ox, oy, ax, ay, 10, '#fbbf24');
+    if (!view.axes) pill('極軸 0°', ax - 26, ay - 16, { color: '#fde68a', size: 11 });
+  }
+
+  // 方位
+  {
+    const pad = 0.62;
+    const dirs = [['北', 0, maxR + pad], ['南', 0, -maxR - pad], ['西', -maxR - pad, 0], ['東', maxR + pad, -0.55]];
+    ctx.font = "700 12px 'Noto Sans TC'"; ctx.fillStyle = 'rgba(148,163,184,0.95)'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    dirs.forEach(([s, x, y]) => { const [px, py] = P(x, y); ctx.fillText(s, px, py); });
+    ctx.textBaseline = 'alphabetic';
+  }
+
+  // 逆時針提示
+  if (view.polarHint) {
+    const rr = 0.7 * sc;
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(ox, oy, rr, 0, -75 * deg, true); ctx.stroke();
+    const ex = ox + rr * Math.cos(75 * deg), ey = oy - rr * Math.sin(75 * deg);
+    const px = ox + rr * Math.cos(68 * deg), py = oy - rr * Math.sin(68 * deg);
+    arrowHead(px, py, ex, ey, 8, '#fbbf24');
+    pill('逆時針', ox + rr * 1.25 * Math.cos(38 * deg) + 14, oy - rr * 1.25 * Math.sin(38 * deg), { color: '#fde68a', size: 11 });
+  }
+
+  // 直角三角形（第二關）
+  if (scene.tri) drawTriangle(P, sc);
+
+  // 已知目標
+  scene.objects.forEach(o => {
+    const [px, py] = P(o.x, o.y);
+    if (o.blink) {
+      const k = (Math.sin(t / 250) + 1) / 2;
+      ctx.strokeStyle = `rgba(248,113,113,${0.4 + 0.6 * k})`; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(px, py, 16 + 6 * k, 0, 2 * Math.PI); ctx.stroke();
+    }
+    emoji(o.emoji, px, py + (o.dy || 0), o.size || 24);
+    if (o.label) pill(o.label, px, py + 24, { size: 11 });
+  });
+
+  // 正解提示
+  if (scene.ghost) {
+    const [px, py] = P(scene.ghost.x, scene.ghost.y);
+    ctx.setLineDash([5, 4]); ctx.strokeStyle = '#4ade80'; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.arc(px, py, 18, 0, 2 * Math.PI); ctx.stroke(); ctx.setLineDash([]);
+    pill('正確位置', px, py - 28, { color: '#bbf7d0', size: 11 });
+  }
+
+  // 玩家標記
+  if (scene.marker) {
+    const m = scene.marker;
+    const [px, py] = P(m.r * Math.cos(m.th * deg), m.r * Math.sin(m.th * deg));
+    ctx.setLineDash([6, 5]); ctx.strokeStyle = '#fb923c'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(px, py); ctx.stroke(); ctx.setLineDash([]);
+    if (m.th > 0) {
+      ctx.strokeStyle = 'rgba(251,146,60,0.85)'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(ox, oy, 0.45 * sc, 0, -m.th * deg, true); ctx.stroke();
+    }
+    const k = (Math.sin(t / 200) + 1) / 2;
+    ctx.strokeStyle = '#fb923c'; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.arc(px, py, 10 + 3 * k, 0, 2 * Math.PI); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(px - 16, py); ctx.lineTo(px + 16, py); ctx.moveTo(px, py - 16); ctx.lineTo(px, py + 16); ctx.stroke();
+  }
+
+  // 同界角動畫
+  if (scene.anim) {
+    const a = scene.anim;
+    if (!a.t0) a.t0 = t;
+    const p = Math.min(1, (t - a.t0) / a.dur);
+    const end = a.to * p;
+    ctx.strokeStyle = '#facc15'; ctx.lineWidth = 3; ctx.beginPath();
+    for (let phi = 0; phi <= end; phi += 3) {
+      const rr = a.r * (0.3 + 0.7 * phi / a.to);
+      const [px, py] = P(rr * Math.cos(phi * deg), rr * Math.sin(phi * deg));
+      phi ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+    }
+    ctx.stroke();
+    if (p >= 1) { const [px, py] = P(a.r * Math.cos(a.to * deg), a.r * Math.sin(a.to * deg)); pill('30° 與 390° 是同一點', px, py - 34, { color: '#fef08a', size: 12, bold: true }); }
+  }
+
+  // 雷達站
+  if (view.station) {
+    const g = ctx.createRadialGradient(ox, oy, 0, ox, oy, 14);
+    g.addColorStop(0, 'rgba(125,211,252,1)'); g.addColorStop(1, 'rgba(125,211,252,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(ox, oy, 14, 0, 2 * Math.PI); ctx.fill();
+    ctx.fillStyle = '#e0f2fe'; ctx.beginPath(); ctx.arc(ox, oy, 4, 0, 2 * Math.PI); ctx.fill();
+    if (state.level === 1) pill('花蓮雷達站', ox - 34, oy + 18, { size: 10, color: '#bae6fd' });
+  }
+}
+
+/* 把標籤放在錨點的某一側，pill 的邊緣離錨點 gap 像素 */
+function pillSide(text, ax, ay, dx, dy, gap, opt) {
+  const size = opt.size || 12;
+  ctx.font = `${opt.bold ? '700' : '500'} ${size}px 'Noto Sans TC', sans-serif`;
+  const w = ctx.measureText(text).width + 10, h = size + 8;
+  const L = Math.hypot(dx, dy) || 1; dx /= L; dy /= L;
+  const ext = Math.abs(dx) * w / 2 + Math.abs(dy) * h / 2;
+  pill(text, ax + dx * (gap + ext), ay + dy * (gap + ext), opt);
+}
+
+function drawTriangle(P, sc) {
+  const T = scene.tri, deg = Math.PI / 180;
+  const [ox, oy] = P(0, 0), [fx, fy] = P(T.x, 0), [px, py] = P(T.x, T.y);
+  const fs = W < 500 ? 12 : 13;
+  const onAxis = Math.abs(T.x) < 0.01;
+  ctx.fillStyle = 'rgba(59,130,246,0.22)';
+  ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(fx, fy); ctx.lineTo(px, py); ctx.closePath(); ctx.fill();
+  // x 邊
+  ctx.strokeStyle = '#f472b6'; ctx.lineWidth = 3.5;
+  ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(fx, fy); ctx.stroke();
+  // y 邊（垂足虛線）
+  ctx.setLineDash([7, 5]); ctx.strokeStyle = '#a3e635'; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(fx, fy); ctx.lineTo(px, py); ctx.stroke(); ctx.setLineDash([]);
+  // 斜邊 r
+  ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 3.5;
+  ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(px, py); ctx.stroke();
+  // 直角記號
+  if (!onAxis && Math.abs(T.y) > 0.01) {
+    const s = 10, dx = T.x > 0 ? -s : s, dy = T.y > 0 ? -s : s;
+    ctx.strokeStyle = 'rgba(255,255,255,0.8)'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(fx + dx, fy); ctx.lineTo(fx + dx, fy + dy); ctx.lineTo(fx, fy + dy); ctx.stroke();
+  }
+  // θ 弧：只標一個 θ，數值寫在左下角的說明
+  if (T.th != null) {
+    const rr = 0.5 * sc;
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.arc(ox, oy, rr, 0, -T.th * deg, true); ctx.stroke();
+    const mid = T.th / 2 * deg, lr = rr + 11;
+    ctx.font = "italic 700 16px 'Times New Roman', serif"; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(2,6,23,0.9)';
+    ctx.strokeText('θ', ox + lr * Math.cos(mid), oy - lr * Math.sin(mid));
+    ctx.fillStyle = '#fde68a'; ctx.fillText('θ', ox + lr * Math.cos(mid), oy - lr * Math.sin(mid));
+    ctx.textBaseline = 'alphabetic';
+  }
+  const below = T.y >= 0 ? 1 : -1;   // 畫布座標：三角形在 x 軸上方時，x 標籤放下方
+  const side = T.x >= 0 ? 1 : -1;
+  // x 標籤：放在 x 邊外側（三角形的另一邊）
+  if (!onAxis) pillSide(`x = ${T.xs}`, (ox + fx) / 2, oy, 0, below, 6, { color: '#fbcfe8', size: fs, bold: true });
+  else pillSide(`x = ${T.xs}`, ox, oy, 1, below * 0.9, 8, { color: '#fbcfe8', size: fs, bold: true });
+  // y 標籤：放在垂足虛線外側（遠離極點那一邊）
+  if (Math.abs(T.y) > 0.01) pillSide(`y = ${T.ys}`, fx, (fy + py) / 2, onAxis ? 1 : side, 0, 8, { color: '#d9f99d', size: fs, bold: true });
+  // r 標籤：放在斜邊外側（遠離垂足那一邊）
+  const hx = (ox + px) / 2, hy = (oy + py) / 2;
+  let nx, ny;
+  if (onAxis) { nx = -1; ny = 0; }
+  else {
+    nx = -(py - oy); ny = (px - ox);
+    if (nx * (hx - fx) + ny * (hy - fy) < 0) { nx = -nx; ny = -ny; }
+  }
+  pillSide(`r = ${T.rs}`, hx, hy, nx, ny, 8, { color: '#bae6fd', size: fs, bold: true });
+  // 點
+  ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(px, py, 5, 0, 2 * Math.PI); ctx.fill();
+}
+
+function frame(t) {
+  if (!$('main-app').classList.contains('hidden') && W > 0) draw(t);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+/* 點選雷達（第一關） */
+let dragging = false;
+function pick(e) {
+  const rect = canvas.getBoundingClientRect();
+  const { ox, oy, sc } = geom();
+  const x = (e.clientX - rect.left - ox) / sc, y = (oy - (e.clientY - rect.top)) / sc;
+  const dist = Math.hypot(x, y);
+  if (dist < 0.4) return;
+  const r = Math.max(1, Math.min(view.maxR, Math.round(dist)));
+  const th = mod360(Math.round((Math.atan2(y, x) * 180 / Math.PI) / 15) * 15);
+  scene.marker = { r, th };
+  if (onPick) onPick(scene.marker);
+}
+canvas.addEventListener('pointerdown', e => { if (!pickEnabled) return; dragging = true; canvas.setPointerCapture(e.pointerId); pick(e); });
+canvas.addEventListener('pointermove', e => { if (dragging && pickEnabled) pick(e); });
+canvas.addEventListener('pointerup', () => { dragging = false; });
+canvas.addEventListener('pointercancel', () => { dragging = false; });
+
+/* =========================================================
+   狀態與面板
+   ========================================================= */
+function setStatus(text, tone = 'idle') {
+  const box = $('status-box'), el = $('status-text');
+  el.textContent = text;
+  const tones = {
+    idle: ['border-transparent', 'text-slate-800'],
+    ok: ['border-green-500', 'text-green-600'],
+    bad: ['border-red-500', 'text-red-600'],
+    warn: ['border-amber-400', 'text-amber-600']
+  };
+  box.classList.remove('border-transparent', 'border-green-500', 'border-red-500', 'border-amber-400');
+  el.classList.remove('text-slate-800', 'text-green-600', 'text-red-600', 'text-amber-600');
+  box.classList.add(tones[tone][0]); el.classList.add(tones[tone][1]);
+}
+function setPanel(title, sub) { $('panel-title').textContent = title; $('panel-sub').textContent = sub; }
+function progressDots(total, cur) {
+  let h = '<div class="flex items-center gap-1.5 text-xs text-slate-500 font-bold"><span class="mr-1">任務進度</span>';
+  for (let i = 0; i < total; i++) {
+    const c = i < cur ? 'bg-green-500' : i === cur ? 'bg-sky-500 ring-2 ring-sky-200' : 'bg-slate-300';
+    h += `<span class="w-2.5 h-2.5 rounded-full ${c}"></span>`;
+  }
+  return h + `<span class="ml-1">${Math.min(cur + 1, total)} / ${total}</span></div>`;
+}
+function feedback(html, tone) {
+  const fb = $('fb');
+  const tones = {
+    ok: 'bg-green-50 border border-green-300 text-green-800',
+    bad: 'bg-red-50 border border-red-300 text-red-800',
+    warn: 'bg-amber-50 border border-amber-300 text-amber-800',
+    info: 'bg-slate-50 border border-slate-300 text-slate-700'
+  };
+  fb.className = 'mt-3 p-3 rounded-lg text-sm leading-relaxed ' + tones[tone];
+  fb.innerHTML = html;
+  typeset(fb);
+  fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+/* ---------- 數字鍵盤 ---------- */
+const KP = { active: null, fields: {}, onSubmit: null };
+function kpSetup(sqrt, onSubmit) {
+  KP.fields = {}; KP.active = null; KP.onSubmit = onSubmit;
+  document.querySelectorAll('.kp-field').forEach(b => {
+    KP.fields[b.dataset.f] = '';
+    b.onclick = () => kpFocus(b.dataset.f);
+  });
+  const keys = ['1', '2', '3', '4', '5', '⌫', '6', '7', '8', '9', '0', '±', '.', sqrt ? '√' : '', 'C', 'GO'];
+  const kp = $('keypad');
+  kp.innerHTML = keys.map(k => {
+    if (k === '') return '<span></span>';
+    if (k === 'GO') return '<button data-k="GO" class="kp-key col-span-2 bg-sky-600 active:bg-sky-700 text-white font-bold rounded-lg text-base">送出</button>';
+    if (k === 'C') return '<button data-k="C" class="kp-key bg-slate-300 active:bg-slate-400 text-slate-700 font-bold rounded-lg text-sm">清除</button>';
+    const special = ['⌫', '±', '√'].includes(k);
+    return `<button data-k="${k}" class="kp-key ${special ? 'bg-slate-200 text-sky-700' : 'bg-white text-slate-800'} active:bg-sky-100 border border-slate-300 font-bold rounded-lg text-lg">${k}</button>`;
+  }).join('');
+  kp.querySelectorAll('button').forEach(b => b.onclick = () => kpPress(b.dataset.k));
+  kp.classList.remove('hidden');
+  const first = document.querySelector('.kp-field');
+  if (first) { kpFocus(first.dataset.f); setTimeout(() => first.scrollIntoView({ block: 'nearest' }), 80); }
+}
+function kpHide() { $('keypad').classList.add('hidden'); KP.active = null; }
+function kpFocus(f) {
+  KP.active = f;
+  document.querySelectorAll('.kp-field').forEach(b => {
+    const on = b.dataset.f === f;
+    b.classList.toggle('border-sky-500', on); b.classList.toggle('bg-sky-50', on); b.classList.toggle('border-slate-300', !on);
+  });
+}
+function kpPress(k) {
+  if (k === 'GO') { if (KP.onSubmit) KP.onSubmit(); return; }
+  if (!KP.active) return;
+  let v = KP.fields[KP.active] || '';
+  if (k === '⌫') v = v.slice(0, -1);
+  else if (k === 'C') v = '';
+  else if (k === '±') v = v.startsWith('−') ? v.slice(1) : '−' + v;
+  else if (v.length < 8) v += k;
+  KP.fields[KP.active] = v;
+  const b = document.querySelector(`.kp-field[data-f="${KP.active}"]`);
+  if (b) b.textContent = v || '　';
+}
+document.addEventListener('keydown', e => {
+  if ($('keypad').classList.contains('hidden') || $('main-app').classList.contains('hidden')) return;
+  if (document.activeElement && document.activeElement.tagName === 'INPUT') return;
+  const map = { Backspace: '⌫', '-': '±', Enter: 'GO', '.': '.' };
+  if (/^[0-9]$/.test(e.key)) kpPress(e.key);
+  else if (map[e.key]) { e.preventDefault(); kpPress(map[e.key]); }
+  else if (e.key === 'Tab') {
+    e.preventDefault();
+    const fs = Object.keys(KP.fields); const i = fs.indexOf(KP.active);
+    kpFocus(fs[(i + 1) % fs.length]);
+  }
+});
+function fieldBtn(f, unit) {
+  return `<span class="inline-flex items-center gap-1"><button data-f="${f}" class="kp-field min-w-[4.5rem] h-10 px-2 bg-white border-2 border-slate-300 rounded-lg text-lg font-bold text-sky-800 text-center">　</button>${unit ? `<span class="text-sm text-slate-600">${unit}</span>` : ''}</span>`;
+}
+
+const btnBase = 'w-full mt-3 disabled:bg-slate-300 disabled:text-slate-500 text-white font-bold py-2.5 rounded-lg transition-colors text-sm shadow-md';
+const btnMain = btnBase + ' bg-sky-600 hover:bg-sky-700';
+const btnNext = 'hidden mt-3 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-lg transition-colors text-sm shadow-md animate-pulse';
+
+/* =========================================================
+   第一關：颱風定位
+   ========================================================= */
+const L1_ITEMS = [
+  { kind: 'tap', key: 'A', name: '漁船 A', emoji: '🚢', r: 3, th: 60, title: '任務 1：定位漁船 A',
+    desc: '雷達回報：漁船 A 距離雷達站 <b>3 格</b>，從極軸逆時針轉 <b>60°</b>。請在雷達上點出漁船 A 的位置。' },
+  { kind: 'tap', key: 'B', name: '漁船 B', emoji: '🚢', r: 4, th: 135, title: '任務 2：定位漁船 B',
+    desc: '雷達回報：漁船 B 距離雷達站 <b>4 格</b>，從極軸逆時針轉 <b>135°</b>。請點出漁船 B 的位置。' },
+  { kind: 'read', key: 'C', name: '漁船 C', emoji: '🚢', r: 2, th: 300, title: '任務 3：回報漁船 C 的位置',
+    desc: '雷達上閃爍的是漁船 C。請回報它離雷達站幾格，以及從極軸轉了幾度（逆時針記正、順時針記負）。' },
+  { kind: 'read', key: 'T', name: '颱風中心', emoji: '🌀', r: 4, th: 315, km: true, title: '任務 4：鎖定颱風中心',
+    desc: '氣象署發布：颱風中心在<b>花蓮東南方 140 公里</b>，已標在雷達上（1 格 = 35 公里）。請用雷達的方式回報：距離幾公里、從極軸轉了幾度。',
+    modal: { who: 'cmd', title: '緊急通訊：指揮官 簡大哥', html: '工程師，氣象署剛傳來颱風中心的最新位置！<br>請立刻用<strong class="text-red-400">雷達的方式</strong>回報，讓所有船隻知道颱風在哪裡。' } },
+  { kind: 'tap', key: 'S', name: '補給船', emoji: '⛴️', r: 2, th: 30, title: '任務 5：定位補給船',
+    desc: '雷達回報：補給船距離雷達站 <b>2 格</b>，從極軸逆時針轉 <b>30°</b>。請點出補給船的位置。' },
+  { kind: 'tap', key: 'H', name: '救難直升機', emoji: '🚁', r: 2, th: 390, title: '任務 6：盤旋的直升機',
+    desc: '救難直升機從雷達站上空出發，沿著極軸方向，<b>逆時針</b>繞著雷達站飛了<b>一圈又 30°</b>（一共轉了 390°），最後停在離雷達站 <b>2 格</b>的地方。請點出直升機現在的位置。',
+    modal: { who: 'intel', title: '緊急通訊：情報官 阿程', html: '工程師，救難直升機在雷達站上空盤旋，等待降落指示。<br>它已經逆時針繞了 <strong class="text-sky-300">390°</strong>，請你判斷它現在停在哪裡。' } }
+];
+
+const L1 = {
+  init() {
+    state.level = 1;
+    Object.assign(view, { maxR: 5, axes: false, polarHint: true, land: true, station: true });
+    Object.assign(scene, { objects: [], marker: null, ghost: null, tri: null, anim: null });
+    $('btn-restart').classList.remove('hidden');
+    $('stage-timer').classList.add('hidden');
+    $('legend').innerHTML = '1 格 = 35 公里<br>極軸指向正東；逆時針記正、順時針記負';
+    setPanel('🌀 颱風危機：颱風定位', '用「距離」和「方向」找出位置');
+    this.idx = 0; this.records = []; this.placed = [];
+    this.startItem();
+  },
+  startItem() {
+    const it = L1_ITEMS[this.idx];
+    if (it.modal) showMissionModal(it.modal, () => this.beginItem());
+    else this.beginItem();
+  },
+  beginItem() {
+    const it = L1_ITEMS[this.idx];
+    this.attempts = 0; this.done = false;
+    scene.marker = null; scene.ghost = null; scene.anim = null;
+    scene.objects = [...this.placed];
+    if (it.kind === 'read') scene.objects.push({ ...this.pos(it), emoji: it.emoji, label: it.name, blink: true });
+    pickEnabled = it.kind === 'tap';
+    $('main-app').dataset.lv = it.kind;
+    onPick = it.kind === 'tap' ? m => {
+      $('mk-info').textContent = `已標記：距離 ${m.r} 格`;
+      $('btn-submit').disabled = false;
+    } : null;
+    setStatus(`等待定位：${it.name}`);
+    this.render();
+  },
+  pos(it) { const a = it.th * Math.PI / 180; return { x: it.r * Math.cos(a), y: it.r * Math.sin(a) }; },
+  placedObj(it) { return it.key === 'H' ? { ...this.pos(it), emoji: it.emoji, dy: -26, size: 22 } : { ...this.pos(it), emoji: it.emoji, label: it.name }; },
+  render() {
+    const it = L1_ITEMS[this.idx];
+    $('panel-data').innerHTML = progressDots(L1_ITEMS.length, this.idx);
+    const hint = it.kind === 'tap'
+      ? '先找到黃色的極軸（正東），從那裡開始逆時針轉到指定角度，再沿著那個方向數格數，每一圈是 1 格。雷達上的細線每 15° 一條。'
+      : '先數它在第幾圈，再從極軸開始量角度：逆時針轉記正角，順時針轉記負角（例如順時針轉 15° 記作 −15°）。雷達上的細線每 15° 一條。' + (it.km ? '最後記得換算成公里：1 格 = 35 公里。' : '');
+    let body;
+    if (it.kind === 'tap') {
+      body = `<div class="bg-white rounded-lg p-3 text-sm flex justify-between items-center border border-sky-100">
+          <span class="text-slate-500">目前標記</span><span id="mk-info" class="font-bold text-orange-600">尚未標記，請點雷達畫面</span></div>
+        <button id="btn-submit" disabled class="${btnMain}">📍 確認標記位置</button>`;
+    } else {
+      body = `<div class="bg-white rounded-lg p-2.5 text-sm border border-sky-100 flex flex-wrap items-center justify-around gap-x-4 gap-y-2">
+          <span class="inline-flex items-center gap-1.5"><span class="text-slate-600">距離</span>${fieldBtn('d', it.km ? '公里' : '格')}</span>
+          <span class="inline-flex items-center gap-1.5"><span class="text-slate-600">轉了</span>${fieldBtn('a', '度')}</span>
+        </div>
+        <button id="btn-submit" class="${btnMain} kp-dup">📡 回報位置</button>`;
+    }
+    $('tasks').innerHTML = `
+      <section class="bg-sky-50 p-4 rounded-xl border border-sky-200">
+        <div class="flex justify-between items-center mb-2 gap-2">
+          <h2 class="font-bold text-sky-900 text-base">${it.emoji} ${it.title}</h2>
+          <button id="btn-hint" class="text-amber-600 hover:text-amber-700 text-sm font-bold shrink-0 px-2 py-1 -mr-2 rounded-lg active:bg-amber-100">💡 提示</button>
+        </div>
+        <p class="text-sm text-slate-700 mb-3 leading-relaxed">${it.desc}</p>
+        <div id="hint-box" class="hidden mb-3 bg-amber-50 border border-amber-200 text-amber-800 p-3 rounded-lg text-sm">${hint}</div>
+        ${body}
+        <p id="fb" class="hidden"></p>
+        <button id="btn-next" class="${btnNext}">${this.idx === L1_ITEMS.length - 1 ? '📞 回報指揮中心' : '接收新狀況：下一個任務 ➡️'}</button>
+      </section>`;
+    $('btn-hint').onclick = () => $('hint-box').classList.toggle('hidden');
+    $('btn-submit').onclick = () => it.kind === 'tap' ? this.checkTap() : this.checkRead();
+    $('btn-next').onclick = () => this.next();
+    if (it.kind === 'read') kpSetup(false, () => this.checkRead()); else kpHide();
+  },
+  checkTap() {
+    if (this.done || !scene.marker) return;
+    const it = L1_ITEMS[this.idx], m = scene.marker, t = mod360(it.th);
+    this.attempts++;
+    if (m.r === it.r && m.th === t) {
+      return this.success(`距離 ${it.r} 格，角度 ${it.th}°`, 'ok', { r: m.r, th: m.th });
+    }
+    let msg, tag;
+    if (m.r === it.r && m.th === mod360(90 - t)) { tag = 'north_cw'; msg = '你是從<b>正北</b>開始、<b>順時針</b>量的嗎？那是生活中的方位角。雷達的角度要從<b>極軸（正東）</b>開始，<b>逆時針</b>量。'; }
+    else if (m.r === it.r && m.th === mod360(-t)) { tag = 'clockwise'; msg = '方向轉反了！角度要從極軸<b>逆時針</b>轉，也就是先往北方（上方）轉。'; }
+    else if (m.r !== it.r && m.th === t) { tag = 'distance'; msg = '方向對了！距離再數一次：從雷達站往外，每一圈是 1 格。'; }
+    else { tag = 'other'; msg = '還差一點。先從黃色的極軸（正東）開始逆時針轉到指定角度，再沿著那個方向數格數。'; }
+    this.fail(msg, tag, { r: m.r, th: m.th });
+  },
+  checkRead() {
+    if (this.done) return;
+    const it = L1_ITEMS[this.idx];
+    const d = parseVal(KP.fields.d), a = parseVal(KP.fields.a);
+    if (isNaN(d) || isNaN(a)) { feedback('請先填完距離和角度，再回報。', 'info'); return; }
+    this.attempts++;
+    const dT = it.km ? it.r * 35 : it.r, t = it.th, am = mod360(a);
+    const dOk = near(d, dT), aOk = near(am, t);
+    const inRange = a > -180 - 0.01 && a < 360 - 0.01;   // 手冊：溝通用的角度範圍 −180° 到 360°
+    if (dOk && aOk && inRange) {
+      const neg = t - 360;   // 終邊在第三、四象限：正角、負角都可以
+      const note = a < 0
+        ? `${KP.fields.a}° 代表從極軸<b>順時針</b>轉 ${Math.abs(a)}°，也可以說成逆時針轉 ${t}°，兩種說法都對。`
+        : (t > 180 ? `也可以說成從極軸<b>順時針</b>轉 ${-neg}°，記作 ${neg}°，兩種說法都對。` : '');
+      return this.success(`距離 ${dT} ${it.km ? '公里' : '格'}，角度 ${KP.fields.a}°`, a < 0 ? 'negative_angle' : 'ok', { d, a }, note);
+    }
+    if (dOk && aOk && !inRange) {
+      this.fail('方向對了，但轉超過一圈了。不必多繞，用 −180° 到 360° 之間的角度回報就好。', 'over_turn', { d, a });
+      return;
+    }
+    const msgs = []; let tag = '';
+    if (!dOk) {
+      if (it.km && near(d, it.r)) { tag = 'km_unit'; msgs.push('你回報的是<b>格數</b>。1 格 = 35 公里，請換算成公里。'); }
+      else { tag = 'distance'; msgs.push('距離再數一次：每一圈是 1 格。' + (it.km ? '最後記得換算成公里。' : '')); }
+    }
+    if (!aOk) {
+      if (near(am, mod360(90 - t))) { tag = tag || 'north_cw'; msgs.push(`${KP.fields.a}° 是從<b>正北順時針</b>量的方位角。雷達的角度要從<b>極軸（正東）</b>開始量：逆時針記正、順時針記負。`); }
+      else if (near(am, mod360(-t))) { tag = tag || 'mirror'; msgs.push('看看目標在極軸的<b>上方還是下方</b>？逆時針轉記正角，順時針轉記負角。'); }
+      else { tag = tag || 'angle'; msgs.push('角度再檢查一次：從極軸開始量，逆時針記正、順時針記負，細線每 15° 一條。'); }
+    }
+    this.fail(msgs.join('<br>'), tag, { d, a });
+  },
+  success(text, tag, answer, extra = '') {
+    const it = L1_ITEMS[this.idx];
+    this.done = true; pickEnabled = false;
+    report({ level: 1, item: it.key, answer, correct: true, tag, attempt: this.attempts });
+    this.records.push({ name: it.name, text });
+    this.placed.push(this.placedObj(it));
+    scene.objects = [...this.placed];
+    scene.marker = null;
+    let msg = `✅ <b>定位成功！</b>${it.name}：${text}。`;
+    if (it.key === 'H') {
+      scene.anim = { t0: 0, dur: 1800, to: 390, r: 2 };
+      msg = '✅ <b>定位成功！</b>直升機繞了 390°，剛好停在<b>補給船的正上方</b>，和任務 5 是同一個位置！';
+    }
+    if (extra) msg += '<br>💡 ' + extra;
+    feedback(msg, 'ok');
+    setStatus('定位成功', 'ok');
+    $('btn-submit').classList.add('hidden');
+    $('btn-next').classList.remove('hidden');
+    kpHide();
+  },
+  fail(msg, tag, answer) {
+    const it = L1_ITEMS[this.idx];
+    report({ level: 1, item: it.key, answer, correct: false, tag, attempt: this.attempts });
+    if (this.attempts >= 3) {
+      this.done = true; pickEnabled = false;
+      const p = this.pos(it); scene.ghost = p;
+      const ans = it.km ? `距離 ${it.r * 35} 公里，角度 ${it.th}°` : `距離 ${it.r} 格，角度 ${it.th}°`;
+      this.records.push({ name: it.name, text: ans + '（看提示）' });
+      this.placed.push(this.placedObj(it));
+      feedback(`${msg}<br><br>正確答案：<b>${ans}</b>，已用綠色虛線標出。看看它和你的答案差在哪裡，再前往下一個任務。`, 'warn');
+      setStatus('已顯示正確位置', 'warn');
+      $('btn-submit').classList.add('hidden');
+      $('btn-next').classList.remove('hidden');
+      kpHide();
+    } else {
+      const extra = this.attempts === 2 ? '<br>💡 提示：極軸是黃色箭頭（正東）；逆時針就是先往上（北方）轉。' : '';
+      feedback(`❌ ${msg}${extra}`, 'bad');
+      setStatus('定位偏差，請再試一次', 'bad');
+    }
+  },
+  next() {
+    this.idx++;
+    if (this.idx >= L1_ITEMS.length) { kpHide(); pickEnabled = false; showOutro(1); }
+    else this.startItem();
+  }
+};
+
+/* =========================================================
+   第二關：坐標翻譯機
+   ========================================================= */
+const L2_ITEMS = [
+  { kind: 'p2r', key: 'P', name: '補給艦 P', emoji: '🚢', r: 2, th: 30, x: SQ3, y: 1, xs: '√3', ys: '1', xt: R`\sqrt{3}`, yt: '1', polar: R`P[2,\ 30^\circ]`, pt: 'P[2, 30°]', maxR: 3, slope: R`\dfrac{y}{x} = \dfrac{1}{\sqrt{3}}` },
+  { kind: 'p2r', key: 'Q', name: '漁船 Q', emoji: '🚢', r: 4, th: 120, x: -2, y: 2 * SQ3, xs: '−2', ys: '2√3', xt: '-2', yt: R`2\sqrt{3}`, polar: R`Q[4,\ 120^\circ]`, pt: 'Q[4, 120°]', maxR: 5, slope: R`\dfrac{y}{x} = \dfrac{2\sqrt{3}}{-2} = -\sqrt{3}` },
+  { kind: 'p2r', key: 'R', name: '救生艇 R', emoji: '🛟', r: 3, th: 270, x: 0, y: -3, xs: '0', ys: '−3', xt: '0', yt: '-3', polar: R`R[3,\ 270^\circ]`, pt: 'R[3, 270°]', maxR: 4 },
+  { kind: 'r2p', key: 'S', name: '救生筏 S', emoji: '🛟', x: 3, y: 4, r: 5, xs: '3', ys: '4', rect: R`S(3,\ 4)`, pt: 'S(3, 4)', maxR: 6,
+    modal: { who: 'intel', title: '緊急通訊：情報官 阿程', html: `直升機傳回了救生筏的 GPS 坐標 ${M('(x,y)')}！<br>雷達站要知道它們<strong class="text-sky-300">離雷達站多遠</strong>才能調整天線，請你反過來算出 ${M('r')}。` } },
+  { kind: 'r2p', key: 'T', name: '救生筏 T', emoji: '🛟', x: -6, y: 8, r: 10, xs: '−6', ys: '8', rect: R`T(-6,\ 8)`, pt: 'T(−6, 8)', maxR: 11 }
+];
+
+const L2 = {
+  init() {
+    state.level = 2;
+    $('main-app').dataset.lv = 'l2';
+    Object.assign(view, { maxR: 5, axes: true, polarHint: false, land: true, station: true });
+    Object.assign(scene, { objects: [], marker: null, ghost: null, tri: null, anim: null });
+    pickEnabled = false; onPick = null;
+    $('btn-restart').classList.remove('hidden');
+    $('stage-timer').classList.add('hidden');
+
+    setPanel('🌀 颱風危機：坐標翻譯機', '極坐標與直角坐標的轉換');
+    this.idx = 0; this.records = [];
+    this.startItem();
+  },
+  startItem() {
+    const it = L2_ITEMS[this.idx];
+    if (it.modal) showMissionModal(it.modal, () => this.beginItem());
+    else this.beginItem();
+  },
+  beginItem() {
+    const it = L2_ITEMS[this.idx];
+    this.attempts = 0; this.done = false;
+    view.maxR = it.maxR || 5;
+    if (it.kind === 'p2r') scene.tri = { x: it.x, y: it.y, th: it.th, rs: String(it.r), xs: '?', ys: '?' };
+    else scene.tri = { x: it.x, y: it.y, th: null, rs: '?', xs: it.xs, ys: it.ys };
+    scene.objects = [];
+    $('legend').innerHTML = `<b>${it.kind === 'p2r' ? '雷達回報 ' : 'GPS 回報 '}${it.pt}</b><br><span style="color:#38bdf8">藍：r</span>　<span style="color:#f472b6">粉：x</span>　<span style="color:#a3e635">綠虛線：y</span>　<span style="color:#fbbf24">黃：θ</span>`;
+    setStatus(`翻譯中：${it.name}`);
+    this.render();
+  },
+  render() {
+    const it = L2_ITEMS[this.idx];
+    $('panel-data').innerHTML = progressDots(L2_ITEMS.length, this.idx);
+    let desc, body, hint;
+    if (it.kind === 'p2r') {
+      desc = `雷達回報 ${M(it.polar)}。請翻譯成直升機看得懂的直角坐標 ${M('(x,y)')}。`;
+      body = `<div class="bg-white rounded-lg p-3 border border-sky-100 flex flex-wrap items-center justify-center gap-1 text-lg font-bold text-slate-700">
+          <span>(</span>${fieldBtn('x')}<span>,</span>${fieldBtn('y')}<span>)</span></div>
+        <p class="text-xs text-slate-500 mt-2">可以用 √ 鍵輸入 √3、2√3 這種寫法，也可以用計算機算出近似值輸入（例如 1.73）。</p>
+        <button id="btn-submit" class="${btnMain} kp-dup">🚁 傳送給直升機</button>`;
+      hint = '看雷達上的直角三角形：藍色斜邊是 r，粉紅色躺在 x 軸上的那邊是 x，綠色虛線（垂足）是 y。想想銳角三角比 cos、sin 的定義。';
+    } else {
+      desc = `救生筏的 GPS 回報 ${M(it.rect)}。雷達站要知道它離雷達站多遠，請算出 ${M('r')}（可以用計算機搭配畢氏定理）。`;
+      body = `<div class="bg-white rounded-lg p-3 border border-sky-100 flex items-center justify-center gap-2 text-lg font-bold text-slate-700">
+          <span>${M('r')} =</span>${fieldBtn('r')}</div>
+        <button id="btn-submit" class="${btnMain} kp-dup">📡 傳送給雷達站</button>`;
+      hint = '雷達上的直角三角形，兩股長是 |x| 和 |y|，r 是斜邊。';
+    }
+    $('tasks').innerHTML = `
+      <section class="bg-sky-50 p-4 rounded-xl border border-sky-200">
+        <div class="flex justify-between items-center mb-2 gap-2">
+          <h2 class="font-bold text-sky-900 text-base">${it.emoji} 任務 ${this.idx + 1}：${it.kind === 'p2r' ? '翻譯' : '算出'}${it.name}${it.kind === 'p2r' ? '的位置' : '的距離'}</h2>
+          <button id="btn-hint" class="text-amber-600 hover:text-amber-700 text-sm font-bold shrink-0 px-2 py-1 -mr-2 rounded-lg active:bg-amber-100">💡 提示</button>
+        </div>
+        <p class="text-sm text-slate-700 mb-3 leading-relaxed">${desc}</p>
+        <div id="hint-box" class="hidden mb-3 bg-amber-50 border border-amber-200 text-amber-800 p-3 rounded-lg text-sm">${hint}</div>
+        ${body}
+        <p id="fb" class="hidden"></p>
+        <button id="btn-next" class="${btnNext}">${this.idx === L2_ITEMS.length - 1 ? '📞 回報指揮中心' : '接收新狀況：下一個任務 ➡️'}</button>
+      </section>`;
+    $('btn-hint').onclick = () => $('hint-box').classList.toggle('hidden');
+    $('btn-submit').onclick = () => this.check();
+    $('btn-next').onclick = () => this.next();
+    kpSetup(true, () => this.check());
+    typeset($('tasks'));
+  },
+  check() {
+    if (this.done) return;
+    const it = L2_ITEMS[this.idx];
+    let ok, msg = '', tag = 'other', answer;
+    if (it.kind === 'p2r') {
+      const x = parseVal(KP.fields.x), y = parseVal(KP.fields.y);
+      if (isNaN(x) || isNaN(y)) { feedback('請把 x 和 y 都填好；√ 的後面要接數字，例如 2√3。', 'info'); return; }
+      answer = { x: KP.fields.x, y: KP.fields.y };
+      this.attempts++;
+      ok = near(x, it.x) && near(y, it.y);
+      if (!ok) {
+        const swap = near(x, it.y) && near(y, it.x);
+        const absOk = near(Math.abs(x), Math.abs(it.x)) && near(Math.abs(y), Math.abs(it.y));
+        if (it.key === 'R' && (swap || absOk || (near(Math.abs(x), 3) && near(y, 0)))) { tag = 'axis'; msg = '救生艇 R 落在哪一條軸上？想想 x、y 哪一個是 0，另一個是正還是負。'; }
+        else if (swap) { tag = 'swap'; msg = 'x、y 對調了。x 是三角形躺在 x 軸上的那一邊，y 是直立的那一邊。'; }
+        else if (absOk) { tag = 'sign'; msg = `數字大小對了，符號再檢查一次：${it.name}在第幾象限？x、y 應該是正還是負？`; }
+        else { msg = '看看雷達上的直角三角形：斜邊是 r，躺在 x 軸上的那邊是 x，直立的那邊是 y。'; }
+        if (this.attempts === 2) msg += `<br>💡 提示：還記得 ${M(R`\cos\theta = \dfrac{x}{r}`)}、${M(R`\sin\theta = \dfrac{y}{r}`)} 嗎？`;
+      }
+    } else {
+      const r = parseVal(KP.fields.r);
+      if (isNaN(r)) { feedback('請先填好 r，再傳送。', 'info'); return; }
+      answer = { r: KP.fields.r };
+      this.attempts++;
+      ok = near(r, it.r);
+      if (!ok) {
+        if (near(r, it.x + it.y) || near(r, Math.abs(it.x) + Math.abs(it.y))) { tag = 'add'; msg = '把 x 和 y 直接相加不是距離喔！r 是直角三角形的斜邊。'; }
+        else if (near(r, it.x * it.x + it.y * it.y)) { tag = 'no_sqrt'; msg = '快完成了！算出平方和之後，別忘了開根號。'; }
+        else if (r < 0) { tag = 'negative'; msg = 'r 是距離，一定不會是負的。'; }
+        else { msg = '畫出直角三角形：兩股長是 |x| 和 |y|，r 是斜邊。'; }
+        if (this.attempts === 2) msg += `<br>💡 提示：畢氏定理 ${M('r^2 = x^2 + y^2')}`;
+      }
+    }
+    report({ level: 2, item: it.key, answer, correct: ok, tag: ok ? 'ok' : tag, attempt: this.attempts });
+    if (ok) return this.finishItem(true);
+    if (this.attempts >= 3) return this.finishItem(false, msg);
+    feedback('❌ ' + msg, 'bad');
+    setStatus('翻譯錯誤，請再試一次', 'bad');
+  },
+  finishItem(ok, msg) {
+    const it = L2_ITEMS[this.idx];
+    this.done = true;
+    let rec;
+    if (it.kind === 'p2r') {
+      scene.tri.xs = it.xs; scene.tri.ys = it.ys;
+      rec = { name: it.name, polar: it.polar.replace(/^[A-Z]/, ''), rect: `(${it.xt},\\ ${it.yt})` };
+    } else {
+      scene.tri.rs = String(it.r);
+      rec = { name: it.name, polar: `r = ${it.r}`, rect: it.rect.replace(/^[A-Z]/, '') };
+    }
+    this.records.push(rec);
+    const ansTex = it.kind === 'p2r' ? `(x,y) = (${it.xt},\\ ${it.yt})` : `r = ${it.r}`;
+    const slope = it.slope ? `<br>💡 斜邊的斜率 ${M(it.slope)}，正好等於 ${M(`\\tan ${it.th}^\\circ`)}。` : '';
+    if (ok) { feedback(`✅ <b>翻譯成功！</b>${M(ansTex)}，${it.kind === 'p2r' ? '直升機已經出發。' : '雷達天線已經轉向。'}${slope}`, 'ok'); setStatus('翻譯成功', 'ok'); }
+    else { feedback(`${msg}<br><br>正確答案：${M(ansTex)}。看看雷達上的三角形，想想差在哪裡，再前往下一個任務。`, 'warn'); setStatus('已顯示正確答案', 'warn'); }
+    $('btn-submit').classList.add('hidden');
+    $('btn-next').classList.remove('hidden');
+    kpHide();
+  },
+  next() {
+    this.idx++;
+    if (this.idx >= L2_ITEMS.length) { kpHide(); showOutro(2); }
+    else this.startItem();
+  }
+};
+
+/* =========================================================
+   第三關：象限挑戰（限時、一次）
+   ========================================================= */
+const L3_ITEMS = [
+  { x: -2, y: -2, xt: '(-2,\\ -2)', opts: [
+    { t: R`[2\sqrt{2},\ 225^\circ]`, ok: true },
+    { t: R`[2\sqrt{2},\ 45^\circ]`, tag: '只看 tanθ' },
+    { t: R`[2\sqrt{2},\ 135^\circ]`, tag: '象限判斷錯' },
+    { t: R`[2,\ 225^\circ]`, tag: 'r 只取 |x|' } ] },
+  { x: -3, y: 3, xt: '(-3,\\ 3)', opts: [
+    { t: R`[3\sqrt{2},\ 135^\circ]`, ok: true },
+    { t: R`[3\sqrt{2},\ 315^\circ]`, tag: '只看 tanθ' },
+    { t: R`[3\sqrt{2},\ 45^\circ]`, tag: '忽略負號' },
+    { t: R`[6,\ 135^\circ]`, tag: 'r 用 |x| + |y|' } ] },
+  { x: 2, y: -2, xt: '(2,\\ -2)', opts: [
+    { t: R`[2\sqrt{2},\ 315^\circ]`, ok: true },
+    { t: R`[2\sqrt{2},\ 135^\circ]`, tag: '只看 tanθ' },
+    { t: R`[2\sqrt{2},\ 45^\circ]`, tag: '忽略負號' },
+    { t: R`[4,\ 315^\circ]`, tag: 'r 用 |x| + |y|' } ] },
+  { x: 0, y: -4, xt: '(0,\\ -4)', opts: [
+    { t: R`[4,\ 270^\circ]`, ok: true },
+    { t: R`[4,\ 90^\circ]`, tag: '忽略負號' },
+    { t: R`[-4,\ 90^\circ]`, tag: 'r 取負值' },
+    { t: R`[4,\ 0^\circ]`, tag: '以為 x = 0 時 θ = 0°' } ] },
+  { x: -3, y: 4, xt: '(-3,\\ 4)', calc: true, opts: [
+    { t: R`[5,\ 126.9^\circ]`, ok: true },
+    { t: R`[5,\ -53.1^\circ]`, tag: '直接採用計算機的 tan⁻¹' },
+    { t: R`[5,\ 53.1^\circ]`, tag: '忽略負號' },
+    { t: R`[7,\ 126.9^\circ]`, tag: 'r 用 |x| + |y|' } ] },
+  { x: -4, y: -3, xt: '(-4,\\ -3)', calc: true, opts: [
+    { t: R`[5,\ 216.9^\circ]`, ok: true },
+    { t: R`[5,\ 36.9^\circ]`, tag: '只看 tanθ' },
+    { t: R`[5,\ 143.1^\circ]`, tag: '象限判斷錯' },
+    { t: R`[25,\ 216.9^\circ]`, tag: '忘了開根號' } ] }
+];
+
+const L3 = {
+  started: false, done: false, answers: [], order: [], q: 0, startAt: 0, endAt: 0, timer: null,
+  auto: false, score: 0, used: 0, busy: false, sending: false,
+  reset() {
+    clearInterval(this.timer);
+    Object.assign(this, { started: false, done: false, answers: [], order: [], q: 0, startAt: 0, endAt: 0, timer: null, auto: false, score: 0, used: 0, busy: false, sending: false });
+  },
+  progKey() { return 'typhoon.l3.' + (state.user ? state.user.account : ''); },
+  saveProg() { store.set(this.progKey(), { order: this.order, answers: this.answers }); },
+  inProgress() { return this.started && !this.done; },
+  restore(l3, serverNow) {
+    this.reset();
+    if (!l3) return;
+    if (l3.submitted) { this.done = true; this.score = l3.score; this.used = (l3.used_seconds || 0) * 1000; this.auto = !!l3.auto; return; }
+    this.arm(l3.started_at, serverNow);
+  },
+  arm(startedAt, serverNow) {
+    const skew = Date.now() - new Date(serverNow).getTime();   // 以伺服器時間為準
+    this.startAt = new Date(startedAt).getTime() + skew;
+    this.endAt = this.startAt + state.timeLimit * 1000;
+    this.started = true;
+    const p = store.get(this.progKey());
+    if (p && Array.isArray(p.order) && p.order.length === L3_ITEMS.length) {
+      this.order = p.order;
+      this.answers = Array.isArray(p.answers) ? p.answers : new Array(L3_ITEMS.length).fill(null);
+    } else {
+      this.order = L3_ITEMS.map(it => it.opts.map((_, i) => i).sort(() => Math.random() - 0.5));
+      this.answers = new Array(L3_ITEMS.length).fill(null);
+      this.saveProg();
+    }
+  },
+  init() {
+    state.level = 3;
+    $('main-app').dataset.lv = '';
+    Object.assign(view, { maxR: 5, axes: true, polarHint: false, land: true, station: true });
+    Object.assign(scene, { objects: [], marker: null, ghost: null, tri: null, anim: null });
+    pickEnabled = false; onPick = null; kpHide();
+    $('btn-restart').classList.add('hidden');
+    $('legend').innerHTML = 'r ≥ 0<br>可以使用計算機';
+    setPanel('🌀 颱風危機：象限挑戰', `限時 ${Math.round(state.timeLimit / 60 * 10) / 10} 分鐘，只能作答一次`);
+    if (this.done) this.renderResult();
+    else if (this.started) { this.startTimer(); this.renderQuestion(); }
+    else this.renderIntro();
+  },
+  renderIntro() {
+    $('stage-timer').classList.add('hidden');
+    setStatus('等待開始作答', 'warn');
+    $('panel-data').innerHTML = '';
+    $('tasks').innerHTML = `
+      <section class="bg-red-50 p-4 rounded-xl border border-red-200">
+        <h2 class="font-bold text-red-800 text-base mb-3">⏱️ 撤離任務規則</h2>
+        <ul class="text-sm text-slate-700 space-y-2 leading-relaxed list-disc pl-5">
+          <li>共 6 個撤離點，每題從四個指令中選出正確的極坐標，可以使用計算機。</li>
+          <li>限時 ${fmtTime(state.timeLimit * 1000)}，時間到系統會自動送出。</li>
+          <li>只有一次機會，開始後不能重來；不小心重新整理，計時也不會停。</li>
+          <li>作答時不顯示對錯，送出前都可以回頭修改。</li>
+        </ul>
+        <div id="start-area">
+          <button id="btn-l3-start" class="${btnBase} bg-red-600 hover:bg-red-700 !py-3 !text-base">開始作答</button>
+        </div>
+      </section>`;
+    $('btn-l3-start').onclick = () => {
+      $('start-area').innerHTML = `<div class="mt-3 bg-white border border-red-300 rounded-lg p-3 text-sm text-red-800">確定要開始嗎？開始後計時不會暫停，也不能重來。
+        <div class="flex gap-2 mt-3"><button id="l3-no" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 rounded-lg">再想想</button><button id="l3-yes" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg">確定開始</button></div></div>`;
+      $('l3-no').onclick = () => this.renderIntro();
+      $('l3-yes').onclick = () => this.start();
+    };
+  },
+  async start() {
+    if (this.busy) return;
+    this.busy = true;
+    $('start-area').innerHTML = '<p class="mt-3 text-sm text-slate-600 text-center">連線中……</p>';
+    try {
+      const r = await API.l3Start();
+      if (!r || !r.ok) {
+        if (r && r.reason === 'login') { forceLogin('登入已過期，請重新登入。'); return; }
+        const msg = r && r.reason === 'locked' ? '請先輸入第三關的授權碼。' : '無法開始作答，請稍後再試。';
+        $('start-area').innerHTML = `<p class="mt-3 text-sm text-red-700 text-center">${msg}</p>`;
+        return;
+      }
+      if (r.submitted) { this.done = true; this.score = r.score; this.used = (r.used_seconds || 0) * 1000; this.renderResult(); return; }
+      this.arm(r.started_at, r.server_now);
+      report({ type: 'l3_start', level: 3 });
+      this.q = 0;
+      this.startTimer();
+      this.renderQuestion();
+    } catch (e) {
+      $('start-area').innerHTML = `<p class="mt-3 text-sm text-red-700 text-center">無法連上伺服器，請確認網路。</p><button id="btn-l3-retry" class="${btnBase} bg-red-600 hover:bg-red-700">再試一次</button>`;
+      $('btn-l3-retry').onclick = () => this.start();
+    } finally { this.busy = false; }
+  },
+  startTimer() {
+    clearInterval(this.timer);
+    $('stage-timer').classList.remove('hidden');
+    this.timer = setInterval(() => this.tick(), 250);
+    this.tick();
+  },
+  tick() {
+    const left = this.endAt - Date.now();
+    const txt = fmtTime(left);
+    $('stage-timer').textContent = txt;
+    const pt = $('panel-timer');
+    if (pt) { pt.textContent = txt; pt.classList.toggle('text-red-600', left <= 30000); }
+    if (left <= 0 && !this.done && !this.sending) this.finish(true);
+  },
+  renderQuestion() {
+    if (this.done || this.sending) return;
+    const it = L3_ITEMS[this.q];
+    scene.objects = [{ x: it.x, y: it.y, emoji: '📍', label: `撤離點 ${this.q + 1}`, size: 26 }];
+    setStatus(`撤離點 ${this.q + 1}：下達指令`, 'idle');
+    const chips = L3_ITEMS.map((_, i) => {
+      const c = i === this.q ? 'bg-red-600 text-white' : this.answers[i] != null ? 'bg-sky-100 text-sky-800 border-sky-300' : 'bg-white text-slate-500 border-slate-300';
+      return `<button data-q="${i}" class="chip w-8 h-8 rounded-full border text-sm font-bold ${c}">${i + 1}</button>`;
+    }).join('');
+    $('panel-data').innerHTML = `<div class="flex items-center justify-between gap-2">
+        <div class="flex gap-1.5 flex-wrap">${chips}</div>
+        <div class="text-right shrink-0"><div class="text-[11px] text-slate-500 font-bold">剩餘時間</div><div id="panel-timer" class="font-black text-2xl tabular-nums text-slate-800">${fmtTime(this.endAt - Date.now())}</div></div>
+      </div>`;
+    document.querySelectorAll('.chip').forEach(b => b.onclick = () => { this.q = +b.dataset.q; this.renderQuestion(); });
+    const opts = this.order[this.q].map(i => {
+      const sel = this.answers[this.q] === i;
+      return `<button data-i="${i}" class="opt-btn rounded-xl border-2 py-3 px-2 text-lg font-bold transition-colors ${sel ? 'border-red-500 bg-red-50 text-red-800' : 'border-slate-300 bg-white text-slate-800 hover:border-red-300'}">${M(it.opts[i].t)}</button>`;
+    }).join('');
+    const last = this.q === L3_ITEMS.length - 1;
+    $('tasks').innerHTML = `
+      <section class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+        <h2 class="font-bold text-slate-900 text-base mb-1">📍 撤離點 ${this.q + 1}</h2>
+        <p class="text-sm text-slate-700 mb-3">直升機回報 ${M(it.xt)}，選出正確的撤離指令 ${M(R`[r,\theta]`)}${it.calc ? '（角度四捨五入到小數第一位）' : ''}：</p>
+        <div class="grid grid-cols-2 gap-2">${opts}</div>
+        <div class="flex gap-2 mt-4">
+          <button id="q-prev" class="flex-1 bg-slate-200 hover:bg-slate-300 disabled:opacity-40 text-slate-700 font-bold py-2.5 rounded-lg text-sm" ${this.q === 0 ? 'disabled' : ''}>⬅️ 上一題</button>
+          ${last ? '<button id="q-submit" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-lg text-sm">📨 送出全部指令</button>'
+                 : '<button id="q-next" class="flex-1 bg-sky-600 hover:bg-sky-700 text-white font-bold py-2.5 rounded-lg text-sm">下一題 ➡️</button>'}
+        </div>
+        <div id="confirm-area"></div>
+      </section>`;
+    document.querySelectorAll('.opt-btn').forEach(b => b.onclick = () => {
+      this.answers[this.q] = +b.dataset.i;
+      this.saveProg();
+      document.querySelectorAll('.opt-btn').forEach(o => {
+        const on = o === b;
+        o.classList.toggle('border-red-500', on); o.classList.toggle('bg-red-50', on); o.classList.toggle('text-red-800', on);
+        o.classList.toggle('border-slate-300', !on); o.classList.toggle('bg-white', !on); o.classList.toggle('text-slate-800', !on);
+      });
+      const chip = document.querySelector(`.chip[data-q="${this.q}"]`);
+      if (chip) chip.classList.add('ring-2', 'ring-sky-300');
+    });
+    $('q-prev').onclick = () => { this.q--; this.renderQuestion(); };
+    if (last) $('q-submit').onclick = () => this.askSubmit();
+    else $('q-next').onclick = () => { this.q++; this.renderQuestion(); };
+    typeset($('tasks'));
+  },
+  askSubmit() {
+    const left = this.answers.filter(a => a == null).length;
+    $('confirm-area').innerHTML = `<div class="mt-3 bg-white border border-red-300 rounded-lg p-3 text-sm text-red-800">${left ? `還有 <b>${left} 題</b>沒選，` : ''}送出後就不能修改了，確定送出嗎？
+      <div class="flex gap-2 mt-3"><button id="s-no" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 rounded-lg">再檢查一下</button><button id="s-yes" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg">確定送出</button></div></div>`;
+    $('s-no').onclick = () => { $('confirm-area').innerHTML = ''; };
+    $('s-yes').onclick = () => this.finish(false);
+    $('confirm-area').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  },
+  async finish(auto) {
+    if (this.done || this.sending) return;
+    this.sending = true; this.auto = auto;
+    clearInterval(this.timer);
+    $('stage-timer').classList.add('hidden');
+    $('panel-data').innerHTML = '';
+    $('tasks').innerHTML = `<section class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center text-sm text-slate-600">${auto ? '時間到，' : ''}正在送出撤離指令……</section>`;
+    try {
+      const r = await API.l3Submit(this.answers, auto);
+      if (!r || !r.ok) {
+        if (r && r.reason === 'login') { this.sending = false; forceLogin('登入已過期，請重新登入。'); return; }
+        throw new Error((r && r.reason) || 'submit');
+      }
+      this.done = true;
+      this.score = r.score; this.used = (r.used_seconds || 0) * 1000;
+      L3_ITEMS.forEach((it, i) => {
+        const a = this.answers[i], opt = a == null ? null : it.opts[a];
+        report({ level: 3, item: i + 1, answer: opt ? opt.t : null, correct: !!(opt && opt.ok), tag: opt ? (opt.ok ? 'ok' : opt.tag) : 'blank' });
+      });
+      store.del(this.progKey());
+      this.renderResult();
+    } catch (e) {
+      $('tasks').innerHTML = `<section class="bg-red-50 p-4 rounded-xl border border-red-200 text-center">
+        <p class="text-sm text-red-800">送出失敗，請確認網路連線。你的答案還保留在這台裝置上。</p>
+        <button id="btn-l3-resend" class="${btnBase} bg-red-600 hover:bg-red-700">重新送出</button></section>`;
+      $('btn-l3-resend').onclick = () => this.finish(auto);
+    } finally { this.sending = false; }
+  },
+  renderResult() {
+    $('stage-timer').classList.add('hidden');
+    scene.objects = [];
+    setStatus('撤離指令已送出', 'ok');
+    $('panel-data').innerHTML = '';
+    let review = '';
+    if (CONFIG.revealLevel3AnswersAfterSubmit && this.answers.length) {
+      review = `<div class="mt-4 space-y-2">${L3_ITEMS.map((it, i) => {
+        const a = this.answers[i], opt = a == null ? null : it.opts[a], right = it.opts.find(o => o.ok);
+        const ok = opt && opt.ok;
+        return `<div class="bg-white border ${ok ? 'border-green-300' : 'border-red-300'} rounded-lg p-2 text-sm text-left">
+          <div class="font-bold">${ok ? '✅' : '❌'} 撤離點 ${i + 1}：${M(it.xt)}</div>
+          <div>你的指令：${opt ? M(opt.t) : '未作答'}${opt && !opt.ok ? `（${opt.tag}）` : ''}</div>
+          ${ok ? '' : `<div>正確指令：${M(right.t)}</div>`}</div>`;
+      }).join('')}</div>`;
+    }
+    $('tasks').innerHTML = `
+      <section class="bg-green-50 p-4 rounded-xl border border-green-200 text-center">
+        <h2 class="font-bold text-green-800 text-lg mb-1">📨 撤離指令已送出</h2>
+        ${this.auto ? '<p class="text-sm text-amber-700 mb-2">時間到，系統已自動送出你的指令。</p>' : ''}
+        <div class="text-5xl font-black text-slate-800 my-3">${this.score} <span class="text-2xl text-slate-400">/ ${L3_ITEMS.length}</span></div>
+        <p class="text-sm text-slate-600">用時 ${fmtTime(this.used)}</p>
+        <p class="text-sm text-slate-600 mt-3 leading-relaxed">${CONFIG.revealLevel3AnswersAfterSubmit ? '' : '正解與解說由老師公布，排行榜以座號顯示。'}</p>
+        ${review}
+        <button id="btn-l3-report" class="${btnMain} animate-pulse">📞 回報指揮中心</button>
+      </section>`;
+    $('btn-l3-report').onclick = () => showOutro(3);
+    typeset($('tasks'));
+  }
+};
+
+const LEVELS = { 1: L1, 2: L2, 3: L3 };
+boot();
+</script>
+</body>
+</html>
