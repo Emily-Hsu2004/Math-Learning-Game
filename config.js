@@ -7,7 +7,7 @@ window.GAME_CONFIG = {
         supabaseUrl：Project URL，例如 'https://abcdefgh.supabase.co'
         supabaseKey：Publishable key（sb_publishable_ 開頭）或舊版 anon key
         ⚠️ 絕對不要貼 secret key 或 service_role key */
-  supabaseUrl: 'https://ziygsfrsqtbjwunxkmow.supabase.co/rest/v1/',
+  supabaseUrl: 'https://ziygsfrsqtbjwunxkmow.supabase.co',
   supabaseKey: 'sb_publishable_-u1GZ1nomwxo9f-th2S7iA_SOVTI4pw',
 
   /* ② 示範模式：上面兩格空白時使用。帳號和授權碼寫在這裡，紀錄只存在各自的裝置。
