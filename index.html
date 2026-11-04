@@ -254,14 +254,7 @@
   </div>
 </div>
 
-<script>
-  /* 每次都載入最新的 config.js（避開瀏覽器快取），並記下載入失敗或格式錯誤 */
-  window.__configError = null; window.__configMissing = false;
-  window.addEventListener('error', function (e) {
-    if (e.filename && e.filename.indexOf('config.js') !== -1) window.__configError = e.message + '（第 ' + e.lineno + ' 行）';
-  }, true);
-  document.write('<script src="config.js?t=' + Date.now() + '" onerror="window.__configMissing=true"><\/script>');
-</script>
+<script src="config.js"></script>
 <script>
 /* =========================================================
    設定：老師請改 config.js，不用改這個檔案
@@ -275,16 +268,6 @@ const DEFAULTS = {
 const CONFIG = Object.assign({}, DEFAULTS, window.GAME_CONFIG || {});
 CONFIG.demo = Object.assign({}, DEFAULTS.demo, CONFIG.demo || {});
 const ONLINE = !!(CONFIG.supabaseUrl && CONFIG.supabaseKey);
-/* 為什麼是示範模式：顯示在登入畫面，方便排除問題 */
-function configProblem() {
-  if (window.__configMissing) return '找不到 config.js。請確認它和 index.html 放在同一層，檔名全部小寫。';
-  if (window.__configError) return 'config.js 格式有誤：' + window.__configError + '。最常見的原因是引號變成全形或彎引號（‘ ’），請改回半形直引號 \' \'。';
-  if (!window.GAME_CONFIG) return 'config.js 有格式錯誤，所以沒有載入。最常見的原因是引號變成全形或彎引號（‘ ’），或少了逗號。';
-  if (!CONFIG.supabaseUrl && !CONFIG.supabaseKey) return 'config.js 的 supabaseUrl 和 supabaseKey 都還是空的。';
-  if (!CONFIG.supabaseUrl) return 'config.js 的 supabaseUrl 還是空的。';
-  if (!CONFIG.supabaseKey) return 'config.js 的 supabaseKey 還是空的。';
-  return '';
-}
 
 /* 瀏覽器儲存（登入狀態、第三關作答進度） */
 const store = {
@@ -569,17 +552,11 @@ $('code-cancel').onclick = () => hideScreen($('code-modal'));
 
 /* 登入 */
 function showLoginError(msg) { const e = $('login-err'); e.textContent = msg; e.classList.remove('hidden'); }
-function showDemoBadge() {
-  if (ONLINE) return;
-  const why = configProblem();
-  $('demo-badge').innerHTML = '示範模式：帳號寫在 config.js，紀錄只存在這台裝置。' + (why ? '<br><span class="text-red-300">' + why + '</span>' : '');
-  $('demo-badge').classList.remove('hidden');
-}
 function showLogin(msg) {
   $('login-status').textContent = '';
   $('btn-login').disabled = false; $('btn-login').textContent = '登入';
   if (msg) showLoginError(msg); else $('login-err').classList.add('hidden');
-  showDemoBadge();
+  if (!ONLINE) $('demo-badge').classList.remove('hidden');
   goTo('login-screen');
 }
 function forceLogin(msg) { API.logout(); state.user = null; state.unlocked = {}; L3.reset(); showLogin(msg); }
@@ -623,10 +600,7 @@ $('btn-logout').onclick = () => {
 
 /* 開啟頁面：已登入就直接進首頁，不用重新登入 */
 async function boot() {
-  showDemoBadge();
-  if (ONLINE && !/^https:\/\/[^/]+\.supabase\.co\/?$/i.test(CONFIG.supabaseUrl.trim())) {
-    console.warn('supabaseUrl 看起來不像 https://xxxx.supabase.co：', CONFIG.supabaseUrl);
-  }
+  if (!ONLINE) $('demo-badge').classList.remove('hidden');
   $('login-status').textContent = '連線中……';
   $('btn-login').disabled = true;
   try {
