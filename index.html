@@ -794,9 +794,21 @@ async function loadSummary() {
   typeset(body);
 }
 
+/* 進第三關前，先向伺服器拿最新的時間設定（老師可能剛改過） */
+async function refreshMe() {
+  try {
+    const me = await API.me();
+    if (me && me.ok) {
+      state.timeLimit = me.time_limit || state.timeLimit;
+      (me.unlocked || []).forEach(l => { state.unlocked[l] = true; });
+    }
+  } catch (e) {}
+}
+
 /* 開場通訊 */
-function openComm(n) {
+async function openComm(n) {
   state.level = n;
+  if (n === 3 && !L3.started) await refreshMe();
   const st = STORY[n];
   goTo('comm-screen', () => {
     const ring = $('comm-ring');
@@ -1757,6 +1769,7 @@ const L3 = {
         return;
       }
       if (r.submitted) { this.done = true; this.score = r.score; this.used = (r.used_seconds || 0) * 1000; this.renderResult(); return; }
+      if (r.time_limit) state.timeLimit = r.time_limit;
       this.arm(r.started_at, r.server_now);
       report({ type: 'l3_start', level: 3 });
       this.q = 0;
