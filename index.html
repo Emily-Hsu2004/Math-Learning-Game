@@ -555,7 +555,7 @@ const STORY = {
     danger: true, title: '緊急狀況：颱風即將登陸', btn: '接收任務',
     intro: [
       { who: 'cmd', html: '工程師，颱風即將登陸！還有<strong class="text-red-400">六個撤離點</strong>必須立刻下達撤離指令。' },
-      { who: 'intel', html: `直升機只回報直角坐標 ${M('(x,y)')}，但撤離指令必須用極坐標 ${M(R`[r,\theta]`)} 下達。可以用計算機幫忙，但別忘了看清楚撤離點在哪個象限！` },
+      { who: 'intel', html: `這次的回報混在一起：有雷達的極坐標 ${M(R`[r,\theta]`)}，也有直升機的直角坐標 ${M('(x,y)')}。用今天學到的方法逐一判斷，別忘了看清楚正負號和角度的方向！` },
       { who: 'cmd', html: '這次只有<strong class="text-red-400">{L3TIME}</strong>，而且只有<strong class="text-red-400">一次機會</strong>，指令送出就不能修改。準備好再開始！' }
     ],
     outroTitle: '任務完成：撤離指令全數送出', outroTag: 'ALL CLEAR 🟢',
@@ -780,7 +780,7 @@ async function loadSummary() {
     l3items = L3_ITEMS.map((it, i) => {
       const a = l3.answers[i], opt = a == null ? null : it.opts[a], ok = !!(opt && opt.ok);
       const st = a == null ? { icon: '⚪', text: '未作答', cls: 'text-slate-400' } : ok ? { icon: '✅', text: '答對', cls: 'text-green-300' } : { icon: '❌', text: '答錯', cls: 'text-red-300' };
-      let extra = `：${M(it.xt)}<div class="text-xs text-slate-300 mt-0.5 ml-6">你的指令：${opt ? M(opt.t) : '—'}`;
+      let extra = `<div class="text-xs text-slate-300 mt-0.5 ml-6">你的指令：${opt ? M(opt.t) : '—'}`;
       if (!ok && res.reveal) extra += `　正確指令：${M(it.opts.find(o => o.ok).t)}`;
       extra += '</div>';
       return li(`撤離點 ${i + 1}`, st, extra);
@@ -1653,39 +1653,48 @@ const L2 = {
 };
 
 /* =========================================================
-   第三關：象限挑戰（限時、一次）
+   第三關：形成性評量（限時、一次）
+   六題依上課順序：讀點、同界角、極 → 直 × 2、求 r、直 → 極
+   每題的正確選項一律放在 opts[0]（伺服器以答案編號 = 0 計分），
+   tag 是錯誤選項對應的迷思，會顯示在老師後台的「題目分析」。
    ========================================================= */
 const L3_ITEMS = [
-  { x: -2, y: -2, xt: '(-2,\\ -2)', opts: [
-    { t: R`[2\sqrt{2},\ 225^\circ]`, ok: true },
-    { t: R`[2\sqrt{2},\ 45^\circ]`, tag: '只看 tanθ' },
-    { t: R`[2\sqrt{2},\ 135^\circ]`, tag: '象限判斷錯' },
-    { t: R`[2,\ 225^\circ]`, tag: 'r 只取 |x|' } ] },
-  { x: -3, y: 3, xt: '(-3,\\ 3)', opts: [
+  { name: '讀點', obj: { x: 3 * Math.cos(150 * Math.PI / 180), y: 3 * Math.sin(150 * Math.PI / 180), emoji: '📍', blink: true },
+    q: `雷達偵測到撤離點的位置（圖上的 📍），讀出它的極坐標 ${M(R`[r,\theta]`)}：`, opts: [
+    { t: R`[3,\ 150^\circ]`, ok: true },
+    { t: R`[150^\circ,\ 3]`, tag: 'r、θ 順序寫反' },
+    { t: R`[3,\ 30^\circ]`, tag: '從 x 軸負向量角' },
+    { t: R`[3,\ 210^\circ]`, tag: '順時針量角' } ] },
+  { name: '同界角',
+    q: `救難直升機從極軸出發，<b>逆時針</b>飛了 ${M(R`420^\circ`)}，停在離雷達站 <b>2 格</b>的地方。依約定（${M(R`0^\circ \le \theta < 360^\circ`)}）寫出它的極坐標：`, opts: [
+    { t: R`[2,\ 60^\circ]`, ok: true },
+    { t: R`[2,\ 420^\circ]`, tag: '沒換到 0°～360°' },
+    { t: R`[2,\ -60^\circ]`, tag: '旋轉方向弄反' },
+    { t: R`[2,\ 300^\circ]`, tag: '用 360° 去減' } ] },
+  { name: '極 → 直（第二象限）',
+    q: `雷達鎖定一艘受困漁船在 ${M(R`[4,\ 150^\circ]`)}，把它換成直角坐標 ${M('(x,y)')}，讓直升機出發：`, opts: [
+    { t: R`(-2\sqrt{3},\ 2)`, ok: true },
+    { t: R`(2\sqrt{3},\ 2)`, tag: '忽略負號' },
+    { t: R`(2,\ -2\sqrt{3})`, tag: 'x、y 對調' },
+    { t: R`(-2,\ 2\sqrt{3})`, tag: 'sin、cos 用反' } ] },
+  { name: '極 → 直（第三象限）',
+    q: `雷達鎖定一艘救生艇在 ${M(R`[4,\ 225^\circ]`)}，把它換成直角坐標 ${M('(x,y)')}：`, opts: [
+    { t: R`(-2\sqrt{2},\ -2\sqrt{2})`, ok: true },
+    { t: R`(2\sqrt{2},\ 2\sqrt{2})`, tag: '忽略負號' },
+    { t: R`(-4,\ -4)`, tag: '把 r 當成 x、y' },
+    { t: R`(-2\sqrt{2},\ 2\sqrt{2})`, tag: 'sin 的正負號錯' } ] },
+  { name: '直 → 極：求 r',
+    q: `直升機回報一處撤離點在 ${M(R`(-3,\ -4)`)}，它離雷達站多遠？`, opts: [
+    { t: R`r = 5`, ok: true },
+    { t: R`r = 7`, tag: 'r 用 |x| + |y|' },
+    { t: R`r = 25`, tag: '忘了開根號' },
+    { t: R`r = \sqrt{7}`, tag: 'r 用 y² − x²' } ] },
+  { name: '直 → 極', obj: { x: -3, y: 3, emoji: '📍', blink: true },
+    q: `直升機回報最後一處撤離點在 ${M(R`(-3,\ 3)`)}（圖上的 📍），寫出它的極坐標 ${M(R`[r,\theta]`)}：`, opts: [
     { t: R`[3\sqrt{2},\ 135^\circ]`, ok: true },
-    { t: R`[3\sqrt{2},\ 315^\circ]`, tag: '只看 tanθ' },
-    { t: R`[3\sqrt{2},\ 45^\circ]`, tag: '忽略負號' },
-    { t: R`[6,\ 135^\circ]`, tag: 'r 用 |x| + |y|' } ] },
-  { x: 2, y: -2, xt: '(2,\\ -2)', opts: [
-    { t: R`[2\sqrt{2},\ 315^\circ]`, ok: true },
-    { t: R`[2\sqrt{2},\ 135^\circ]`, tag: '只看 tanθ' },
-    { t: R`[2\sqrt{2},\ 45^\circ]`, tag: '忽略負號' },
-    { t: R`[4,\ 315^\circ]`, tag: 'r 用 |x| + |y|' } ] },
-  { x: 0, y: -4, xt: '(0,\\ -4)', opts: [
-    { t: R`[4,\ 270^\circ]`, ok: true },
-    { t: R`[4,\ 90^\circ]`, tag: '忽略負號' },
-    { t: R`[-4,\ 90^\circ]`, tag: 'r 取負值' },
-    { t: R`[4,\ 0^\circ]`, tag: '以為 x = 0 時 θ = 0°' } ] },
-  { x: -3, y: 4, xt: '(-3,\\ 4)', calc: true, opts: [
-    { t: R`[5,\ 126.9^\circ]`, ok: true },
-    { t: R`[5,\ -53.1^\circ]`, tag: '直接採用計算機的 tan⁻¹' },
-    { t: R`[5,\ 53.1^\circ]`, tag: '忽略負號' },
-    { t: R`[7,\ 126.9^\circ]`, tag: 'r 用 |x| + |y|' } ] },
-  { x: -4, y: -3, xt: '(-4,\\ -3)', calc: true, opts: [
-    { t: R`[5,\ 216.9^\circ]`, ok: true },
-    { t: R`[5,\ 36.9^\circ]`, tag: '只看 tanθ' },
-    { t: R`[5,\ 143.1^\circ]`, tag: '象限判斷錯' },
-    { t: R`[25,\ 216.9^\circ]`, tag: '忘了開根號' } ] }
+    { t: R`[3\sqrt{2},\ 45^\circ]`, tag: '角度看錯方向' },
+    { t: R`[6,\ 135^\circ]`, tag: 'r 用 |x| + |y|' },
+    { t: R`[3,\ 135^\circ]`, tag: 'r 只取 |x|' } ] }
 ];
 
 const L3 = {
@@ -1726,7 +1735,7 @@ const L3 = {
     Object.assign(scene, { objects: [], marker: null, ghost: null, tri: null, anim: null });
     pickEnabled = false; onPick = null; kpHide();
     $('btn-restart').classList.add('hidden');
-    $('legend').innerHTML = 'r ≥ 0<br>可以使用計算機';
+    $('legend').innerHTML = 'r ≥ 0，0° ≤ θ &lt; 360°<br>不需要計算機';
     setPanel('🌀 颱風危機：象限挑戰', `限時${timeText(state.timeLimit)}，只能作答一次`);
     if (this.done) this.renderResult();
     else if (this.started) { this.startTimer(); this.renderQuestion(); }
@@ -1740,7 +1749,8 @@ const L3 = {
       <section class="bg-red-50 p-4 rounded-xl border border-red-200">
         <h2 class="font-bold text-red-800 text-base mb-3">⏱️ 撤離任務規則</h2>
         <ul class="text-sm text-slate-700 space-y-2 leading-relaxed list-disc pl-5">
-          <li>共 6 個撤離點，每題從四個指令中選出正確的極坐標，可以使用計算機。</li>
+          <li>共 6 個撤離點，涵蓋今天學的全部內容：讀點、同界角、極坐標與直角坐標互換。</li>
+          <li>每題從四個選項中選出正確答案，不需要計算機。</li>
           <li>限時${timeText(state.timeLimit)}，時間到系統會自動送出。</li>
           <li>只有一次機會，開始後不能重來；不小心重新整理，計時也不會停。</li>
           <li>作答時不顯示對錯，送出前都可以回頭修改。</li>
@@ -1797,7 +1807,7 @@ const L3 = {
   renderQuestion() {
     if (this.done || this.sending) return;
     const it = L3_ITEMS[this.q];
-    scene.objects = [{ x: it.x, y: it.y, emoji: '📍', label: `撤離點 ${this.q + 1}`, size: 26 }];
+    scene.objects = it.obj ? [{ ...it.obj, label: `撤離點 ${this.q + 1}`, size: 26 }] : [];
     setStatus(`撤離點 ${this.q + 1}：下達指令`, 'idle');
     const chips = L3_ITEMS.map((_, i) => {
       const c = i === this.q ? 'bg-red-600 text-white' : this.answers[i] != null ? 'bg-sky-100 text-sky-800 border-sky-300' : 'bg-white text-slate-500 border-slate-300';
@@ -1816,7 +1826,7 @@ const L3 = {
     $('tasks').innerHTML = `
       <section class="bg-slate-50 p-4 rounded-xl border border-slate-200">
         <h2 class="font-bold text-slate-900 text-base mb-1">📍 撤離點 ${this.q + 1}</h2>
-        <p class="text-sm text-slate-700 mb-3">直升機回報 ${M(it.xt)}，選出正確的撤離指令 ${M(R`[r,\theta]`)}${it.calc ? '（角度四捨五入到小數第一位）' : ''}：</p>
+        <p class="text-sm text-slate-700 mb-3 leading-relaxed">${it.q}</p>
         <div class="grid grid-cols-2 gap-2">${opts}</div>
         <div class="flex gap-2 mt-4">
           <button id="q-prev" class="flex-1 bg-slate-200 hover:bg-slate-300 disabled:opacity-40 text-slate-700 font-bold py-2.5 rounded-lg text-sm" ${this.q === 0 ? 'disabled' : ''}>⬅️ 上一題</button>

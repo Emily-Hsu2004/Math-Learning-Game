@@ -14,6 +14,49 @@
   td, th { padding: .4rem .55rem; }
   .bar { height: .55rem; border-radius: 9999px; background: #e2e8f0; overflow: hidden; }
   .bar > span { display: block; height: 100%; border-radius: 9999px; }
+  /* 第三關講解畫面（投影用） */
+  .ex-cta { background: #dc2626; color: #fff; font-weight: 700; border-radius: .5rem; padding: .45rem .9rem; font-size: .875rem; }
+  .ex-cta:hover { background: #b91c1c; }
+  .ex-badge { display: inline-block; background: #fee2e2; color: #b91c1c; font-size: .7rem; font-weight: 700; border-radius: 9999px; padding: .05rem .5rem; margin-left: .25rem; }
+  .ex-wrap { position: fixed; inset: 0; z-index: 50; background: rgba(15,23,42,.75); display: flex; align-items: center; justify-content: center; padding: 1rem; }
+  .ex-box { background: #fff; border-radius: 1.25rem; width: 100%; max-width: 64rem; max-height: 100%; overflow-y: auto; padding: 1.5rem 2rem; box-shadow: 0 25px 50px rgba(0,0,0,.35); }
+  .ex-head { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin-bottom: 1rem; }
+  .ex-title { font-size: 1.75rem; font-weight: 900; color: #1e293b; }
+  .ex-meta { color: #64748b; font-weight: 700; }
+  .ex-nav { margin-left: auto; display: flex; gap: .5rem; }
+  .ex-nav button { background: #e2e8f0; color: #334155; font-weight: 700; border-radius: .5rem; padding: .4rem .8rem; }
+  .ex-nav button:hover:not(:disabled) { background: #cbd5e1; }
+  .ex-nav button:disabled { opacity: .35; }
+  .ex-body { display: flex; gap: 1.5rem; align-items: flex-start; }
+  .ex-main { flex: 1; min-width: 0; }
+  .ex-radar { width: 15rem; flex-shrink: 0; background: #f0f9ff; border-radius: 1rem; }
+  .ex-q { font-size: 1.6rem; font-weight: 700; color: #0f172a; line-height: 1.5; margin-bottom: 1.25rem; }
+  .ex-opts { display: grid; gap: .6rem; }
+  .ex-opt { display: grid; grid-template-columns: 2.5rem minmax(7rem, 11rem) minmax(3rem, 1fr) 4.5rem; align-items: center; gap: .75rem; border: 2px solid #e2e8f0; border-radius: .75rem; padding: .6rem .9rem; }
+  .ex-opt.ex-ok { border-color: #22c55e; background: #f0fdf4; }
+  .ex-opt.ex-no { opacity: .9; }
+  .ex-letter { width: 2.25rem; height: 2.25rem; border-radius: 9999px; background: #e0f2fe; color: #075985; font-weight: 900; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+  .ex-ok .ex-letter { background: #22c55e; color: #fff; }
+  .ex-text { font-size: 1.5rem; font-weight: 700; font-family: 'Times New Roman', 'Noto Sans TC', serif; white-space: nowrap; }
+  .ex-bar { height: 1rem; background: #f1f5f9; border-radius: 9999px; overflow: hidden; }
+  .ex-bar > span { display: block; height: 100%; background: #38bdf8; border-radius: 9999px; }
+  .ex-ok .ex-bar > span { background: #22c55e; }
+  .ex-no .ex-bar > span { background: #f87171; }
+  .ex-count { font-size: 1.25rem; font-weight: 900; text-align: right; font-variant-numeric: tabular-nums; }
+  .ex-note { grid-column: 2 / -1; color: #b91c1c; font-weight: 700; font-size: 1rem; }
+  .ex-note-ok { color: #15803d; }
+  .ex-blank { color: #64748b; margin-top: .5rem; font-weight: 700; }
+  .ex-reveal { display: block; margin: 1.25rem auto 0; background: #16a34a; color: #fff; font-weight: 900; font-size: 1.25rem; border-radius: .75rem; padding: .7rem 2rem; }
+  .ex-reveal:hover { background: #15803d; }
+  .ex-sol { margin-top: 1.25rem; background: #fffbeb; border: 1px solid #fde68a; border-radius: .75rem; padding: 1rem 1.25rem; }
+  .ex-sol-h { font-weight: 900; color: #92400e; margin-bottom: .35rem; font-size: 1.1rem; }
+  .ex-sol ol { list-style: decimal; padding-left: 1.5rem; font-size: 1.3rem; line-height: 1.7; color: #1e293b; }
+  .ex-tip { margin-top: 1rem; font-size: .8rem; color: #94a3b8; }
+  @media (max-width: 640px) {
+    .ex-body { flex-direction: column; align-items: center; } .ex-main { width: 100%; }
+    .ex-box { padding: 1rem; } .ex-q { font-size: 1.2rem; } .ex-text { font-size: 1.15rem; }
+    .ex-opt { grid-template-columns: 2.25rem 1fr 3.5rem; } .ex-bar { grid-column: 2 / -1; grid-row: 2; }
+  }
 </style>
 <script>
   window.__configError = null; window.__configMissing = false;
@@ -110,7 +153,7 @@ const token = () => store.get(TOKEN_KEY);
 const ITEM_NAMES = {
   1: { A: '漁船 A：點出 [3, 60°]', B: '漁船 B：點出 [4, 135°]', C: '漁船 C：讀出 [2, 300°]', T: '颱風中心：讀出 [140 公里, 315°]', S: '補給船：點出 [2, 30°]', H: '直升機：點出轉 390°' },
   2: { P: 'P[2, 30°] → (x, y)', Q: 'Q[4, 120°] → (x, y)', R: 'R[3, 270°] → (x, y)', S: 'S(3, 4) → r', T: 'T(−6, 8) → r' },
-  3: { 1: '撤離點 1：(−2, −2)', 2: '撤離點 2：(−3, 3)', 3: '撤離點 3：(2, −2)', 4: '撤離點 4：(0, −4)', 5: '撤離點 5：(−3, 4)', 6: '撤離點 6：(−4, −3)' }
+  3: { 1: '第 1 題 讀點：雷達上的撤離點', 2: '第 2 題 同界角：逆時針 420°、2 格', 3: '第 3 題 極 → 直：[4, 150°]', 4: '第 4 題 極 → 直：[4, 225°]', 5: '第 5 題 求 r：(−3, −4)', 6: '第 6 題 直 → 極：(−3, 3)' }
 };
 const ITEM_ORDER = { 1: ['A', 'B', 'C', 'T', 'S', 'H'], 2: ['P', 'Q', 'R', 'S', 'T'], 3: ['1', '2', '3', '4', '5', '6'] };
 const TAGS = {
@@ -124,13 +167,27 @@ const plain = v => {
   const t = typeof v === 'string' ? v : JSON.stringify(v);
   return t.replace(/\\sqrt\{(\d+)\}/g, '√$1').replace(/\^\\circ/g, '°').replace(/\\ /g, ' ').replace(/-/g, '−');
 };
-const L3_KEY = [
-  ['[2√2, 225°]', '[2√2, 45°]', '[2√2, 135°]', '[2, 225°]'],
-  ['[3√2, 135°]', '[3√2, 315°]', '[3√2, 45°]', '[6, 135°]'],
-  ['[2√2, 315°]', '[2√2, 135°]', '[2√2, 45°]', '[4, 315°]'],
-  ['[4, 270°]', '[4, 90°]', '[−4, 90°]', '[4, 0°]'],
-  ['[5, 126.9°]', '[5, −53.1°]', '[5, 53.1°]', '[7, 126.9°]'],
-  ['[5, 216.9°]', '[5, 36.9°]', '[5, 143.1°]', '[25, 216.9°]']
+/* 第三關題目（與 index.html 的 L3_ITEMS 對應）：opts 第 0 個是正解，tag 是錯誤選項對應的迷思；
+   show 是講解畫面上 A～D 的排列（存的是 opts 的編號），避免正解永遠排在 A */
+const L3_Q = [
+  { q: '讀出雷達上撤離點的極坐標 [r, θ]。', pt: [3, 150],
+    opts: [['[3, 150°]'], ['[150°, 3]', 'r、θ 順序寫反'], ['[3, 30°]', '從 x 軸負向量角'], ['[3, 210°]', '順時針量角']], show: [2, 1, 0, 3],
+    sol: ['從極軸（正東）逆時針量：放射線每條 15°，數到撤離點共 10 條 → θ = 150°。', '撤離點在第 3 圈 → r = 3。', '先寫距離、再寫角度：[3, 150°]。'] },
+  { q: '直升機從極軸出發，逆時針飛了 420°，停在離雷達站 2 格的地方。依約定（0° ≤ θ < 360°）寫出它的極坐標。',
+    opts: [['[2, 60°]'], ['[2, 420°]', '沒換到 0°～360°'], ['[2, −60°]', '旋轉方向弄反'], ['[2, 300°]', '用 360° 去減']], show: [1, 0, 3, 2],
+    sol: ['420° 比一圈多：420° − 360° = 60°，兩個角是同界角，終邊相同。', '依約定 0° ≤ θ < 360°，寫成 [2, 60°]。', '300° 是 360° − 60°，方向反了。'] },
+  { q: '[4, 150°] 換成直角坐標 (x, y)。',
+    opts: [['(−2√3, 2)'], ['(2√3, 2)', '忽略負號'], ['(2, −2√3)', 'x、y 對調'], ['(−2, 2√3)', 'sin、cos 用反']], show: [1, 3, 2, 0],
+    sol: ['x = r cos θ = 4 cos 150° = 4 × (−√3 / 2) = −2√3', 'y = r sin θ = 4 sin 150° = 4 × (1 / 2) = 2', '150° 在第二象限：x 負、y 正 → (−2√3, 2)。'] },
+  { q: '[4, 225°] 換成直角坐標 (x, y)。',
+    opts: [['(−2√2, −2√2)'], ['(2√2, 2√2)', '忽略負號'], ['(−4, −4)', '把 r 當成 x、y'], ['(−2√2, 2√2)', 'sin 的正負號錯']], show: [3, 2, 0, 1],
+    sol: ['x = 4 cos 225° = 4 × (−√2 / 2) = −2√2', 'y = 4 sin 225° = 4 × (−√2 / 2) = −2√2', '225° 在第三象限：x、y 都是負的。'] },
+  { q: '直升機回報 (−3, −4)，它離雷達站多遠？',
+    opts: [['r = 5'], ['r = 7', 'r 用 |x| + |y|'], ['r = 25', '忘了開根號'], ['r = √7', 'r 用 y² − x²']], show: [2, 0, 3, 1],
+    sol: ['r = √(x² + y²) = √((−3)² + (−4)²)', '= √(9 + 16) = √25 = 5', '負號平方後變正，r 一定 ≥ 0。'] },
+  { q: '直升機回報 (−3, 3)，寫出它的極坐標 [r, θ]。', pt: [Math.hypot(3, 3), 135],
+    opts: [['[3√2, 135°]'], ['[3√2, 45°]', '角度看錯方向'], ['[6, 135°]', 'r 用 |x| + |y|'], ['[3, 135°]', 'r 只取 |x|']], show: [3, 1, 0, 2],
+    sol: ['r = √((−3)² + 3²) = √18 = 3√2', '點在第二象限，|x| = |y|，正好在 135° 的放射線上（從雷達上可以直接讀出）。', '答案：[3√2, 135°]。'] }
 ];
 const fmtT = t => t ? new Date(t).toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', hour12: false, month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '—';
 const fmtSec = s => s == null ? '—' : `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}`;
@@ -254,8 +311,10 @@ function viewItems() {
   const att = filteredAttempts();
   const lvSel = $('f-level').value;
   let html = '';
+  const l3 = l3Stats(), worst = l3Worst(l3);
   [1, 2, 3].filter(lv => !lvSel || String(lv) === lvSel).forEach(lv => {
     const rows = ITEM_ORDER[lv].map(key => {
+      if (lv === 3) return l3Row(+key - 1, l3, worst);
       const list = att.filter(a => a.level === lv && String(a.item) === key);
       const bySeat = groupBy(list, a => a.seat);
       const people = bySeat.size;
@@ -271,11 +330,113 @@ function viewItems() {
         <td class="min-w-[9rem]"><div class="flex items-center gap-2"><div class="bar flex-1"><span style="width:${p}%;background:${color}"></span></div><b class="w-10 text-right">${people ? p + '%' : '—'}</b></div></td>
         <td class="text-center">${lv === 3 || !people ? '—' : pct(eventually, people) + '%'}</td><td>${top}</td></tr>`;
     });
-    html += card(['', '第一關：颱風定位', '第二關：坐標翻譯機', '第三關：象限挑戰'][lv],
-      table(['題目', '作答人數', lv === 3 ? '答對率' : '一次答對率', lv === 3 ? '—' : '最後答對率', '最常見的錯誤（次數）'], rows));
+    if (lv === 3) {
+      const btn = worst.length ? `<button data-explain="${worst[0]}" class="ex-cta">▶ 講解錯最多的題目（第 ${worst.map(i => i + 1).join('、')} 題）</button>` : '';
+      html += card('第三關：象限挑戰', `<div class="flex flex-wrap items-center justify-between gap-2 mb-3"><p class="text-sm text-slate-500">已交卷 ${l3.n} 人。點「講解」打開投影用的畫面：先看各選項有多少人選，再按「公布正解」。</p>${btn}</div>`
+        + table(['題目', '作答人數', '答對率', '最常見的錯誤（人數）', ''], rows));
+      return;
+    }
+    html += card(['', '第一關：颱風定位', '第二關：坐標翻譯機'][lv],
+      table(['題目', '作答人數', '一次答對率', '最後答對率', '最常見的錯誤（次數）'], rows));
   });
   return `<p class="text-sm text-slate-500 mb-3">「一次答對率」看的是每位學生第一次作答的結果；第三關每人只作答一次。用上方的日期與時段篩選某一節課。</p>` + html;
 }
+
+/* ---------- 第三關：每個選項的人數與講解畫面 ---------- */
+function l3Stats() {
+  const seat = $('f-seat').value;
+  const runs = (DATA.runs || []).filter(r => r.submitted_at && Array.isArray(r.answers) && (!seat || String(r.seat) === seat));
+  return {
+    n: runs.length,
+    items: L3_Q.map((it, i) => {
+      const count = it.opts.map((_, k) => runs.filter(r => r.answers[i] === k).length);
+      return { count, blank: runs.length - count.reduce((a, b) => a + b, 0), right: count[0] };
+    })
+  };
+}
+/* 答對人數最少的題目（同分時全部列出） */
+function l3Worst(st) {
+  if (!st.n) return [];
+  const min = Math.min(...st.items.map(s => s.right));
+  return min >= st.n ? [] : st.items.map((s, i) => s.right === min ? i : -1).filter(i => i >= 0);
+}
+/* 學生畫面上的雷達（只畫網格與撤離點） */
+function radarSvg(r, deg) {
+  const S = 22, C = 5.6 * S, rad = deg * Math.PI / 180, px = C + r * S * Math.cos(rad), py = C - r * S * Math.sin(rad);
+  let g = '';
+  for (let a = 0; a < 360; a += 15) {
+    const t = a * Math.PI / 180, o = a % 90 === 0 ? .45 : a % 30 === 0 ? .25 : .12;
+    g += `<line x1="${C}" y1="${C}" x2="${C + 5 * S * Math.cos(t)}" y2="${C - 5 * S * Math.sin(t)}" stroke="rgba(14,116,144,${o})"/>`;
+  }
+  for (let k = 1; k <= 5; k++) g += `<circle cx="${C}" cy="${C}" r="${k * S}" fill="none" stroke="rgba(14,116,144,.35)"/><text x="${C + k * S}" y="${C + 13}" font-size="10" text-anchor="middle" fill="#0e7490">${k}</text>`;
+  g += `<line x1="${C}" y1="${C}" x2="${C + 5.4 * S}" y2="${C}" stroke="#f59e0b" stroke-width="2.5"/>`;
+  g += `<circle cx="${px}" cy="${py}" r="6" fill="#dc2626" stroke="#fff" stroke-width="2"/>`;
+  return `<svg class="ex-radar" viewBox="0 0 ${2 * C} ${2 * C}" role="img" aria-label="雷達圖">${g}</svg>`;
+}
+function l3Row(i, st, worst) {
+  const s = st.items[i], it = L3_Q[i], p = pct(s.right, st.n);
+  const color = p >= 80 ? '#22c55e' : p >= 50 ? '#f59e0b' : '#ef4444';
+  const wrong = it.opts.map((o, k) => [o[1], s.count[k]]).slice(1).filter(x => x[1] > 0);
+  if (s.blank) wrong.push(['未作答', s.blank]);
+  const top = wrong.sort((a, b) => b[1] - a[1]).slice(0, 2).map(([t, c]) => `${esc(t)}（${c}）`).join('、') || '—';
+  const badge = worst.includes(i) ? ' <span class="ex-badge">錯最多</span>' : '';
+  return `<tr class="border-b border-slate-100">
+    <td>${esc(ITEM_NAMES[3][i + 1])}${badge}</td><td class="text-center">${st.n}</td>
+    <td class="min-w-[9rem]"><div class="flex items-center gap-2"><div class="bar flex-1"><span style="width:${p}%;background:${color}"></span></div><b class="w-10 text-right">${st.n ? p + '%' : '—'}</b></div></td>
+    <td>${top}</td><td><button data-explain="${i}" class="bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-lg px-3 py-1 text-xs whitespace-nowrap">講解</button></td></tr>`;
+}
+
+const EX = { open: false, q: 0, reveal: false };
+function openExplain(i) { Object.assign(EX, { open: true, q: i, reveal: false }); renderExplain(); }
+function closeExplain() { EX.open = false; const el = $('ex'); if (el) el.remove(); }
+function renderExplain() {
+  if (!EX.open || !DATA) return;
+  let el = $('ex');
+  if (!el) { el = document.createElement('div'); el.id = 'ex'; el.className = 'ex-wrap'; document.body.appendChild(el); }
+  const st = l3Stats(), s = st.items[EX.q], it = L3_Q[EX.q], max = Math.max(1, ...s.count, s.blank);
+  const opts = it.show.map((k, pos) => {
+    const ok = k === 0, c = s.count[k], w = Math.round(c / max * 100);
+    const cls = EX.reveal ? (ok ? 'ex-opt ex-ok' : 'ex-opt ex-no') : 'ex-opt';
+    const note = EX.reveal ? (ok ? '<span class="ex-note ex-note-ok">✅ 正解</span>' : `<span class="ex-note">${esc(it.opts[k][1])}</span>`) : '';
+    return `<div class="${cls}"><div class="ex-letter">${'ABCD'[pos]}</div><div class="ex-text">${esc(it.opts[k][0])}</div>
+      <div class="ex-bar"><span style="width:${w}%"></span></div><div class="ex-count">${c} 人</div>${note}</div>`;
+  }).join('');
+  const blank = s.blank ? `<div class="ex-blank">未作答 ${s.blank} 人</div>` : '';
+  const p = pct(s.right, st.n);
+  el.innerHTML = `<div class="ex-box">
+    <div class="ex-head">
+      <div class="ex-title">第三關 第 ${EX.q + 1} 題</div>
+      <div class="ex-meta">${EX.reveal ? `答對率 ${st.n ? p + '%' : '—'}（${s.right} / ${st.n} 人）` : `已交卷 ${st.n} 人`}</div>
+      <div class="ex-nav">
+        <button data-ex="prev" ${EX.q === 0 ? 'disabled' : ''}>◀ 上一題</button>
+        <button data-ex="next" ${EX.q === L3_Q.length - 1 ? 'disabled' : ''}>下一題 ▶</button>
+        <button data-ex="close">✕ 關閉</button>
+      </div>
+    </div>
+    <div class="ex-body">${it.pt ? radarSvg(it.pt[0], it.pt[1]) : ''}<div class="ex-main">
+    <div class="ex-q">${esc(it.q)}</div>
+    <div class="ex-opts">${opts}</div>${blank}</div></div>
+    ${EX.reveal ? `<div class="ex-sol"><div class="ex-sol-h">講解</div><ol>${it.sol.map(x => `<li>${esc(x)}</li>`).join('')}</ol></div>`
+                : '<button data-ex="reveal" class="ex-reveal">公布正解（空白鍵）</button>'}
+    <div class="ex-tip">鍵盤：← → 換題、空白鍵公布正解、Esc 關閉。只顯示人數，不顯示學生姓名。</div>
+  </div>`;
+  el.querySelectorAll('[data-ex]').forEach(b => b.onclick = () => exAct(b.dataset.ex));
+  el.onclick = e => { if (e.target === el) closeExplain(); };
+}
+function exAct(a) {
+  if (a === 'close') return closeExplain();
+  if (a === 'reveal') EX.reveal = true;
+  if (a === 'prev' && EX.q > 0) { EX.q--; EX.reveal = false; }
+  if (a === 'next' && EX.q < L3_Q.length - 1) { EX.q++; EX.reveal = false; }
+  renderExplain();
+}
+document.addEventListener('keydown', e => {
+  if (!EX.open) return;
+  if (e.key === 'Escape') exAct('close');
+  else if (e.key === 'ArrowLeft') exAct('prev');
+  else if (e.key === 'ArrowRight') exAct('next');
+  else if (e.key === ' ') { e.preventDefault(); exAct('reveal'); }
+});
 
 function viewRank() {
   const seat = $('f-seat').value;
@@ -350,6 +511,8 @@ function viewSettings() {
 
 /* ---------- 互動 ---------- */
 function bindView() {
+  document.querySelectorAll('[data-explain]').forEach(b => b.onclick = () => openExplain(+b.dataset.explain));
+  renderExplain();   // 自動更新時，講解畫面的人數一起更新
   document.querySelectorAll('[data-retake]').forEach(b => b.onclick = async () => {
     const seat = +b.dataset.retake;
     if (!confirm(`確定讓 ${seat} 號重考第三關嗎？他目前的第三關成績會被刪除。`)) return;
