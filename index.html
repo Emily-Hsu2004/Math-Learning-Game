@@ -123,7 +123,7 @@
 <div id="title-screen" class="screen screen-pad hidden fixed inset-0 z-[60] flex flex-col items-center justify-center overflow-y-auto text-white bg-slate-900 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900 via-slate-800 to-black">
   <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] bg-sky-600/20 rounded-full blur-[100px] pointer-events-none"></div>
   <div id="user-chip" class="absolute z-20 flex items-center gap-2 bg-slate-800/90 border border-slate-600 rounded-full pl-3 pr-1 py-1 text-sm text-slate-200" style="top:max(1rem,env(safe-area-inset-top));right:max(1rem,env(safe-area-inset-right))">
-    👷 工程師 <b id="user-seat" class="text-sky-300"></b> 號
+    👷 <b id="user-seat" class="text-sky-300"></b>
     <button id="btn-logout" class="ml-1 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-bold px-3 py-1.5 rounded-full">登出</button>
   </div>
   <div class="relative z-10 flex flex-col items-center w-full max-w-sm">
@@ -163,6 +163,24 @@
     <div class="flex gap-3 mt-6">
       <button id="code-cancel" class="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold py-3 rounded-xl">返回</button>
       <button id="code-ok" class="flex-1 bg-sky-600 hover:bg-sky-500 text-white font-bold py-3 rounded-xl shadow-[0_0_15px_rgba(2,132,199,0.4)]">驗證並進入</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 取暱稱（第一次登入） ==================== -->
+<div id="nick-modal" class="screen hidden fixed inset-0 z-[70] items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+  <div id="nick-box" class="bg-slate-800 border border-slate-600 rounded-3xl p-6 md:p-8 max-w-sm w-full text-white shadow-2xl">
+    <div class="flex items-center gap-3 mb-4 border-b border-slate-700 pb-4">
+      <span class="text-2xl">🪪</span>
+      <h3 class="text-green-400 font-bold text-lg tracking-wider">取一個暱稱</h3>
+    </div>
+    <p class="text-slate-300 text-sm mb-4">暱稱會顯示在第三關排行榜上，1～10 個字。<b class="text-amber-300">取了之後不能自己修改</b>，要改請找老師。</p>
+    <input id="nick-input" type="text" maxlength="10" autocomplete="off" spellcheck="false" aria-label="暱稱"
+      class="w-full bg-slate-900 border-2 border-slate-600 focus:border-sky-400 rounded-xl px-4 py-3 text-lg font-bold outline-none">
+    <p id="nick-err" class="hidden text-red-400 text-sm mt-2 text-center"></p>
+    <div class="flex gap-3 mt-6">
+      <button id="nick-logout" class="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold py-3 rounded-xl">登出</button>
+      <button id="nick-ok" class="flex-1 bg-sky-600 hover:bg-sky-500 text-white font-bold py-3 rounded-xl shadow-[0_0_15px_rgba(2,132,199,0.4)]">確定</button>
     </div>
   </div>
 </div>
@@ -332,10 +350,11 @@ const RemoteAPI = {
   token() { return store.get('typhoon.token'); },
   async login(account, password) {
     const r = await this.rpc('game_login', { p_account: account, p_password: password });
-    if (!r || !r.ok) return { ok: false };
+    if (!r || !r.ok) return { ok: false, reason: r && r.reason };
     store.set('typhoon.token', r.token);
     return this.me();
   },
+  setNickname(nick) { return this.rpc('game_set_nickname', { p_token: this.token(), p_nickname: nick }); },
   async me() {
     const t = this.token();
     if (!t) return { ok: false };
@@ -343,7 +362,11 @@ const RemoteAPI = {
     if (!r || !r.ok) store.del('typhoon.token');
     return r;
   },
-  async logout() { store.del('typhoon.token'); },
+  async logout() {   // 通知伺服器刪掉這台裝置的登入，才能在別台登入
+    const t = this.token();
+    store.del('typhoon.token');
+    if (t) { try { await this.rpc('game_logout', { p_token: t }); } catch (e) {} }
+  },
   unlock(level, code) { return this.rpc('game_unlock', { p_token: this.token(), p_level: level, p_code: code }); },
   log(e) {
     return this.rpc('game_log', { p_token: this.token(), p_level: e.level, p_item: String(e.item), p_answer: e.answer == null ? null : e.answer,
@@ -384,11 +407,21 @@ const LocalAPI = {
     const d = this.data(); if (!d.session) return { ok: false };
     const a = this.acc(d.session); if (!a) return { ok: false };
     const u = this.user(d);
-    return { ok: true, account: a.account, seat: a.seat, name: a.name, unlocked: u.unlocked, l3: u.l3,
+    return { ok: true, account: a.account, seat: a.seat, name: a.name, nickname: u.nickname || null, unlocked: u.unlocked, l3: u.l3,
       server_now: new Date().toISOString(), time_limit: CONFIG.level3Seconds, role: 'student',
       show_leaderboard: true, reveal_answers: !!CONFIG.revealLevel3AnswersAfterSubmit };
   },
   async logout() { const d = this.data(); d.session = null; this.save(d); },
+  async setNickname(nick) {
+    const d = this.data(); if (!d.session) return { ok: false, reason: 'login' };
+    const u = this.user(d);
+    if (u.nickname) return { ok: false, reason: 'locked', nickname: u.nickname };
+    const v = String(nick || '').replace(/[\u0000-\u001f\u007f]/g, '').trim();
+    if (v.length < 1 || [...v].length > 10) return { ok: false, reason: 'invalid' };
+    if (Object.entries(d.users).some(([k, o]) => k !== d.session && o.nickname && o.nickname.toLowerCase() === v.toLowerCase())) return { ok: false, reason: 'taken' };
+    u.nickname = v; this.save(d);
+    return { ok: true, nickname: v };
+  },
   async unlock(level, code) {
     const ok = String(CONFIG.demo.codes[level] || '').toLowerCase() === String(code).trim().toLowerCase();
     if (ok) { const d = this.data(); const u = this.user(d); if (!u.unlocked.includes(level)) u.unlocked.push(level); this.save(d); }
@@ -406,8 +439,8 @@ const LocalAPI = {
   },
   async leaderboard() {
     const d = this.data(), u = this.user(d), a = this.acc(d.session);
-    const me = u.l3 && u.l3.submitted ? { rank: 1, seat: a.seat, score: u.l3.score, used_seconds: u.l3.used_seconds } : null;
-    return { ok: true, show: true, total: me ? 1 : 0, top: me ? [me] : [], me };
+    const me = u.l3 && u.l3.submitted ? { rank: 1, nickname: u.nickname || '（未取暱稱）', score: u.l3.score, used_seconds: u.l3.used_seconds } : null;
+    return { ok: true, show: true, total: me ? 1 : 0, top: me ? [{ ...me, is_me: true }] : [], me };
   },
   async l3Start() {
     const d = this.data(), u = this.user(d);
@@ -667,6 +700,7 @@ async function doLogin() {
   try {
     const me = await API.login(a, p);
     if (me && me.ok) { $('login-password').value = ''; onLoggedIn(me); }
+    else if (me && me.reason === 'in_use') showLoginError('這個帳號已經在其他裝置登入，同一時間只能在一台裝置使用。如果是你自己換了裝置，請先在原本的裝置按「登出」，或請老師在後台按「強制登出」。');
     else showLoginError('帳號或密碼不正確。');
   } catch (e) {
     showLoginError(explainError(e));
@@ -678,16 +712,56 @@ $('btn-login').onclick = doLogin;
 $('login-password').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 $('login-account').addEventListener('keydown', e => { if (e.key === 'Enter') $('login-password').focus(); });
 
+const whoText = u => u && u.nickname ? u.nickname : `工程師 ${u && u.seat != null ? u.seat : '—'} 號`;
 function onLoggedIn(me) {
-  state.user = { account: me.account, seat: me.seat, name: me.name };
+  state.user = { account: me.account, seat: me.seat, name: me.name, nickname: me.nickname || null, role: me.role || 'student' };
   state.unlocked = {};
   (me.unlocked || []).forEach(l => { state.unlocked[l] = true; });
   state.timeLimit = me.time_limit || CONFIG.level3Seconds;
   L3.restore(me.l3, me.server_now);
-  $('user-seat').textContent = me.seat != null ? me.seat : '—';
+  $('user-seat').textContent = whoText(state.user);
   if (L3.inProgress()) { state.level = 3; enterMain(3); }   // 第三關作答中重新整理：直接回到作答畫面
+  else if (state.user.role === 'student' && !state.user.nickname) { goTo('title-screen'); openNick(); }
   else goTo('title-screen');
 }
+
+/* 取暱稱：學生第一次登入時必填，之後只有老師能改 */
+function openNick() {
+  $('nick-input').value = '';
+  $('nick-err').classList.add('hidden');
+  showScreen($('nick-modal'));
+  setTimeout(() => $('nick-input').focus(), 100);
+}
+let nickBusy = false;
+async function saveNick() {
+  const v = $('nick-input').value.trim(), err = $('nick-err');
+  const fail = msg => {
+    err.textContent = msg; err.classList.remove('hidden');
+    const box = $('nick-box'); box.classList.remove('shake'); void box.offsetWidth; box.classList.add('shake');
+  };
+  if (!v) return fail('請輸入暱稱。');
+  if ([...v].length > 10) return fail('暱稱最多 10 個字。');
+  if (nickBusy) return;
+  nickBusy = true;
+  const btn = $('nick-ok'); btn.disabled = true; btn.textContent = '儲存中……';
+  try {
+    const r = await API.setNickname(v);
+    if (r && (r.ok || r.reason === 'locked')) {
+      state.user.nickname = r.nickname;
+      $('user-seat').textContent = whoText(state.user);
+      hideScreen($('nick-modal'));
+    } else if (r && r.reason === 'login') { hideScreen($('nick-modal')); forceLogin('登入已過期，請重新登入。'); }
+    else if (r && r.reason === 'taken') fail('這個暱稱已經有人用了，換一個吧。');
+    else fail('暱稱要 1～10 個字。');
+  } catch (e) {
+    fail(explainError(e));
+  } finally {
+    nickBusy = false; btn.disabled = false; btn.textContent = '確定';
+  }
+}
+$('nick-ok').onclick = saveNick;
+$('nick-input').addEventListener('keydown', e => { if (e.key === 'Enter') saveNick(); });
+$('nick-logout').onclick = () => { hideScreen($('nick-modal')); forceLogin(); };
 
 $('btn-logout').onclick = () => {
   if (L3.inProgress() && !confirm('第三關作答中，登出後計時不會停止。確定要登出嗎？')) return;
@@ -726,7 +800,7 @@ function itemStatus(rows) {
 }
 
 async function loadSummary() {
-  $('sum-who').textContent = `工程師 ${state.user && state.user.seat != null ? state.user.seat : '—'} 號`;
+  $('sum-who').textContent = whoText(state.user);
   const body = $('sum-body');
   body.innerHTML = '<p class="text-slate-400 text-center py-6">讀取中……</p>';
   let res, lb;
@@ -758,13 +832,13 @@ async function loadSummary() {
 
   // 排行榜
   if (lb && lb.show) {
-    const mySeat = state.user ? state.user.seat : null;
-    const rows = (lb.top || []).map(r => `<tr class="${r.seat === mySeat ? 'bg-sky-700/60 font-bold' : 'border-t border-slate-700'}">
-        <td class="py-1.5 px-2 text-center">${r.rank}</td><td class="px-2 text-center">${r.seat} 號${r.seat === mySeat ? '（你）' : ''}</td>
+    const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const rows = (lb.top || []).map(r => `<tr class="${r.is_me ? 'bg-sky-700/60 font-bold' : 'border-t border-slate-700'}">
+        <td class="py-1.5 px-2 text-center">${r.rank}</td><td class="px-2 text-center">${esc(r.nickname)}${r.is_me ? '（你）' : ''}</td>
         <td class="px-2 text-center">${r.score}</td><td class="px-2 text-center tabular-nums">${fmtTime((r.used_seconds || 0) * 1000)}</td></tr>`).join('');
-    const meOut = lb.me && !(lb.top || []).some(r => r.seat === lb.me.seat) ? `<p class="text-sm text-sky-200 mt-2">你的名次：第 ${lb.me.rank} 名（${lb.me.score} 分，${fmtTime((lb.me.used_seconds || 0) * 1000)}）</p>` : '';
+    const meOut = lb.me && !(lb.top || []).some(r => r.is_me) ? `<p class="text-sm text-sky-200 mt-2">你的名次：第 ${lb.me.rank} 名（${lb.me.score} 分，${fmtTime((lb.me.used_seconds || 0) * 1000)}）</p>` : '';
     html += box('🏆 第三關排行榜（前 10 名）', rows
-      ? `<div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="text-slate-400 text-xs"><th class="pb-1">名次</th><th class="pb-1">座號</th><th class="pb-1">分數</th><th class="pb-1">用時</th></tr></thead><tbody>${rows}</tbody></table></div>${meOut}`
+      ? `<div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="text-slate-400 text-xs"><th class="pb-1">名次</th><th class="pb-1">暱稱</th><th class="pb-1">分數</th><th class="pb-1">用時</th></tr></thead><tbody>${rows}</tbody></table></div>${meOut}`
       : '<p class="text-slate-400">還沒有人完成第三關。</p>');
   } else {
     html += box('🏆 第三關排行榜', '<p class="text-slate-400">老師還沒公布排行榜。</p>');

@@ -269,6 +269,8 @@ function filteredAttempts() {
 }
 const card = (title, inner, extra = '') => `<section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 mb-4 ${extra}"><h2 class="font-bold text-slate-800 mb-3">${title}</h2>${inner}</section>`;
 const table = (head, rows) => `<div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="text-left text-slate-500 border-b border-slate-200">${head.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.join('') || `<tr><td colspan="${head.length}" class="text-slate-400 text-center py-6">沒有資料</td></tr>`}</tbody></table></div>`;
+const nickOf = seat => { const st = DATA && (DATA.students || []).find(x => x.seat === seat); return st && st.nickname ? st.nickname : ''; };
+const nickCell = v => v ? esc(v) : '<span class="text-slate-400">（未取）</span>';
 function groupBy(arr, keyFn) { const m = new Map(); arr.forEach(x => { const k = keyFn(x); if (!m.has(k)) m.set(k, []); m.get(k).push(x); }); return m; }
 
 /* ---------- 各分頁 ---------- */
@@ -298,7 +300,7 @@ function viewBoard() {
       return `<span class="inline-block rounded px-1 text-[11px] ${c}">${lv === 1 ? '一' : '二'} ${u ? `${k}/${total}` : '鎖'}</span>`;
     };
     return `<div class="bg-white rounded-xl border border-slate-200 p-2 text-center">
-      <div class="text-xl font-black">${esc(s.seat)}</div><div class="text-[11px] text-slate-500 truncate">${esc(s.name || s.account)}</div>
+      <div class="text-xl font-black">${esc(s.seat)}</div><div class="text-[11px] text-slate-500 truncate">${esc(s.name || s.account)}</div><div class="text-[11px] text-sky-800 font-bold truncate">${s.nickname ? esc(s.nickname) : '&nbsp;'}</div>
       <div class="flex justify-center gap-1 mt-1">${dot(1, 6)}${dot(2, 5)}</div><div class="text-xs mt-1">三：${l3}</div></div>`;
   }).join('');
   return `<div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4">
@@ -446,7 +448,7 @@ function viewRank() {
   const rows = done.map((r, i) => {
     const key = r.score + '|' + r.used_seconds; if (key !== prev) { rank = i + 1; prev = key; }
     const wrong = (r.answers || []).map((a, k) => a === 0 ? null : `${k + 1}${a == null ? '（未答）' : ''}`).filter(Boolean).join('、') || '全對';
-    return `<tr class="border-b border-slate-100"><td class="text-center font-bold">${rank}</td><td class="text-center">${esc(r.seat)}</td><td>${esc(r.name)}</td>
+    return `<tr class="border-b border-slate-100"><td class="text-center font-bold">${rank}</td><td class="text-center">${esc(r.seat)}</td><td>${esc(r.name)}</td><td>${nickCell(r.nickname)}</td>
       <td class="text-center font-bold">${r.score}</td><td class="text-center tabular-nums">${fmtSec(r.used_seconds)}</td>
       <td>${wrong}</td><td class="text-center">${r.auto ? '是' : ''}${r.late ? '（逾時）' : ''}</td><td>${fmtT(r.submitted_at)}</td>
       <td><button data-retake="${esc(r.seat)}" class="bg-red-50 hover:bg-red-100 text-red-700 font-bold rounded-lg px-2 py-1 text-xs">允許重考</button></td></tr>`;
@@ -455,12 +457,12 @@ function viewRank() {
   const lim = ((DATA.levels || []).find(l => l.level === 3) || {}).time_limit || 180;
   const rows2 = doing.map(r => {
     const left = lim - (now - new Date(r.started_at).getTime()) / 1000;
-    return `<tr class="border-b border-slate-100"><td class="text-center">${esc(r.seat)}</td><td>${esc(r.name)}</td><td>${fmtT(r.started_at)}</td>
+    return `<tr class="border-b border-slate-100"><td class="text-center">${esc(r.seat)}</td><td>${esc(r.name)}</td><td>${nickCell(r.nickname)}</td><td>${fmtT(r.started_at)}</td>
       <td class="text-center">${left > 0 ? '剩 ' + fmtSec(left) : '<span class="text-red-600">已超時，尚未送出</span>'}</td>
       <td><button data-retake="${esc(r.seat)}" class="bg-red-50 hover:bg-red-100 text-red-700 font-bold rounded-lg px-2 py-1 text-xs">允許重考</button></td></tr>`;
   });
-  return card('第三關排名（分數高者在前，同分比用時）', table(['名次', '座號', '姓名', '分數', '用時', '答錯的題號', '時間到自動送出', '送出時間', ''], rows))
-    + card('作答中', table(['座號', '姓名', '開始時間', '狀態', ''], rows2))
+  return card('第三關排名（分數高者在前，同分比用時）', table(['名次', '座號', '姓名', '暱稱', '分數', '用時', '答錯的題號', '時間到自動送出', '送出時間', ''], rows))
+    + card('作答中', table(['座號', '姓名', '暱稱', '開始時間', '狀態', ''], rows2))
     + '<p class="text-sm text-slate-500">「允許重考」會刪除該生的第三關紀錄，學生重新進入第三關即可再作答一次。</p>';
 }
 
@@ -468,12 +470,12 @@ function viewLog() {
   const att = filteredAttempts().slice().reverse();
   const shown = att.slice(0, 500);
   const rows = shown.map(a => `<tr class="border-b border-slate-100 ${a.correct ? '' : 'bg-red-50/40'}">
-    <td class="whitespace-nowrap">${fmtT(a.t)}</td><td class="text-center">${esc(a.seat)}</td><td class="text-center">${a.level}</td>
+    <td class="whitespace-nowrap">${fmtT(a.t)}</td><td class="text-center">${esc(a.seat)}</td><td>${nickCell(nickOf(a.seat))}</td><td class="text-center">${a.level}</td>
     <td>${esc((ITEM_NAMES[a.level] || {})[a.item] || a.item)}</td><td class="text-center">${a.correct ? '✅' : '❌'}</td>
     <td>${esc(tagName(a.tag))}</td><td class="text-center">${a.attempt || ''}</td><td class="text-xs text-slate-500">${esc(plain(a.answer))}</td></tr>`);
   return `<div class="flex items-center justify-between gap-3 mb-3 flex-wrap"><p class="text-sm text-slate-500">共 ${att.length} 筆${att.length > 500 ? '，畫面只顯示最新 500 筆，完整資料請匯出' : ''}。</p>
       <button id="btn-csv" class="bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg px-4 py-2 text-sm">⬇️ 匯出 CSV（Excel 可開）</button></div>`
-    + card('作答明細（最新在上）', table(['時間', '座號', '關卡', '題目', '對錯', '錯誤類型', '第幾次', '作答內容'], rows));
+    + card('作答明細（最新在上）', table(['時間', '座號', '暱稱', '關卡', '題目', '對錯', '錯誤類型', '第幾次', '作答內容'], rows));
 }
 
 function viewStudents() {
@@ -481,12 +483,14 @@ function viewStudents() {
     const run = DATA.runs.find(r => r.seat === s.seat);
     return `<tr class="border-b border-slate-100"><td class="text-center font-bold">${esc(s.seat)}</td><td>${esc(s.account)}</td>
       <td class="font-mono">${showPw ? esc(s.password) : '••••••'}</td><td>${esc(s.name)}</td>
+      <td><span class="whitespace-nowrap">${nickCell(s.nickname)}</span> <button data-nick="${esc(s.seat)}" data-cur="${esc(s.nickname || '')}" class="bg-slate-200 hover:bg-slate-300 font-bold rounded-lg px-2 py-1 text-xs">修改</button></td>
       <td>${(s.unlocked || []).map(l => '第' + ['', '一', '二', '三'][l] + '關').join('、') || '—'}</td>
-      <td>${run ? (run.submitted_at ? run.score + ' 分' : '作答中') : '—'}</td></tr>`;
+      <td>${run ? (run.submitted_at ? run.score + ' 分' : '作答中') : '—'}</td>
+      <td class="whitespace-nowrap">${s.logged_in ? `<span class="text-green-700 font-bold">登入中</span> <button data-kick="${esc(s.seat)}" class="bg-red-50 hover:bg-red-100 text-red-700 font-bold rounded-lg px-2 py-1 text-xs">強制登出</button>` : '<span class="text-slate-400">未登入</span>'}</td></tr>`;
   });
-  return `<div class="flex items-center justify-between gap-3 mb-3 flex-wrap"><p class="text-sm text-slate-500">新增、修改帳號密碼請到 Supabase → Table Editor → students。</p>
+  return `<div class="flex items-center justify-between gap-3 mb-3 flex-wrap"><p class="text-sm text-slate-500">新增、修改帳號密碼請到 Supabase → Table Editor → students。<br>一個帳號同時只能在一台裝置登入；學生換裝置登不進去時，按「強制登出」。暱稱不恰當時按「修改」，清空就會讓學生重新取。</p>
       <button id="btn-pw" class="bg-slate-200 hover:bg-slate-300 font-bold rounded-lg px-3 py-2 text-sm">${showPw ? '隱藏密碼' : '顯示密碼'}</button></div>`
-    + card(`學生名單（${DATA.students.length} 人）`, table(['座號', '帳號', '密碼', '姓名', '已解鎖', '第三關'], rows));
+    + card(`學生名單（${DATA.students.length} 人）`, table(['座號', '帳號', '密碼', '姓名', '暱稱', '已解鎖', '第三關', '登入狀態'], rows));
 }
 
 function viewSettings() {
@@ -511,6 +515,22 @@ function viewSettings() {
 
 /* ---------- 互動 ---------- */
 function bindView() {
+  document.querySelectorAll('[data-kick]').forEach(b => b.onclick = async () => {
+    const seat = +b.dataset.kick;
+    if (!confirm(`確定讓 ${seat} 號登出嗎？他正在用的裝置會被登出，之後可以在任何一台裝置重新登入。`)) return;
+    try { const r = await rpc('admin_force_logout', { p_token: token(), p_seat: seat }); if (!r.ok) throw new Error('沒有權限'); refresh(); }
+    catch (e) { alert(e.message); }
+  });
+  document.querySelectorAll('[data-nick]').forEach(b => b.onclick = async () => {
+    const seat = +b.dataset.nick;
+    const v = prompt(`${seat} 號的新暱稱（1～10 個字；清空表示讓學生重新取）：`, b.dataset.cur);
+    if (v === null) return;
+    try {
+      const r = await rpc('admin_set_nickname', { p_token: token(), p_seat: seat, p_nickname: v });
+      if (!r.ok) throw new Error(r.reason === 'taken' ? '這個暱稱已經有人用了。' : r.reason === 'invalid' ? '暱稱要 1～10 個字。' : '沒有權限');
+      refresh();
+    } catch (e) { alert(e.message); }
+  });
   document.querySelectorAll('[data-explain]').forEach(b => b.onclick = () => openExplain(+b.dataset.explain));
   renderExplain();   // 自動更新時，講解畫面的人數一起更新
   document.querySelectorAll('[data-retake]').forEach(b => b.onclick = async () => {
@@ -523,8 +543,8 @@ function bindView() {
   if (csv) csv.onclick = () => {
     const att = filteredAttempts();
     const cell = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
-    const lines = [['時間', '座號', '關卡', '題目', '答對', '錯誤類型', '第幾次', '作答內容'].map(cell).join(',')]
-      .concat(att.map(a => [fmtT(a.t), a.seat, a.level, (ITEM_NAMES[a.level] || {})[a.item] || a.item, a.correct ? '是' : '否', tagName(a.tag), a.attempt || '', plain(a.answer)].map(cell).join(',')));
+    const lines = [['時間', '座號', '暱稱', '關卡', '題目', '答對', '錯誤類型', '第幾次', '作答內容'].map(cell).join(',')]
+      .concat(att.map(a => [fmtT(a.t), a.seat, nickOf(a.seat), a.level, (ITEM_NAMES[a.level] || {})[a.item] || a.item, a.correct ? '是' : '否', tagName(a.tag), a.attempt || '', plain(a.answer)].map(cell).join(',')));
     const blob = new Blob(['\ufeff' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
