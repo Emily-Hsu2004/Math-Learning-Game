@@ -1428,19 +1428,15 @@ const btnNext = 'hidden mt-3 w-full bg-indigo-600 hover:bg-indigo-700 text-white
 /* =========================================================
    第一關：颱風定位
    ========================================================= */
-const L1_ITEMS = [
-  { kind: 'tap', key: 'A', name: '漁船 A', emoji: '🚢', r: 3, th: 60, title: '任務 1：定位漁船 A',
-    desc: '雷達回報：漁船 A 距離雷達站 <b>3 格</b>，從極軸逆時針轉 <b>60°</b>。請在雷達上點出漁船 A 的位置。' },
-  { kind: 'tap', key: 'B', name: '漁船 B', emoji: '🚢', r: 4, th: 135, title: '任務 2：定位漁船 B',
-    desc: '雷達回報：漁船 B 距離雷達站 <b>4 格</b>，從極軸逆時針轉 <b>135°</b>。請點出漁船 B 的位置。' },
-  { kind: 'read', key: 'C', name: '漁船 C', emoji: '🚢', r: 2, th: 300, title: '任務 3：回報漁船 C 的位置',
-    desc: '雷達上閃爍的是漁船 C。請回報它離雷達站幾格，以及從極軸轉了幾度（逆時針記正、順時針記負）。' },
-  { kind: 'read', key: 'T', name: '颱風中心', emoji: '🌀', r: 4, th: 315, km: true, title: '任務 4：鎖定颱風中心',
-    desc: '氣象署發布：颱風中心在<b>花蓮東南方 140 公里</b>，已標在雷達上（1 格 = 35 公里）。請用雷達的方式回報：距離幾公里、從極軸轉了幾度。',
+const L1_ITEMS = [   // 四個任務，與紙本學習單「任務紀錄」的順序相同
+  { kind: 'tap', key: 'A', name: '漁船', emoji: '🚢', r: 3, th: 60, title: '任務 1：定位漁船',
+    desc: '雷達回報：漁船距離雷達站 <b>3 格</b>，從極軸逆時針轉 <b>60°</b>。請在雷達上點出漁船的位置。' },
+  { kind: 'read', key: 'T', name: '颱風中心', emoji: '🌀', r: 4, th: 300, title: '任務 2：鎖定颱風中心',
+    desc: '颱風中心已經標在雷達上（閃爍的 🌀）。請回報它離雷達站幾格，以及從極軸轉了幾度（逆時針記正、順時針記負）。',
     modal: { who: 'cmd', title: '緊急通訊：指揮官 簡大哥', html: '工程師，氣象署剛傳來颱風中心的最新位置！<br>請立刻用<strong class="text-red-400">雷達的方式</strong>回報，讓所有船隻知道颱風在哪裡。' } },
-  { kind: 'tap', key: 'S', name: '補給船', emoji: '⛴️', r: 2, th: 30, title: '任務 5：定位補給船',
+  { kind: 'tap', key: 'S', name: '補給船', emoji: '⛴️', r: 2, th: 30, title: '任務 3：定位補給船',
     desc: '雷達回報：補給船距離雷達站 <b>2 格</b>，從極軸逆時針轉 <b>30°</b>。請點出補給船的位置。' },
-  { kind: 'tap', key: 'H', name: '救難直升機', emoji: '🚁', r: 2, th: 390, title: '任務 6：盤旋的直升機',
+  { kind: 'tap', key: 'H', name: '救難直升機', emoji: '🚁', r: 2, th: 390, title: '任務 4：盤旋的直升機',
     desc: '救難直升機從雷達站上空出發，沿著極軸方向，<b>逆時針</b>繞著雷達站飛了<b>一圈又 30°</b>（一共轉了 390°），最後停在離雷達站 <b>2 格</b>的地方。請點出直升機現在的位置。',
     modal: { who: 'intel', title: '緊急通訊：情報官 阿程', html: '工程師，救難直升機在雷達站上空盤旋，等待降落指示。<br>它已經逆時針繞了 <strong class="text-sky-300">390°</strong>，請你判斷它現在停在哪裡。' } }
 ];
@@ -1452,7 +1448,7 @@ const L1 = {
     Object.assign(scene, { objects: [], marker: null, ghost: null, tri: null, anim: null });
     $('btn-restart').classList.remove('hidden');
     $('stage-timer').classList.add('hidden');
-    $('legend').innerHTML = '1 格 = 35 公里<br>極軸指向正東；逆時針記正、順時針記負';
+    $('legend').innerHTML = '極軸指向正東<br>逆時針記正、順時針記負';
     setPanel('🌀 颱風危機：颱風定位', '用「距離」和「方向」找出位置');
     this.idx = 0; this.records = []; this.placed = [];
     this.startItem();
@@ -1571,7 +1567,7 @@ const L1 = {
     let msg = `✅ <b>定位成功！</b>${it.name}：${text}。`;
     if (it.key === 'H') {
       scene.anim = { t0: 0, dur: 1800, to: 390, r: 2 };
-      msg = '✅ <b>定位成功！</b>直升機繞了 390°，剛好停在<b>補給船的正上方</b>，和任務 5 是同一個位置！';
+      msg = '✅ <b>定位成功！</b>直升機繞了 390°，剛好停在<b>補給船的正上方</b>，和任務 3 是同一個位置！';
     }
     if (extra) msg += '<br>💡 ' + extra;
     feedback(msg, 'ok');
@@ -1610,10 +1606,15 @@ const L1 = {
 /* =========================================================
    第二關：坐標翻譯機
    ========================================================= */
+/* 第二關：與紙本學習單第二部分相同。D、E、F 給極坐標與 cosθ、sinθ，求 (x, y)；S、T 給 (x, y)，求 r */
+const degOf = (x, y) => ((Math.atan2(y, x) * 180 / Math.PI) + 360) % 360;
 const L2_ITEMS = [
-  { kind: 'p2r', key: 'P', name: '補給艦 P', emoji: '🚢', r: 2, th: 30, x: SQ3, y: 1, xs: '√3', ys: '1', xt: R`\sqrt{3}`, yt: '1', polar: R`P[2,\ 30^\circ]`, pt: 'P[2, 30°]', maxR: 3, slope: R`\dfrac{y}{x} = \dfrac{1}{\sqrt{3}}` },
-  { kind: 'p2r', key: 'Q', name: '漁船 Q', emoji: '🚢', r: 4, th: 120, x: -2, y: 2 * SQ3, xs: '−2', ys: '2√3', xt: '-2', yt: R`2\sqrt{3}`, polar: R`Q[4,\ 120^\circ]`, pt: 'Q[4, 120°]', maxR: 5, slope: R`\dfrac{y}{x} = \dfrac{2\sqrt{3}}{-2} = -\sqrt{3}` },
-  { kind: 'p2r', key: 'R', name: '救生艇 R', emoji: '🛟', r: 3, th: 270, x: 0, y: -3, xs: '0', ys: '−3', xt: '0', yt: '-3', polar: R`R[3,\ 270^\circ]`, pt: 'R[3, 270°]', maxR: 4 },
+  { kind: 'p2r', key: 'D', name: '補給艦 D', emoji: '🚢', r: 5, th: degOf(4, 3), x: 4, y: 3, xs: '4', ys: '3', xt: '4', yt: '3',
+    polar: R`D[5,\ 36.9^\circ]`, pt: 'D[5, 36.9°]', thT: R`36.9^\circ`, cosT: R`\tfrac{4}{5}`, sinT: R`\tfrac{3}{5}`, maxR: 6 },
+  { kind: 'p2r', key: 'E', name: '漁船 E', emoji: '🚢', r: 10, th: degOf(-8, 6), x: -8, y: 6, xs: '−8', ys: '6', xt: '-8', yt: '6',
+    polar: R`E[10,\ 143.1^\circ]`, pt: 'E[10, 143.1°]', thT: R`143.1^\circ`, cosT: R`-\tfrac{4}{5}`, sinT: R`\tfrac{3}{5}`, maxR: 11 },
+  { kind: 'p2r', key: 'F', name: '救生艇 F', emoji: '🛟', r: 5, th: degOf(3, -4), x: 3, y: -4, xs: '3', ys: '−4', xt: '3', yt: '-4',
+    polar: R`F[5,\ 306.9^\circ]`, pt: 'F[5, 306.9°]', thT: R`306.9^\circ`, cosT: R`\tfrac{3}{5}`, sinT: R`-\tfrac{4}{5}`, maxR: 6 },
   { kind: 'r2p', key: 'S', name: '救生筏 S', emoji: '🛟', x: 3, y: 4, r: 5, xs: '3', ys: '4', rect: R`S(3,\ 4)`, pt: 'S(3, 4)', maxR: 6,
     modal: { who: 'intel', title: '緊急通訊：情報官 阿程', html: `直升機傳回了救生筏的 GPS 坐標 ${M('(x,y)')}！<br>雷達站要知道它們<strong class="text-sky-300">離雷達站多遠</strong>才能調整天線，請你反過來算出 ${M('r')}。` } },
   { kind: 'r2p', key: 'T', name: '救生筏 T', emoji: '🛟', x: -6, y: 8, r: 10, xs: '−6', ys: '8', rect: R`T(-6,\ 8)`, pt: 'T(−6, 8)', maxR: 11 }
@@ -1654,12 +1655,12 @@ const L2 = {
     $('panel-data').innerHTML = progressDots(L2_ITEMS.length, this.idx);
     let desc, body, hint;
     if (it.kind === 'p2r') {
-      desc = `雷達回報 ${M(it.polar)}。請翻譯成直升機看得懂的直角坐標 ${M('(x,y)')}。`;
+      desc = `雷達回報 ${M(it.polar)}，已知 ${M(`\\cos ${it.thT} = ${it.cosT}`)}、${M(`\\sin ${it.thT} = ${it.sinT}`)}。請翻譯成直升機看得懂的直角坐標 ${M('(x,y)')}。`;
       body = `<div class="bg-white rounded-lg p-3 border border-sky-100 flex flex-wrap items-center justify-center gap-1 text-lg font-bold text-slate-700">
           <span>(</span>${fieldBtn('x')}<span>,</span>${fieldBtn('y')}<span>)</span></div>
-        <p class="text-xs text-slate-500 mt-2">可以用 √ 鍵輸入 √3、2√3 這種寫法，也可以用計算機算出近似值輸入（例如 1.73）。</p>
+        <p class="text-xs text-slate-500 mt-2">答案都是整數；負數先按 ± 鍵（鍵盤可以直接打 −）。</p>
         <button id="btn-submit" class="${btnMain} kp-dup">🚁 傳送給直升機</button>`;
-      hint = '看雷達上的直角三角形：藍色斜邊是 r，粉紅色躺在 x 軸上的那邊是 x，綠色虛線（垂足）是 y。想想銳角三角比 cos、sin 的定義。';
+      hint = '看雷達上的直角三角形：藍色斜邊是 r，粉紅色躺在 x 軸上的那邊是 x，綠色虛線（往 x 軸作的垂線）是 y。想想 cosθ、sinθ 和 x、y、r 的關係。';
     } else {
       desc = `救生筏的 GPS 回報 ${M(it.rect)}。雷達站要知道它離雷達站多遠，請算出 ${M('r')}（可以用計算機搭配畢氏定理）。`;
       body = `<div class="bg-white rounded-lg p-3 border border-sky-100 flex items-center justify-center gap-2 text-lg font-bold text-slate-700">
@@ -1691,7 +1692,7 @@ const L2 = {
     let ok, msg = '', tag = 'other', answer;
     if (it.kind === 'p2r') {
       const x = parseVal(KP.fields.x), y = parseVal(KP.fields.y);
-      if (isNaN(x) || isNaN(y)) { feedback('請把 x 和 y 都填好；√ 的後面要接數字，例如 2√3。', 'info'); return; }
+      if (isNaN(x) || isNaN(y)) { feedback('請把 x 和 y 都填好。', 'info'); return; }
       answer = { x: KP.fields.x, y: KP.fields.y };
       this.attempts++;
       ok = near(x, it.x) && near(y, it.y);
@@ -1737,7 +1738,9 @@ const L2 = {
     }
     this.records.push(rec);
     const ansTex = it.kind === 'p2r' ? `(x,y) = (${it.xt},\\ ${it.yt})` : `r = ${it.r}`;
-    const slope = it.slope ? `<br>💡 斜邊的斜率 ${M(it.slope)}，正好等於 ${M(`\\tan ${it.th}^\\circ`)}。` : '';
+    const slope = it.kind === 'p2r'
+      ? `<br>💡 ${M(`x = ${it.r} \\times \\left(${it.cosT}\\right) = ${it.xt}`)}、${M(`y = ${it.r} \\times \\left(${it.sinT}\\right) = ${it.yt}`)}，也就是 ${M('x = r\\cos\\theta')}、${M('y = r\\sin\\theta')}。`
+      : `<br>💡 ${M(`r = \\sqrt{(${it.x})^2 + ${it.y}^2} = ${it.r}`)}，也就是 ${M('r = \\sqrt{x^2 + y^2}')}。`;
     if (ok) { feedback(`✅ <b>翻譯成功！</b>${M(ansTex)}，${it.kind === 'p2r' ? '直升機已經出發。' : '雷達天線已經轉向。'}${slope}`, 'ok'); setStatus('翻譯成功', 'ok'); }
     else { feedback(`${msg}<br><br>正確答案：${M(ansTex)}。看看雷達上的三角形，想想差在哪裡，再前往下一個任務。`, 'warn'); setStatus('已顯示正確答案', 'warn'); }
     $('btn-submit').classList.add('hidden');
