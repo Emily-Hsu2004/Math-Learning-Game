@@ -583,7 +583,26 @@ function bindView() {
 }
 
 /* ---------- 開始 ---------- */
-if (ONLINE && token()) refresh(true); else showLoginPage();
+/* 網站更新偵測：老師後台開著時網站更新了，就重新載入成新版 */
+async function pageOutdated() {
+  if (location.protocol === 'file:') return false;
+  try {
+    const r = await fetch(location.pathname + '?v=' + Date.now(), { method: 'HEAD', cache: 'no-store' });
+    const lm = r.ok && r.headers.get('last-modified');
+    if (!lm || new Date(lm).getTime() <= new Date(document.lastModified).getTime() + 2000) return false;
+    const last = +sessionStorage.getItem('typhoon.adminReloadAt') || 0;
+    if (Date.now() - last < 60000) return false;
+    sessionStorage.setItem('typhoon.adminReloadAt', String(Date.now()));
+    location.replace(location.pathname + '?r=' + Date.now());
+    return true;
+  } catch (e) { return false; }
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') pageOutdated(); });
+
+(async () => {
+  if (await pageOutdated()) return;
+  if (ONLINE && token()) refresh(true); else showLoginPage();
+})();
 </script>
 </body>
 </html>

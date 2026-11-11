@@ -694,6 +694,7 @@ async function doLogin() {
   const a = $('login-account').value.trim(), p = $('login-password').value;
   if (!a || !p) { showLoginError('請輸入帳號和密碼。'); return; }
   if (loginBusy) return;
+  if (await PageUpdate.check()) return;     // 登入前先確認是最新版
   loginBusy = true;
   const btn = $('btn-login'); btn.disabled = true; btn.textContent = '登入中……';
   $('login-err').classList.add('hidden');
@@ -769,7 +770,31 @@ $('btn-logout').onclick = () => {
 };
 
 /* 開啟頁面：已登入就直接進首頁，不用重新登入 */
+/* 網站更新偵測：GitHub Pages 更新後，還開著的舊分頁會繼續跑舊程式（例如登出不會通知伺服器）。
+   比對這一頁的 Last-Modified 和伺服器上最新的版本，不同就重新載入（第三關作答中除外）。 */
+const PageUpdate = {
+  async latest() {
+    try {
+      const r = await fetch(location.pathname + '?v=' + Date.now(), { method: 'HEAD', cache: 'no-store' });
+      const lm = r.ok && r.headers.get('last-modified');
+      return lm ? new Date(lm).getTime() : null;
+    } catch (e) { return null; }
+  },
+  async check() {
+    if (location.protocol === 'file:' || (typeof L3 !== 'undefined' && L3.inProgress())) return false;
+    const mine = new Date(document.lastModified).getTime(), now = await this.latest();
+    if (!now || !mine || now <= mine + 2000) return false;
+    let last = 0; try { last = +sessionStorage.getItem('typhoon.reloadAt') || 0; } catch (e) {}
+    if (Date.now() - last < 60000) return false;          // 一分鐘內最多重新載入一次，避免 CDN 還沒更新時一直重整
+    try { sessionStorage.setItem('typhoon.reloadAt', String(Date.now())); } catch (e) {}
+    location.replace(location.pathname + '?r=' + Date.now());
+    return true;
+  }
+};
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') PageUpdate.check(); });
+
 async function boot() {
+  if (await PageUpdate.check()) return;
   showDemoBadge();
   if (ONLINE && !/^https:\/\/[^/]+\.supabase\.co\/?$/i.test(CONFIG.supabaseUrl.trim())) {
     console.warn('supabaseUrl 看起來不像 https://xxxx.supabase.co：', CONFIG.supabaseUrl);
