@@ -67,7 +67,9 @@
   .top3-card { background: rgba(255,255,255,.1); border: 2px solid rgba(255,255,255,.2); border-radius: 1rem; padding: 1.25rem; text-align: center; }
   .top3-1 { border-color: #fbbf24; background: rgba(251,191,36,.15); }
   .top3-medal { font-size: 3rem; line-height: 1; } .top3-rank { font-weight: 700; color: #bae6fd; margin-top: .25rem; }
-  .top3-name { font-size: 2rem; font-weight: 900; margin: .5rem 0; word-break: break-all; }
+  .top3-name { font-size: 2rem; font-weight: 900; margin: .5rem 0 .1rem; word-break: break-all; }
+  .top3-nick { color: #fde68a; font-weight: 700; margin-bottom: .5rem; word-break: break-all; }
+  .top3-miss { margin-top: .6rem; padding-top: .6rem; border-top: 1px solid rgba(255,255,255,.2); color: #e0f2fe; font-size: .95rem; line-height: 1.6; }
   .top3-score { font-size: 2.5rem; font-weight: 900; } .top3-score span { font-size: 1.25rem; color: #bae6fd; }
   .top3-time { color: #bae6fd; font-variant-numeric: tabular-nums; }
   .top3-empty { color: #bae6fd; font-size: 1.25rem; } .top3-note { margin-top: 1rem; color: #bae6fd; font-size: .875rem; }
@@ -565,14 +567,21 @@ function viewRank() {
       <td class="text-center">${left > 0 ? '剩 ' + fmtSec(left) : '<span class="text-red-600">已超時，尚未送出</span>'}</td>
       <td><button data-retake="${esc(r.seat)}" class="bg-red-50 hover:bg-red-100 text-red-700 font-bold rounded-lg px-2 py-1 text-xs">允許重考</button></td></tr>`;
   });
-  if (RANK_TOP3) return viewTop3(done);
-  const top3Btn = `<div class="flex flex-wrap items-center justify-between gap-2 mb-3"><p class="text-sm text-slate-500">要公布名次時，按右邊的按鈕切換成投影用的前三名（只顯示暱稱）。</p><button id="btn-top3" class="ex-cta">🏆 只顯示前三名</button></div>`;
-  return card('第三關排名（分數高者在前，同分比用時）', top3Btn + table(['名次', '座號', '姓名', '暱稱', '分數', '用時', '答錯的題號', '時間到自動送出', '送出時間', ''], rows))
-    + card('作答中', table(['座號', '姓名', '暱稱', '開始時間', '狀態', ''], rows2))
+  // 還沒開始作答第三關的學生
+  const started = new Set(DATA.runs.map(r => r.seat));
+  const notYet = (DATA.students || []).filter(s => !started.has(s.seat) && (!seat || String(s.seat) === seat));
+  const rows3 = notYet.map(s => `<tr class="border-b border-slate-100"><td class="text-center">${esc(s.seat)}</td><td>${esc(s.name)}</td><td>${nickCell(s.nickname)}</td>
+      <td>${(s.unlocked || []).includes(3) ? '已解鎖，還沒按開始' : '還沒輸入第三關授權碼'}</td><td>${s.logged_in ? '<span class="text-green-700 font-bold">登入中</span>' : '<span class="text-slate-400">未登入</span>'}</td></tr>`);
+  const rest = card(`作答中（${doing.length} 人）`, table(['座號', '姓名', '暱稱', '開始時間', '狀態', ''], rows2))
+    + card(`尚未作答（${notYet.length} 人）`, table(['座號', '姓名', '暱稱', '狀態', '登入狀態'], rows3))
     + '<p class="text-sm text-slate-500">「允許重考」會刪除該生的第三關紀錄，學生重新進入第三關即可再作答一次。</p>';
+  if (RANK_TOP3) return viewTop3(done) + rest;
+  const top3Btn = `<div class="flex flex-wrap items-center justify-between gap-2 mb-3"><p class="text-sm text-slate-500">要公布名次時，按右邊的按鈕切換成前三名的大字畫面。</p><button id="btn-top3" class="ex-cta">🏆 只顯示前三名</button></div>`;
+  return card(`第三關排名（已交卷 ${done.length} 人；分數高者在前，同分比用時）`, top3Btn + table(['名次', '座號', '姓名', '暱稱', '分數', '用時', '答錯的題號', '時間到自動送出', '送出時間', ''], rows))
+    + rest;
 }
 
-/* 前三名（投影用）：只顯示暱稱、分數、用時；同分同時的並列 */
+/* 前三名：座號、姓名、暱稱、分數、用時、答錯與未作答的題號；同分同時的並列 */
 function viewTop3(done) {
   let rank = 0, prev = null;
   const ranked = done.map((r, i) => { const k = r.score + '|' + r.used_seconds; if (k !== prev) { rank = i + 1; prev = k; } return { ...r, rank }; })
@@ -580,13 +589,22 @@ function viewTop3(done) {
   const medal = ['', '🥇', '🥈', '🥉'];
   const cards = ranked.map(r => `<div class="top3-card top3-${r.rank}">
       <div class="top3-medal">${medal[r.rank]}</div><div class="top3-rank">第 ${r.rank} 名</div>
-      <div class="top3-name">${r.nickname ? esc(r.nickname) : esc(r.seat) + ' 號'}</div>
-      <div class="top3-score">${r.score} <span>/ ${L3_Q.length}</span></div><div class="top3-time">用時 ${fmtSec(r.used_seconds)}</div></div>`).join('');
+      <div class="top3-name">${esc(r.seat)} 號　${esc(r.name || '')}</div>
+      <div class="top3-nick">${r.nickname ? '暱稱：' + esc(r.nickname) : '（未取暱稱）'}</div>
+      <div class="top3-score">${r.score} <span>/ ${L3_Q.length}</span></div><div class="top3-time">用時 ${fmtSec(r.used_seconds)}</div>
+      <div class="top3-miss">${top3Miss(r.answers)}</div></div>`).join('');
   return `<section class="top3-wrap">
       <div class="top3-head"><h2>🏆 第三關前三名</h2><button id="btn-top3" class="top3-all">顯示全部排名</button></div>
       ${cards ? `<div class="top3-grid">${cards}</div>` : '<p class="top3-empty">還沒有人交卷。</p>'}
       <p class="top3-note">已交卷 ${done.length} 人。分數高者在前，同分比用時。</p>
     </section>`;
+}
+
+function top3Miss(answers) {
+  const a = Array.isArray(answers) ? answers : [];
+  const wrong = L3_Q.map((_, k) => a[k] != null && a[k] !== 0 ? k + 1 : null).filter(Boolean);
+  const blank = L3_Q.map((_, k) => a[k] == null ? k + 1 : null).filter(Boolean);
+  return `答錯：${wrong.length ? '第 ' + wrong.join('、') + ' 題' : '無'}<br>未作答：${blank.length ? '第 ' + blank.join('、') + ' 題' : '無'}`;
 }
 
 function viewLog() {
