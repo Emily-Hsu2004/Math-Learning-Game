@@ -1606,7 +1606,7 @@ const L1 = {
 /* =========================================================
    第二關：坐標翻譯機
    ========================================================= */
-/* 第二關：與紙本學習單第二部分相同。D、E、F 給極坐標與 cosθ、sinθ，求 (x, y)；S、T 給 (x, y)，求 r */
+/* 第二關：與紙本學習單第二部分相同。D、E、F 給極坐標與 cosθ、sinθ，求 (x, y)；G、H 給 (x, y)，求 r */
 const degOf = (x, y) => ((Math.atan2(y, x) * 180 / Math.PI) + 360) % 360;
 const L2_ITEMS = [
   { kind: 'p2r', key: 'D', name: '補給艦 D', emoji: '🚢', r: 5, th: degOf(4, 3), x: 4, y: 3, xs: '4', ys: '3', xt: '4', yt: '3',
@@ -1615,9 +1615,9 @@ const L2_ITEMS = [
     polar: R`E[10,\ 143.1^\circ]`, pt: 'E[10, 143.1°]', thT: R`143.1^\circ`, cosT: R`-\tfrac{4}{5}`, sinT: R`\tfrac{3}{5}`, maxR: 11 },
   { kind: 'p2r', key: 'F', name: '救生艇 F', emoji: '🛟', r: 5, th: degOf(3, -4), x: 3, y: -4, xs: '3', ys: '−4', xt: '3', yt: '-4',
     polar: R`F[5,\ 306.9^\circ]`, pt: 'F[5, 306.9°]', thT: R`306.9^\circ`, cosT: R`\tfrac{3}{5}`, sinT: R`-\tfrac{4}{5}`, maxR: 6 },
-  { kind: 'r2p', key: 'S', name: '救生筏 S', emoji: '🛟', x: 3, y: 4, r: 5, xs: '3', ys: '4', rect: R`S(3,\ 4)`, pt: 'S(3, 4)', maxR: 6,
+  { kind: 'r2p', key: 'G', name: '救生筏 G', emoji: '🛟', x: 3, y: 4, r: 5, xs: '3', ys: '4', rect: R`G(3,\ 4)`, pt: 'G(3, 4)', maxR: 6,
     modal: { who: 'intel', title: '緊急通訊：情報官 阿程', html: `直升機傳回了救生筏的 GPS 坐標 ${M('(x,y)')}！<br>雷達站要知道它們<strong class="text-sky-300">離雷達站多遠</strong>才能調整天線，請你反過來算出 ${M('r')}。` } },
-  { kind: 'r2p', key: 'T', name: '救生筏 T', emoji: '🛟', x: -6, y: 8, r: 10, xs: '−6', ys: '8', rect: R`T(-6,\ 8)`, pt: 'T(−6, 8)', maxR: 11 }
+  { kind: 'r2p', key: 'H', name: '救生筏 H', emoji: '🛟', x: -6, y: 8, r: 10, xs: '−6', ys: '8', rect: R`H(-6,\ 8)`, pt: 'H(−6, 8)', maxR: 11 }
 ];
 
 const L2 = {
@@ -1740,7 +1740,7 @@ const L2 = {
     const ansTex = it.kind === 'p2r' ? `(x,y) = (${it.xt},\\ ${it.yt})` : `r = ${it.r}`;
     const slope = it.kind === 'p2r'
       ? `<br>💡 ${M(`x = ${it.r} \\times \\left(${it.cosT}\\right) = ${it.xt}`)}、${M(`y = ${it.r} \\times \\left(${it.sinT}\\right) = ${it.yt}`)}，也就是 ${M('x = r\\cos\\theta')}、${M('y = r\\sin\\theta')}。`
-      : `<br>💡 ${M(`r = \\sqrt{(${it.x})^2 + ${it.y}^2} = ${it.r}`)}，也就是 ${M('r = \\sqrt{x^2 + y^2}')}。`;
+      : `<br>💡 ${M(`r = \\sqrt{${it.x < 0 ? `(${it.x})` : it.x}^2 + ${it.y < 0 ? `(${it.y})` : it.y}^2} = ${it.r}`)}，也就是 ${M('r = \\sqrt{x^2 + y^2}')}。`;
     if (ok) { feedback(`✅ <b>翻譯成功！</b>${M(ansTex)}，${it.kind === 'p2r' ? '直升機已經出發。' : '雷達天線已經轉向。'}${slope}`, 'ok'); setStatus('翻譯成功', 'ok'); }
     else { feedback(`${msg}<br><br>正確答案：${M(ansTex)}。看看雷達上的三角形，想想差在哪裡，再前往下一個任務。`, 'warn'); setStatus('已顯示正確答案', 'warn'); }
     $('btn-submit').classList.add('hidden');
@@ -1855,7 +1855,7 @@ const L3 = {
           <li>每題從四個選項中選出正確答案，不需要計算機。</li>
           <li>限時${timeText(state.timeLimit)}，時間到系統會自動送出。</li>
           <li>只有一次機會，開始後不能重來；不小心重新整理，計時也不會停。</li>
-          <li>作答時不顯示對錯，送出前都可以回頭修改。</li>
+          <li>作答時不顯示對錯，送出前都可以回頭修改；在最後一題按「送出全部指令」就會直接交卷。</li>
         </ul>
         <div id="start-area">
           <button id="btn-l3-start" class="${btnBase} bg-red-600 hover:bg-red-700 !py-3 !text-base">開始作答</button>
@@ -1935,7 +1935,6 @@ const L3 = {
           ${last ? '<button id="q-submit" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-lg text-sm">📨 送出全部指令</button>'
                  : '<button id="q-next" class="flex-1 bg-sky-600 hover:bg-sky-700 text-white font-bold py-2.5 rounded-lg text-sm">下一題 ➡️</button>'}
         </div>
-        <div id="confirm-area"></div>
       </section>`;
     document.querySelectorAll('.opt-btn').forEach(b => b.onclick = () => {
       this.answers[this.q] = +b.dataset.i;
@@ -1949,17 +1948,9 @@ const L3 = {
       if (chip) chip.classList.add('ring-2', 'ring-sky-300');
     });
     $('q-prev').onclick = () => { this.q--; this.renderQuestion(); };
-    if (last) $('q-submit').onclick = () => this.askSubmit();
+    if (last) $('q-submit').onclick = () => this.finish(false);   // 直接送出，不再二次確認
     else $('q-next').onclick = () => { this.q++; this.renderQuestion(); };
     typeset($('tasks'));
-  },
-  askSubmit() {
-    const left = this.answers.filter(a => a == null).length;
-    $('confirm-area').innerHTML = `<div class="mt-3 bg-white border border-red-300 rounded-lg p-3 text-sm text-red-800">${left ? `還有 <b>${left} 題</b>沒選，` : ''}送出後就不能修改了，確定送出嗎？
-      <div class="flex gap-2 mt-3"><button id="s-no" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 rounded-lg">再檢查一下</button><button id="s-yes" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg">確定送出</button></div></div>`;
-    $('s-no').onclick = () => { $('confirm-area').innerHTML = ''; };
-    $('s-yes').onclick = () => this.finish(false);
-    $('confirm-area').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   },
   async finish(auto) {
     if (this.done || this.sending) return;
