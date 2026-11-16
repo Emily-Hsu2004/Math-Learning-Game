@@ -31,6 +31,14 @@
   #stage-tools { top: max(.75rem, env(safe-area-inset-top)); left: max(.75rem, env(safe-area-inset-left)); }
   #keypad { padding-bottom: max(.5rem, env(safe-area-inset-bottom)); }
 
+  /* 小螢幕：對話、任務完成、總結的卡片比螢幕高時，卡片不能被壓縮（否則下方的按鈕會被裁掉），改成整個畫面可以捲動 */
+  #comm-screen > *, #outro-screen > *, #summary-screen > * { flex-shrink: 0; }
+  #comm-screen, #outro-screen, #summary-screen { -webkit-overflow-scrolling: touch; }
+  #comm-screen .chat-bubble, #outro-screen .chat-bubble { scroll-margin: 1rem 0 2.5rem; }
+  /* 彈出視窗（任務間通訊、授權碼、暱稱）：比螢幕高時從上方排起並可以捲動，不會上下都被裁掉 */
+  #mission-modal, #code-modal, #nick-modal { overflow-y: auto; align-items: flex-start; -webkit-overflow-scrolling: touch; }
+  #mission-modal > *, #code-modal > *, #nick-modal > * { margin-top: auto; margin-bottom: auto; flex-shrink: 0; }
+
   /* 手機直向：上雷達、下任務 */
   @media (max-width: 767px) {
     #stage { height: 42vh; height: 42dvh; }
@@ -930,6 +938,7 @@ $('btn-answer').onclick = () => {
 function renderCommChat(st) {
   const chat = $('comm-chat');
   chat.classList.remove('hidden');
+  $('comm-screen').scrollTop = 0;
   chat.classList.toggle('border-red-500/50', !!st.danger);
   chat.classList.toggle('border-slate-600', !st.danger);
   const t = $('comm-title');
@@ -960,6 +969,11 @@ function renderCommChat(st) {
 }
 $('comm-btn').onclick = () => enterMain(state.level);
 
+/* 對話一則一則出現時，自動捲到最新的一則，最後捲到按鈕：小螢幕不用自己往下找 */
+['comm-screen', 'outro-screen'].forEach(id => $(id).addEventListener('animationstart', e => {
+  if (e.animationName === 'chatPopUp') e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}));
+
 function enterMain(n) {
   goTo('main-app', () => { resizeCanvas(); LEVELS[n].init(); keepAwake(); });
 }
@@ -982,6 +996,7 @@ window.addEventListener('orientationchange', () => setTimeout(() => { if (!$('ma
 function showOutro(n) {
   const st = STORY[n];
   goTo('outro-screen', () => {
+    $('outro-screen').scrollTop = 0;
     $('outro-title').textContent = st.outroTitle;
     $('outro-tag').textContent = st.outroTag;
     $('outro-bubbles').innerHTML = bubbles(st.outro, 0.4);
