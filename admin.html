@@ -435,7 +435,7 @@ function radarSvg(r, deg, maxR = 5) {
   const R0 = 110, S = R0 / maxR, C = R0 + 13, rad = deg * Math.PI / 180, px = C + r * S * Math.cos(rad), py = C - r * S * Math.sin(rad);
   let g = '';
   for (let a = 0; a < 360; a += 15) {
-    const t = a * Math.PI / 180, o = a % 90 === 0 ? .45 : a % 30 === 0 ? .25 : .12;
+    const t = a * Math.PI / 180, o = a % 90 === 0 ? .5 : a % 30 === 0 ? .36 : .26;
     g += `<line x1="${C}" y1="${C}" x2="${C + R0 * Math.cos(t)}" y2="${C - R0 * Math.sin(t)}" stroke="rgba(14,116,144,${o})"/>`;
   }
   const step = maxR > 6 ? 2 : 1;

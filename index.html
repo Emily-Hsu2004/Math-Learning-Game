@@ -94,6 +94,21 @@
 
   .kp-key { min-height: 42px; }
   .opt-btn mjx-container { pointer-events: none; }
+  /* 選擇題：選項放不下兩欄時改成一欄（由程式判斷）；真的太窄才縮小算式，不會超出框框 */
+  .opt-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+  .opt-grid.opt-one { grid-template-columns: minmax(0, 1fr); }
+  .opt-btn { min-width: 0; overflow: hidden; }
+  .opt-btn mjx-container { max-width: 100%; }
+  .opt-grid:not(.measuring) .opt-btn mjx-container svg { max-width: 100%; height: auto; }
+  /* 練習模式 */
+  .min-w-0 { min-width: 0; }
+  .practice-badge.hidden { display: none; }
+  .practice-badge:not(.hidden) { display: inline-flex; }
+  .practice-badge { align-items: center; background: #f59e0b; color: #fff; font-weight: 800; font-size: .8rem; padding: .3rem .6rem; border-radius: .5rem; box-shadow: 0 4px 10px rgba(0,0,0,.25); white-space: nowrap; }
+  .redo-btn { margin-left: .5rem; background: rgba(56,189,248,.18); border: 1px solid rgba(56,189,248,.5); color: #bae6fd; font-size: .75rem; font-weight: 700; padding: .15rem .55rem; border-radius: 9999px; white-space: nowrap; }
+  .redo-btn:hover { background: rgba(56,189,248,.32); color: #fff; }
+  .opt-btn.p-ok { border-color: #22c55e !important; background: #f0fdf4 !important; color: #166534 !important; }
+  .opt-btn.p-no { border-color: #ef4444 !important; background: #fef2f2 !important; color: #991b1b !important; }
 
   @media (prefers-reduced-motion: reduce) {
     .vibrate, .spin-slow, .animate-pulse, .animate-ping { animation: none !important; }
@@ -244,6 +259,7 @@
     <div id="stage-tools" class="absolute flex gap-2 z-20">
       <button id="btn-home" class="bg-slate-800/90 hover:bg-slate-700 text-white px-3 py-1.5 rounded-lg text-sm font-bold shadow-lg">🏠 首頁</button>
       <button id="btn-restart" class="bg-sky-600/90 hover:bg-sky-700 text-white px-3 py-1.5 rounded-lg text-sm font-bold shadow-lg">↻ <span class="max-md:hidden">重新開始本關</span><span class="md:hidden">重來</span></button>
+      <span id="practice-badge" class="practice-badge hidden">🔁 練習・不計分</span>
     </div>
     <div id="status-box" class="absolute md:top-14 md:left-3 bg-white/95 backdrop-blur-md px-2.5 py-1.5 md:px-3 md:py-2 rounded-xl shadow-xl border-2 border-transparent z-10 pointer-events-none max-w-[46%] md:max-w-[65%] transition-colors">
       <div class="text-[10px] md:text-[11px] text-slate-500 font-bold mb-0.5">雷達系統</div>
@@ -473,6 +489,7 @@ const API = ONLINE ? RemoteAPI : LocalAPI;
 const GAME_LOG = [];
 const pendingLogs = [];
 function report(evt) {
+  if (state.practice) { console.log('[練習，不記錄]', evt); return; }   // 練習模式：不送到資料庫、不影響成績與排名
   evt.ts = new Date().toISOString();
   GAME_LOG.push(evt);
   console.log('[作答紀錄]', evt);
@@ -499,10 +516,31 @@ const SQ3 = Math.sqrt(3), SQ2 = Math.sqrt(2);
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function typeset(el) {
-  const mj = window.MathJax;
-  if (!mj || !mj.startup || !mj.startup.promise) { setTimeout(() => typeset(el), 300); return; }
-  mj.startup.promise.then(() => mj.typesetPromise([el])).catch(() => {});
+  return new Promise(done => {
+    const go = () => {
+      const mj = window.MathJax;
+      if (!mj || !mj.startup || !mj.startup.promise) { setTimeout(go, 300); return; }
+      mj.startup.promise.then(() => mj.typesetPromise([el])).catch(() => {}).then(done);
+    };
+    go();
+  });
 }
+
+/* 選擇題選項：有任何一個算式比按鈕寬，就把這一題改成一欄 */
+function fitOptions(grid) {
+  if (!grid) return;
+  grid.classList.add('measuring'); grid.classList.remove('opt-one');
+  const btns = [...grid.querySelectorAll('.opt-btn')];
+  const tooWide = btns.some(b => {
+    const m = b.querySelector('mjx-container svg') || b.querySelector('mjx-container');
+    if (!m) return false;
+    const cs = getComputedStyle(b);
+    return m.getBoundingClientRect().width > b.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) + 0.5;
+  });
+  grid.classList.toggle('opt-one', tooWide);
+  grid.classList.remove('measuring');
+}
+window.addEventListener('resize', () => document.querySelectorAll('.opt-grid').forEach(fitOptions));
 
 function parseVal(s) {
   if (!s) return NaN;
@@ -610,7 +648,7 @@ const STORY = {
 };
 
 /* ---------- 畫面切換 ---------- */
-const state = { level: 0, unlocked: {}, user: null, timeLimit: 180 };
+const state = { level: 0, unlocked: {}, user: null, timeLimit: 180, practice: null };
 const SCREENS = ['login-screen', 'title-screen', 'comm-screen', 'main-app', 'outro-screen', 'summary-screen'];
 
 function showScreen(el) { el.classList.remove('hidden', 'fade-out'); el.classList.add('flex'); }
@@ -879,9 +917,12 @@ async function loadSummary() {
 
   // 每題對錯
   const list = items => `<ul class="space-y-1.5">${items.join('')}</ul>`;
-  const li = (name, st, extra = '') => `<li class="flex items-start justify-between gap-3"><span>${st.icon} ${name}${extra}</span><span class="${st.cls} shrink-0 text-sm">${st.text}</span></li>`;
-  html += box('🌀 第一關：颱風定位', list(L1_ITEMS.map(it => li(it.name, itemStatus(rowsOf(1, it.key))))));
-  html += box('🚁 第二關：坐標翻譯機', list(L2_ITEMS.map(it => li(it.name, itemStatus(rowsOf(2, it.key))))));
+  const redo = (lv, key) => `<button data-practice="${lv}:${key}" class="redo-btn">🔁 重做</button>`;
+  const li = (name, st, extra = '', btn = '') => `<li class="flex items-start justify-between gap-3"><span class="min-w-0">${st.icon} ${name}${extra}</span><span class="shrink-0 text-sm flex items-center"><span class="${st.cls}">${st.text}</span>${btn}</span></li>`;
+  const l12 = (lv, items) => list(items.map(it => { const rs = rowsOf(lv, it.key); return li(it.name, itemStatus(rs), '', rs.length ? redo(lv, it.key) : ''); }));
+  const note = '<p class="text-xs text-slate-400 mb-2">做過的題目可以按「🔁 重做」單獨練習；練習不會記錄，也不會影響成績和排名。</p>';
+  html += box('🌀 第一關：颱風定位', note + l12(1, L1_ITEMS));
+  html += box('🚁 第二關：坐標翻譯機', l12(2, L2_ITEMS));
   let l3items;
   if (l3 && l3.submitted && Array.isArray(l3.answers)) {
     l3items = L3_ITEMS.map((it, i) => {
@@ -890,14 +931,18 @@ async function loadSummary() {
       let extra = `<div class="text-xs text-slate-300 mt-0.5 ml-6">你的指令：${opt ? M(opt.t) : '—'}`;
       if (!ok && res.reveal) extra += `　正確指令：${M(it.opts.find(o => o.ok).t)}`;
       extra += '</div>';
-      return li(`撤離點 ${i + 1}`, st, extra);
+      return li(`撤離點 ${i + 1}`, st, extra, res.reveal ? redo(3, i) : '');
     });
-    if (!res.reveal) l3items.push('<li class="text-xs text-slate-400 pt-1">正確指令會在老師公布後顯示在這裡。</li>');
+    if (!res.reveal) l3items.push('<li class="text-xs text-slate-400 pt-1">正確指令會在老師公布後顯示在這裡；老師公布後，也可以重做第三關的題目練習。</li>');
   } else {
     l3items = ['<li class="text-slate-400">第三關還沒有完成。</li>'];
   }
   html += box('📍 第三關：象限挑戰', list(l3items));
   body.innerHTML = html;
+  body.querySelectorAll('[data-practice]').forEach(b => b.onclick = () => {
+    const [lv, key] = b.dataset.practice.split(':');
+    startPractice(+lv, key);
+  });
   typeset(body);
 }
 
@@ -1035,8 +1080,34 @@ function showMissionModal(m, cb) {
   };
 }
 
-$('btn-home').onclick = () => { pickEnabled = false; goTo('title-screen'); };
-$('btn-restart').onclick = () => LEVELS[state.level].init();
+$('btn-home').onclick = () => { pickEnabled = false; endPractice(); goTo('title-screen'); };
+$('btn-restart').onclick = () => {
+  if (state.practice && state.practice.lv === 3) L3P.init();
+  else LEVELS[state.level].init();
+};
+
+/* ---------- 練習模式：從任務總結單獨重做一題，不記錄、不列入排名 ---------- */
+const practiceIndex = (lv, items) => state.practice && state.practice.lv === lv ? Math.max(0, items.findIndex(it => String(it.key) === String(state.practice.key))) : 0;
+function setPracticeUI(on) {
+  $('practice-badge').classList.toggle('hidden', !on);
+  $('btn-restart').innerHTML = on ? '↻ <span class="max-md:hidden">重做本題</span><span class="md:hidden">重做</span>'
+                                  : '↻ <span class="max-md:hidden">重新開始本關</span><span class="md:hidden">重來</span>';
+}
+function startPractice(lv, key) {
+  state.practice = { lv, key: String(key) };
+  setPracticeUI(true);
+  if (lv === 3) { L3P.start(+key); return; }
+  state.level = lv;
+  goTo('main-app', () => { resizeCanvas(); LEVELS[lv].init(); });
+}
+function endPractice() {
+  if (!state.practice) return;
+  state.practice = null;
+  setPracticeUI(false);
+  kpHide(); pickEnabled = false;
+}
+function exitPractice() { endPractice(); openSummary(); }
+const practiceNextLabel = '↩️ 回到任務總結';
 
 /* =========================================================
    雷達畫布
@@ -1112,11 +1183,11 @@ function draw(t) {
     if (maxR <= 6) { const [lx, ly] = P(-2.5, -1.2); ctx.fillStyle = 'rgba(187,247,208,0.35)'; ctx.font = "700 14px 'Noto Sans TC'"; ctx.textAlign = 'center'; ctx.fillText('台灣', lx, ly); }
   }
 
-  // 放射線（每 15°）
+  // 放射線（每 15°）：90° 最明顯、30° 次之，15° 也要看得清楚才能數格
   for (let a = 0; a < 360; a += 15) {
-    const alpha = a % 90 === 0 ? 0.3 : a % 30 === 0 ? 0.15 : 0.07;
+    const alpha = a % 90 === 0 ? 0.5 : a % 30 === 0 ? 0.36 : 0.26;
     const [ex, ey] = P(maxR * Math.cos(a * deg), maxR * Math.sin(a * deg));
-    ctx.strokeStyle = `rgba(56,189,248,${alpha})`; ctx.lineWidth = 1;
+    ctx.strokeStyle = `rgba(56,189,248,${alpha})`; ctx.lineWidth = a % 90 === 0 ? 1.5 : a % 30 === 0 ? 1.2 : 1;
     ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ex, ey); ctx.stroke();
   }
   // 同心圓
@@ -1464,8 +1535,8 @@ const L1 = {
     $('btn-restart').classList.remove('hidden');
     $('stage-timer').classList.add('hidden');
     $('legend').innerHTML = '極軸指向正東<br>逆時針記正、順時針記負';
-    setPanel('🌀 颱風危機：颱風定位', '用「距離」和「方向」找出位置');
-    this.idx = 0; this.records = []; this.placed = [];
+    setPanel(state.practice ? '🔁 練習：颱風定位' : '🌀 颱風危機：颱風定位', state.practice ? '練習不記錄成績、不列入排名' : '用「距離」和「方向」找出位置');
+    this.idx = practiceIndex(1, L1_ITEMS); this.records = []; this.placed = [];
     this.startItem();
   },
   startItem() {
@@ -1518,7 +1589,7 @@ const L1 = {
         <div id="hint-box" class="hidden mb-3 bg-amber-50 border border-amber-200 text-amber-800 p-3 rounded-lg text-sm">${hint}</div>
         ${body}
         <p id="fb" class="hidden"></p>
-        <button id="btn-next" class="${btnNext}">${this.idx === L1_ITEMS.length - 1 ? '📞 回報指揮中心' : '接收新狀況：下一個任務 ➡️'}</button>
+        <button id="btn-next" class="${btnNext}">${state.practice ? practiceNextLabel : this.idx === L1_ITEMS.length - 1 ? '📞 回報指揮中心' : '接收新狀況：下一個任務 ➡️'}</button>
       </section>`;
     $('btn-hint').onclick = () => $('hint-box').classList.toggle('hidden');
     $('btn-submit').onclick = () => it.kind === 'tap' ? this.checkTap() : this.checkRead();
@@ -1612,6 +1683,7 @@ const L1 = {
     }
   },
   next() {
+    if (state.practice) { exitPractice(); return; }
     this.idx++;
     if (this.idx >= L1_ITEMS.length) { kpHide(); pickEnabled = false; showOutro(1); }
     else this.startItem();
@@ -1645,8 +1717,8 @@ const L2 = {
     $('btn-restart').classList.remove('hidden');
     $('stage-timer').classList.add('hidden');
 
-    setPanel('🌀 颱風危機：坐標翻譯機', '極坐標與直角坐標的轉換');
-    this.idx = 0; this.records = [];
+    setPanel(state.practice ? '🔁 練習：坐標翻譯機' : '🌀 颱風危機：坐標翻譯機', state.practice ? '練習不記錄成績、不列入排名' : '極坐標與直角坐標的轉換');
+    this.idx = practiceIndex(2, L2_ITEMS); this.records = [];
     this.startItem();
   },
   startItem() {
@@ -1693,7 +1765,7 @@ const L2 = {
         <div id="hint-box" class="hidden mb-3 bg-amber-50 border border-amber-200 text-amber-800 p-3 rounded-lg text-sm">${hint}</div>
         ${body}
         <p id="fb" class="hidden"></p>
-        <button id="btn-next" class="${btnNext}">${this.idx === L2_ITEMS.length - 1 ? '📞 回報指揮中心' : '接收新狀況：下一個任務 ➡️'}</button>
+        <button id="btn-next" class="${btnNext}">${state.practice ? practiceNextLabel : this.idx === L2_ITEMS.length - 1 ? '📞 回報指揮中心' : '接收新狀況：下一個任務 ➡️'}</button>
       </section>`;
     $('btn-hint').onclick = () => $('hint-box').classList.toggle('hidden');
     $('btn-submit').onclick = () => this.check();
@@ -1763,6 +1835,7 @@ const L2 = {
     kpHide();
   },
   next() {
+    if (state.practice) { exitPractice(); return; }
     this.idx++;
     if (this.idx >= L2_ITEMS.length) { kpHide(); showOutro(2); }
     else this.startItem();
@@ -1944,7 +2017,7 @@ const L3 = {
       <section class="bg-slate-50 p-4 rounded-xl border border-slate-200">
         <h2 class="font-bold text-slate-900 text-base mb-1">📍 撤離點 ${this.q + 1}</h2>
         <p class="text-sm text-slate-700 mb-3 leading-relaxed">${it.q}</p>
-        <div class="grid grid-cols-2 gap-2">${opts}</div>
+        <div class="opt-grid measuring">${opts}</div>
         <div class="flex gap-2 mt-4">
           <button id="q-prev" class="flex-1 bg-slate-200 hover:bg-slate-300 disabled:opacity-40 text-slate-700 font-bold py-2.5 rounded-lg text-sm" ${this.q === 0 ? 'disabled' : ''}>⬅️ 上一題</button>
           ${last ? '<button id="q-submit" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-lg text-sm">📨 送出全部指令</button>'
@@ -1965,7 +2038,7 @@ const L3 = {
     $('q-prev').onclick = () => { this.q--; this.renderQuestion(); };
     if (last) $('q-submit').onclick = () => this.finish(false);   // 直接送出，不再二次確認
     else $('q-next').onclick = () => { this.q++; this.renderQuestion(); };
-    typeset($('tasks'));
+    typeset($('tasks')).then(() => fitOptions(document.querySelector('#tasks .opt-grid')));
   },
   async finish(auto) {
     if (this.done || this.sending) return;
@@ -2011,6 +2084,64 @@ const L3 = {
       </section>`;
     $('btn-l3-report').onclick = () => showOutro(3);
     $('btn-l3-summary').onclick = () => openSummary();
+  }
+};
+
+/* 第三關練習：老師公布正解後才開放；選了馬上知道對錯，不送出、不計分 */
+const L3P = {
+  start(i) {
+    state.level = 3; this.i = i;
+    goTo('main-app', () => { resizeCanvas(); this.init(); });
+  },
+  init() {
+    $('main-app').dataset.lv = '';
+    Object.assign(view, { maxR: 5, axes: true, polarHint: false, land: true, station: true });
+    Object.assign(scene, { objects: [], marker: null, ghost: null, tri: null, anim: null });
+    pickEnabled = false; onPick = null; kpHide();
+    $('btn-restart').classList.remove('hidden');
+    $('stage-timer').classList.add('hidden');
+    $('legend').innerHTML = 'r ≥ 0，0° ≤ θ &lt; 360°<br>不需要計算機';
+    setPanel('🔁 練習：象限挑戰', '練習不記錄成績、不列入排名');
+    this.order = L3_ITEMS[this.i].opts.map((_, k) => k).sort(() => Math.random() - 0.5);
+    this.tried = []; this.solved = false;
+    this.render();
+  },
+  render() {
+    const it = L3_ITEMS[this.i];
+    scene.objects = it.obj ? [{ ...it.obj, label: `撤離點 ${this.i + 1}`, size: 26 }] : [];
+    setStatus(this.solved ? '答對了' : `練習：撤離點 ${this.i + 1}`, this.solved ? 'ok' : 'idle');
+    $('panel-data').innerHTML = '';
+    const opts = this.order.map(k => {
+      const st = this.tried.includes(k) ? (it.opts[k].ok ? ' p-ok' : ' p-no') : '';
+      return `<button data-i="${k}" class="opt-btn rounded-xl border-2 py-3 px-2 text-lg font-bold transition-colors border-slate-300 bg-white text-slate-800 hover:border-sky-300${st}" ${this.solved ? 'disabled' : ''}>${M(it.opts[k].t)}</button>`;
+    }).join('');
+    const last = this.tried[this.tried.length - 1], lastOpt = last == null ? null : it.opts[last];
+    const fb = !lastOpt ? '<p class="text-xs text-slate-500 mt-3">選一個答案，馬上就會知道對不對；答錯可以再選。</p>'
+      : lastOpt.ok ? '<div class="mt-3 bg-green-50 border border-green-300 text-green-800 rounded-lg p-3 text-sm font-bold">✅ 答對了！</div>'
+      : `<div class="mt-3 bg-red-50 border border-red-300 text-red-800 rounded-lg p-3 text-sm">❌ 這個不對。可能的原因：<b>${lastOpt.tag}</b>。再選一次看看。</div>`;
+    $('tasks').innerHTML = `
+      <section class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+        <h2 class="font-bold text-slate-900 text-base mb-1">📍 撤離點 ${this.i + 1}（練習）</h2>
+        <p class="text-sm text-slate-700 mb-3 leading-relaxed">${it.q}</p>
+        <div class="opt-grid measuring">${opts}</div>
+        ${fb}
+        <div class="flex gap-2 mt-4">
+          <button id="p-prev" class="flex-1 bg-slate-200 hover:bg-slate-300 disabled:opacity-40 text-slate-700 font-bold py-2.5 rounded-lg text-sm" ${this.i === 0 ? 'disabled' : ''}>⬅️ 上一題</button>
+          <button id="p-next" class="flex-1 bg-slate-200 hover:bg-slate-300 disabled:opacity-40 text-slate-700 font-bold py-2.5 rounded-lg text-sm" ${this.i === L3_ITEMS.length - 1 ? 'disabled' : ''}>下一題 ➡️</button>
+        </div>
+        <button id="p-back" class="w-full mt-2 bg-sky-600 hover:bg-sky-700 text-white font-bold py-2.5 rounded-lg text-sm">${practiceNextLabel}</button>
+      </section>`;
+    document.querySelectorAll('#tasks .opt-btn').forEach(b => b.onclick = () => {
+      const k = +b.dataset.i;
+      if (this.solved || this.tried.includes(k)) return;
+      this.tried.push(k);
+      if (it.opts[k].ok) this.solved = true;
+      this.render();
+    });
+    $('p-prev').onclick = () => { this.i--; this.init(); };
+    $('p-next').onclick = () => { this.i++; this.init(); };
+    $('p-back').onclick = () => exitPractice();
+    typeset($('tasks')).then(() => fitOptions(document.querySelector('#tasks .opt-grid')));
   }
 };
 
